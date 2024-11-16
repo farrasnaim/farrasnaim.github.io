@@ -1,3 +1,0 @@
-# Resume Templates
-
-yeah nah
