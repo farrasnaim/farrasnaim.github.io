@@ -22,22 +22,18 @@ const modalText = document.querySelector("[data-modal-text]");
 const testimonialsModalFunc = function () {
   modalContainer.classList.toggle("active");
   overlay.classList.toggle("active");
-}
+};
 
 // add click event to all modal items
 for (let i = 0; i < testimonialsItem.length; i++) {
-
   testimonialsItem[i].addEventListener("click", function () {
-
     modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
     modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
     modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
     modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
 
     testimonialsModalFunc();
-
   });
-
 }
 
 // add click event to modal close button
@@ -67,12 +63,10 @@ if (select) {
 if (select && selectValue) {
   for (let i = 0; i < selectItems.length; i++) {
     selectItems[i].addEventListener("click", function () {
-
       let selectedValue = this.innerText.toLowerCase();
       selectValue.innerText = this.innerText;
       select.classList.remove("active");
       filterFunc(selectedValue);
-
     });
   }
 }
@@ -81,9 +75,7 @@ if (select && selectValue) {
 const filterItems = document.querySelectorAll("[data-filter-item]");
 
 const filterFunc = function (selectedValue) {
-
   for (let i = 0; i < filterItems.length; i++) {
-
     if (selectedValue === "all") {
       filterItems[i].classList.add("active");
     } else if (selectedValue === filterItems[i].dataset.category) {
@@ -91,18 +83,14 @@ const filterFunc = function (selectedValue) {
     } else {
       filterItems[i].classList.remove("active");
     }
-
   }
-
-}
+};
 
 // add event in all filter button items for large screen
 let lastClickedBtn = filterBtn[0];
 
 for (let i = 0; i < filterBtn.length; i++) {
-
   filterBtn[i].addEventListener("click", function () {
-
     let selectedValue = this.innerText.toLowerCase();
     selectValue.innerText = this.innerText;
     filterFunc(selectedValue);
@@ -110,9 +98,7 @@ for (let i = 0; i < filterBtn.length; i++) {
     lastClickedBtn.classList.remove("active");
     this.classList.add("active");
     lastClickedBtn = this;
-
   });
-
 }
 
 
@@ -125,14 +111,12 @@ const formBtn = document.querySelector("[data-form-btn]");
 // add event to all form input field
 for (let i = 0; i < formInputs.length; i++) {
   formInputs[i].addEventListener("input", function () {
-
     // check form validation
     if (form.checkValidity()) {
       formBtn.removeAttribute("disabled");
     } else {
       formBtn.setAttribute("disabled", "");
     }
-
   });
 }
 
@@ -168,22 +152,22 @@ const sections = document.querySelectorAll("section[id]");
 const observerOptions = {
   root: null,
   rootMargin: "0px",
-  threshold: 0.4
+  threshold: 0.4,
 };
 
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
+  entries.forEach((entry) => {
     const sectionId = entry.target.getAttribute("id");
     const navLink = document.querySelector(`.navbar-link[href="#${sectionId}"]`);
 
     if (entry.isIntersecting && navLink && entry.intersectionRatio >= 0.4) {
-      document.querySelectorAll('.navbar-link.active').forEach(link => link.classList.remove('active'));
-      navLink.classList.add('active');
+      document.querySelectorAll(".navbar-link.active").forEach((link) => link.classList.remove("active"));
+      navLink.classList.add("active");
     }
   });
 }, observerOptions);
 
-sections.forEach(section => observer.observe(section));
+sections.forEach((section) => observer.observe(section));
 
 // Force highlight 'About' on load if no scroll interaction yet
 window.addEventListener("load", () => {
@@ -191,8 +175,8 @@ window.addEventListener("load", () => {
   if (aboutSection && window.scrollY < 100) {
     const aboutLink = document.querySelector('.navbar-link[href="#about"]');
     if (aboutLink) {
-      document.querySelectorAll('.navbar-link').forEach(link => link.classList.remove('active'));
-      aboutLink.classList.add('active');
+      document.querySelectorAll(".navbar-link").forEach((link) => link.classList.remove("active"));
+      aboutLink.classList.add("active");
     }
   }
 });
