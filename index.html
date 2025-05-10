@@ -46,6 +46,33 @@
         height: auto;
         transition: none;
       }
+      .lifestyle {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+      }
+      .lifestyle-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 24px;
+        margin-top: 1rem;
+      }
+      .lifestyle-card {
+        background-color: #1f2937;
+        color: white;
+        padding: 16px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+      .lifestyle-card .h4 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+
+      .lifestyle-card .timeline-text {
+        font-size: 14px;
+        line-height: 1.6;
+      }
     </style>
 
     <!--
@@ -172,6 +199,30 @@
             <p>
               Senior-level IT auditor specializing in ITGC, application controls, and cybersecurity risk. Experienced in assessing SAP, Oracle, and Dynamics environments and advising clients on IT governance and control remediation.
             </p>
+          </section>
+
+          <section class="lifestyle">
+            <header>
+              <h2 class="h2 article-title">Life Style</h2>
+            </header>
+            <div class="lifestyle-grid">
+              <div class="lifestyle-card">
+                <h4 class="h4">🛡️ IT Audit & GRC</h4>
+                <p class="timeline-text">Reviewing IT risks, controls, and compliance frameworks across industries.</p>
+              </div>
+              <div class="lifestyle-card">
+                <h4 class="h4">💻 Tech Curious</h4>
+                <p class="timeline-text">Exploring new systems, playing with the latest gadgets, and staying updated on emerging technologies.</p>
+              </div>
+              <div class="lifestyle-card">
+                <h4 class="h4">🧭 Solo Travel</h4>
+                <p class="timeline-text">Going places alone and pretending I'm okay with it.</p>
+              </div>
+              <div class="lifestyle-card">
+                <h4 class="h4">🕹️ Late-night Valorant</h4>
+                <p class="timeline-text">Clutching rounds and my mental health at midnight.</p>
+              </div>
+            </div>
           </section>
 
           <header>
