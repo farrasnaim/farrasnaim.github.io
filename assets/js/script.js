@@ -7,12 +7,19 @@ const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
 
 
 
-// sidebar variables
-const sidebar = document.querySelector("[data-sidebar]");
-const sidebarBtn = document.querySelector("[data-sidebar-btn]");
+// sidebar toggle functionality for mobile (ensure DOM is loaded)
+window.addEventListener("DOMContentLoaded", () => {
+  const sidebar = document.querySelector("[data-sidebar]");
+  const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 
-// sidebar toggle functionality for mobile
-sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
+  if (sidebar && sidebarBtn) {
+    sidebarBtn.addEventListener("click", function () {
+      sidebar.classList.toggle("active");
+    });
+  } else {
+    console.error("Sidebar or sidebar button not found in DOM");
+  }
+});
 
 
 
@@ -58,7 +65,7 @@ overlay.addEventListener("click", testimonialsModalFunc);
 // custom select variables
 const select = document.querySelector("[data-select]");
 const selectItems = document.querySelectorAll("[data-select-item]");
-const selectValue = document.querySelector("[data-selecct-value]");
+const selectValue = document.querySelector("[data-select-value]");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
 select.addEventListener("click", function () { elementToggleFunc(this); });
@@ -137,23 +144,48 @@ for (let i = 0; i < formInputs.length; i++) {
 
 
 // page navigation variables
-const navigationLinks = document.querySelectorAll("[data-nav-link]");
+const navLinks = document.querySelectorAll(".navbar-link");
 const pages = document.querySelectorAll("[data-page]");
 
 // add event to all nav link
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
+for (let i = 0; i < navLinks.length; i++) {
+  navLinks[i].addEventListener("click", function (e) {
+    const targetId = this.getAttribute("href").substring(1);
+    const section = document.getElementById(targetId);
 
-    for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
-        pages[i].classList.add("active");
-        navigationLinks[i].classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
-      }
+    if (section) {
+      // Remove active from all nav links first
+      navLinks.forEach((link) => link.classList.remove("active"));
+
+      // Add active to the clicked one
+      this.classList.add("active");
+
+      // Smooth scroll
+      section.scrollIntoView({ behavior: "smooth" });
+
+      e.preventDefault();
     }
-
   });
-}
+});
+
+const sections = document.querySelectorAll("section[id]");
+
+const observerOptions = {
+  root: null,
+  rootMargin: "0px",
+  threshold: 0.4
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const sectionId = entry.target.getAttribute("id");
+    const navLink = document.querySelector(`.navbar-link[href="#${sectionId}"]`);
+
+    if (entry.isIntersecting && navLink) {
+      document.querySelectorAll('.navbar-link.active').forEach(link => link.classList.remove('active'));
+      navLink.classList.add('active');
+    }
+  });
+}, observerOptions);
+
+sections.forEach(section => observer.observe(section));

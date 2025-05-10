@@ -124,22 +124,43 @@
   #LIFESTYLE CARD
 \*-----------------------------------*/
 
+.lifestyle-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 1rem;
+}
+
 .lifestyle-card {
-  background: var(--card-yellow);
-  color: var(--onyx);
-  padding: 16px 16px 16px 20px;
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--light-gray);
+  padding: 16px 20px;
   border-left: 4px solid var(--vegas-gold);
   border-radius: 12px;
-  box-shadow: var(--shadow-1);
-  border: 1px solid var(--vegas-gold);
+  box-shadow: inset 0 0 0 1px var(--vegas-gold), var(--shadow-1);
+  border: 1px solid var(--jet);
   transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.6s ease;
   opacity: 0;
   animation: fadeInUp 0.6s ease forwards;
+  will-change: transform;
 }
 
 .lifestyle-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.1);
+}
+
+.lifestyle-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.lifestyle-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.lifestyle-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.lifestyle-card:nth-child(4) {
+  animation-delay: 0.4s;
 }
 
 @keyframes fadeInUp {
@@ -515,16 +536,46 @@ main {
 }
 
 .navbar-link {
+  position: relative;
   color: var(--light-gray);
   font-size: var(--fs-8);
   padding: 20px 7px;
   transition: color var(--transition-1);
 }
 
-.navbar-link:hover,
-.navbar-link:focus { color: var(--light-gray-70); }
+.navbar-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  width: 60%;
+  height: 2px;
+  background-color: var(--orange-yellow-crayola);
+  transition: transform 0.3s ease;
+  border-radius: 1px;
+  opacity: 0.8;
+}
 
-.navbar-link.active { color: var(--orange-yellow-crayola); }
+.navbar-link:hover::after,
+.navbar-link.active::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.navbar-link:hover,
+.navbar-link:focus {
+  color: var(--light-gray-70);
+}
+
+.navbar-link.active {
+  color: var(--orange-yellow-crayola) !important;
+}
+
+.navbar-link.active::after {
+  transform: translateX(-50%) scaleX(1);
+  background-color: var(--orange-yellow-crayola);
+}
 
 
 
@@ -544,6 +595,15 @@ main {
 }
 
 .about-text p { margin-bottom: 15px; }
+
+
+.quote {
+  font-style: italic;
+  color: var(--light-gray);
+  opacity: 0.9;
+  font-size: 0.95rem;
+  margin-top: 1rem;
+}
 
 
 
@@ -805,6 +865,17 @@ main {
 
 .article-title { margin-bottom: 30px; }
 
+.timeline-item-title img {
+  max-height: 24px;
+  max-width: 100px;
+  height: auto;
+  width: auto;
+  flex-shrink: 0;
+  object-fit: contain;
+  vertical-align: middle;
+  display: inline-block;
+  margin-top: -2px;
+}
 
 /**
  * education and experience 
@@ -1918,4 +1989,261 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .timeline-text { max-width: 700px; }
 
+}
+
+@media (max-width: 600px) {
+  .lifestyle-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/*-----------------------------------*\
+  #LIFESTYLE CARD HEADINGS
+\*-----------------------------------*/
+
+.lifestyle-card .h4 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lifestyle-card .h4 img,
+.lifestyle-card .h4 svg {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+
+/*-----------------------------------*\
+  #RESUME POLISH
+\*-----------------------------------*/
+
+.resume {
+  margin-top: 3rem;
+}
+
+.timeline-item {
+  background-color: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+  padding: 16px 20px;
+  transition: background 0.3s ease;
+}
+
+.timeline-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.timeline-item-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: var(--fw-600);
+}
+
+.timeline-text {
+  font-size: var(--fs-6);
+  line-height: 1.7;
+  color: var(--light-gray);
+}
+
+.timeline-item-title img {
+  max-height: 24px;
+  max-width: 100px;
+  height: auto;
+  width: auto;
+  flex-shrink: 0;
+  object-fit: contain;
+  vertical-align: middle;
+  display: inline-block;
+  margin-top: -2px;
+}
+
+
+/*-----------------------------------*\
+  #RESUME SUBTITLE
+\*-----------------------------------*/
+
+.section-subtext {
+  font-size: var(--fs-6);
+  font-weight: var(--fw-300);
+  color: var(--light-gray-70);
+  margin-top: 8px;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+
+/*-----------------------------------*\
+  #SKILLS CUSTOM SECTION
+\*-----------------------------------*/
+
+.skills {
+  margin-top: 3rem;
+}
+
+.skills-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 24px;
+  font-size: var(--fs-6);
+  font-weight: var(--fw-400);
+  color: var(--light-gray);
+  padding-left: 16px;
+}
+
+.skills-list li {
+  list-style: disc;
+}
+
+
+/*-----------------------------------*\
+  #CERTIFICATIONS SECTION
+\*-----------------------------------*/
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px 20px;
+  list-style: none;
+  padding-left: 0;
+  font-size: var(--fs-6);
+  color: var(--light-gray);
+}
+
+.cert-grid li {
+  background: rgba(255, 255, 255, 0.02);
+  padding: 12px 16px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.cert-grid li:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.cert-grid a.cert-link {
+  color: var(--light-gray);
+  text-decoration: none;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.cert-grid a.cert-link:hover {
+  color: var(--orange-yellow-crayola);
+  text-decoration: underline;
+  text-shadow: 0 0 4px rgba(255, 215, 0, 0.3);
+}
+/*-----------------------------------*\
+  #SECTION DIVIDER
+\*-----------------------------------*/
+
+.section-divider {
+  width: 100%;
+  height: 1px;
+  margin: 3rem 0;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--jet),
+    transparent
+  );
+  border: none;
+  opacity: 0.5;
+}
+
+
+/*-----------------------------------*\
+  #RESUME HEADER
+\*-----------------------------------*/
+
+.resume-header {
+  margin-top: 3rem;
+}
+
+/*-----------------------------------*\
+  #CLOSING CTA
+\*-----------------------------------*/
+
+#closing-cta {
+  margin-top: 5rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#closing-cta .section-subtext {
+  color: var(--light-gray);
+  font-size: var(--fs-6);
+  font-weight: var(--fw-300);
+  line-height: 1.7;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/*-----------------------------------*\
+  #RESUME BLOCKS FIX
+\*-----------------------------------*/
+
+#education,
+#experience {
+  margin-bottom: 4rem;
+}
+
+.lifestyle {
+  margin-bottom: 4rem;
+}
+
+/*-----------------------------------*\
+  #FINAL POLISH
+\*-----------------------------------*/
+
+/* Accessibility focus style */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px dashed var(--orange-yellow-crayola);
+  outline-offset: 4px;
+}
+
+/* Resume card hover motion */
+.timeline-item {
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.timeline-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+
+@media (max-width: 768px) {
+  .navbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: hsla(240, 1%, 17%, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    border-top: 1px solid var(--jet);
+    border-radius: 12px 12px 0 0;
+    padding: 0.5rem;
+  }
+
+  .main-content {
+    padding-bottom: 5rem; /* To avoid content being hidden by navbar */
+  }
+
+  .navbar-list {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .navbar-link {
+    font-size: var(--fs-7);
+    padding: 0.5rem;
+  }
 }
