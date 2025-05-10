@@ -2,24 +2,8 @@
 
 
 
-// element toggle function
-const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
 
-
-
-// sidebar toggle functionality for mobile (ensure DOM is loaded)
-window.addEventListener("DOMContentLoaded", () => {
-  const sidebar = document.querySelector("[data-sidebar]");
-  const sidebarBtn = document.querySelector("[data-sidebar-btn]");
-
-  if (sidebar && sidebarBtn) {
-    sidebarBtn.addEventListener("click", function () {
-      sidebar.classList.toggle("active");
-    });
-  } else {
-    console.error("Sidebar or sidebar button not found in DOM");
-  }
-});
+// sidebar toggle functionality for mobile
 
 
 
@@ -57,8 +41,13 @@ for (let i = 0; i < testimonialsItem.length; i++) {
 }
 
 // add click event to modal close button
-modalCloseBtn.addEventListener("click", testimonialsModalFunc);
-overlay.addEventListener("click", testimonialsModalFunc);
+if (modalCloseBtn) {
+  modalCloseBtn.addEventListener("click", testimonialsModalFunc);
+}
+
+if (overlay) {
+  overlay.addEventListener("click", testimonialsModalFunc);
+}
 
 
 
@@ -68,18 +57,24 @@ const selectItems = document.querySelectorAll("[data-select-item]");
 const selectValue = document.querySelector("[data-select-value]");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
-select.addEventListener("click", function () { elementToggleFunc(this); });
+if (select) {
+  select.addEventListener("click", function () {
+    select.classList.toggle("active");
+  });
+}
 
 // add event in all select items
-for (let i = 0; i < selectItems.length; i++) {
-  selectItems[i].addEventListener("click", function () {
+if (select && selectValue) {
+  for (let i = 0; i < selectItems.length; i++) {
+    selectItems[i].addEventListener("click", function () {
 
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    elementToggleFunc(select);
-    filterFunc(selectedValue);
+      let selectedValue = this.innerText.toLowerCase();
+      selectValue.innerText = this.innerText;
+      select.classList.remove("active");
+      filterFunc(selectedValue);
 
-  });
+    });
+  }
 }
 
 // filter variables
@@ -166,7 +161,7 @@ for (let i = 0; i < navLinks.length; i++) {
       e.preventDefault();
     }
   });
-});
+}
 
 const sections = document.querySelectorAll("section[id]");
 
@@ -181,7 +176,7 @@ const observer = new IntersectionObserver((entries) => {
     const sectionId = entry.target.getAttribute("id");
     const navLink = document.querySelector(`.navbar-link[href="#${sectionId}"]`);
 
-    if (entry.isIntersecting && navLink) {
+    if (entry.isIntersecting && navLink && entry.intersectionRatio >= 0.4) {
       document.querySelectorAll('.navbar-link.active').forEach(link => link.classList.remove('active'));
       navLink.classList.add('active');
     }
@@ -189,3 +184,24 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 sections.forEach(section => observer.observe(section));
+
+// Force highlight 'About' on load if no scroll interaction yet
+window.addEventListener("load", () => {
+  const aboutSection = document.getElementById("about");
+  if (aboutSection && window.scrollY < 100) {
+    const aboutLink = document.querySelector('.navbar-link[href="#about"]');
+    if (aboutLink) {
+      document.querySelectorAll('.navbar-link').forEach(link => link.classList.remove('active'));
+      aboutLink.classList.add('active');
+    }
+  }
+});
+
+const sidebar = document.querySelector("[data-sidebar]");
+const sidebarBtn = document.querySelector("[data-sidebar-btn]");
+
+if (sidebar && sidebarBtn) {
+  sidebarBtn.addEventListener("click", function () {
+    sidebar.classList.toggle("active");
+  });
+}
