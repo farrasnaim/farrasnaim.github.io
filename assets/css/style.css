@@ -485,6 +485,9 @@ main {
 .contact-info :is(.contact-link, time, address) {
   color: var(--white-2);
   font-size: var(--fs-7);
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-all;
 }
 
 .contact-info address { font-style: normal; }
@@ -881,7 +884,7 @@ main {
  * education and experience 
  */
 
-.timeline { margin-bottom: 30px; }
+.timeline { margin-bottom: 20px; }
 
 .timeline .title-wrapper {
   display: flex;
@@ -1963,11 +1966,11 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .contacts-list { grid-template-columns: 1fr; }
 
-  .contact-info :is(.contact-link) {
+  /* .contact-info :is(.contact-link) {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
+  } */
 
   .contact-info :is(.contact-link, time, address) {
     --fs-7: 14px;
@@ -2193,7 +2196,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 #education,
 #experience {
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 }
 
 .lifestyle {
