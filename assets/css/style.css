@@ -1659,3 +1659,26 @@ button:focus-visible {
     bottom: 1px;
   }
 }
+
+/*-----------------------------------*\
+  #GO TO TOP BUTTON
+\*-----------------------------------*/
+
+.go-top-btn {
+  margin: 2rem auto 0;
+  display: block;
+  padding: 10px 20px;
+  background: var(--bg-gradient-jet);
+  color: var(--orange-yellow-crayola);
+  font-size: var(--fs-6);
+  font-weight: var(--fw-500);
+  border-radius: 8px;
+  box-shadow: var(--shadow-2);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.go-top-btn:hover {
+  background: var(--bg-gradient-yellow-1);
+  color: var(--white-2);
+  transform: translateY(-2px);
+}
