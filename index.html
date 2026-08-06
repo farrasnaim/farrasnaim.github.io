@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Farras Naim — IT Risk & GRC. Thinking about systems.">
+    <meta name="description" content="Farras Naim — IT auditor, gamer, solo traveler, organization enthusiast">
     <title>Farras Naim</title>
     <style>
         * {
@@ -14,19 +14,21 @@
 
         :root {
             --bg: #ffffff;
-            --text: #000000;
+            --text: #1a1a1a;
             --text-muted: #666666;
             --border: #e5e5e5;
-            --accent: #0000ff;
+            --accent: #0066ff;
+            --bg-secondary: #f9f9f9;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg: #0a0a0a;
                 --text: #ffffff;
-                --text-muted: #999999;
+                --text-muted: #aaaaaa;
                 --border: #222222;
-                --accent: #3b82f6;
+                --accent: #4a9eff;
+                --bg-secondary: #111111;
             }
         }
 
@@ -40,295 +42,536 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            display: grid;
+            grid-template-columns: 22% 48% 30%;
+            min-height: 100vh;
+            gap: 0;
+            padding: 0 4%;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         a {
             color: var(--accent);
             text-decoration: none;
-            border-bottom: 1px solid var(--accent);
-            transition: opacity 0.2s;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
         }
 
         a:hover {
-            opacity: 0.7;
+            border-bottom-color: var(--accent);
         }
 
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
+        /* LEFT SIDEBAR */
+        .sidebar {
+            background: var(--bg-secondary);
+            padding: 1.2rem 1rem;
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 2rem 0.5rem;
         }
 
-        .header {
-            margin-bottom: 5rem;
+        .sidebar-content {
+            flex: 1;
         }
 
-        .name {
-            font-size: 2.5rem;
+        .sidebar h1 {
+            font-size: 1.2rem;
             font-weight: 700;
             line-height: 1.1;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
             letter-spacing: -0.02em;
         }
 
-        .tagline {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            font-weight: 400;
+        .sidebar-photo {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 0.8rem;
         }
 
-        .meta {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-            font-size: 0.95rem;
+        .sidebar-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .sidebar-intro {
+            font-size: 0.8rem;
             color: var(--text-muted);
-            margin-bottom: 1rem;
+            line-height: 1.5;
+            margin-bottom: 0.7rem;
+        }
+
+        .sidebar-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 1.2rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-connect {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .sidebar-connect-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sidebar-connect-links {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .sidebar-connect-link {
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 5px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .sidebar-connect-link:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
+        }
+
+        .sidebar-footer {
+            display: none;
+        }
+
+        /* MIDDLE CONTENT */
+        .middle-content {
+            padding: 3rem 2.5rem;
+            overflow-y: auto;
         }
 
         section {
-            margin-bottom: 4rem;
+            margin-bottom: 3.5rem;
         }
 
         .section-title {
             font-size: 1.4rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
-            margin-top: 0;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid var(--accent);
         }
 
-        .section-subtitle {
-            font-size: 1rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-            font-weight: 400;
-            line-height: 1.7;
-        }
-
-        .divider {
-            height: 1px;
-            background: var(--border);
-            margin: 3rem 0;
-        }
-
+        /* WORK SECTION */
         .work-item {
-            margin-bottom: 2.5rem;
+            margin-bottom: 2.2rem;
+            padding-bottom: 2.2rem;
+            border-bottom: 1px solid var(--border);
         }
 
-        .work-date {
-            font-size: 0.9rem;
+        .work-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .work-period {
+            font-size: 0.8rem;
             color: var(--accent);
-            font-weight: 600;
-            margin-bottom: 0.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.4rem;
         }
 
-        .work-title {
-            font-size: 1.1rem;
+        .work-role {
+            font-size: 1.05rem;
             font-weight: 700;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.2rem;
         }
 
         .work-company {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.6rem;
+            font-weight: 500;
         }
 
-        .work-desc {
-            font-size: 1rem;
+        .work-description {
+            font-size: 0.9rem;
             color: var(--text-muted);
-            line-height: 1.7;
-        }
-
-        .interests {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .interest-item {
-            font-size: 0.95rem;
             line-height: 1.6;
         }
 
-        .interest-label {
-            font-weight: 600;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .tag {
-            background: var(--border);
-            padding: 0.35rem 0.75rem;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .cta {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .cta-btn {
-            padding: 0.75rem 1.5rem;
-            background: var(--accent);
-            color: var(--bg);
-            border: 1px solid var(--accent);
-            border-radius: 4px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: inherit;
-            text-decoration: none;
-            display: inline-block;
-            border-bottom: none;
-        }
-
-        .cta-btn:hover {
-            opacity: 0.9;
-        }
-
-        .cta-btn.secondary {
-            background: transparent;
-            color: var(--accent);
-        }
-
-        footer {
-            border-top: 1px solid var(--border);
-            padding-top: 2rem;
-            margin-top: 4rem;
+        /* COLLEGE SECTION */
+        .college-intro {
             font-size: 0.9rem;
             color: var(--text-muted);
-            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
         }
 
-        @media (max-width: 640px) {
-            .container {
-                padding: 2rem 1.5rem;
-            }
+        .college-subsection {
+            margin-bottom: 2.2rem;
+        }
 
-            .name {
-                font-size: 2rem;
-            }
+        .college-subsection-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
 
-            .interests {
-                grid-template-columns: 1fr;
-            }
+        .org-item {
+            margin-bottom: 1.4rem;
+            padding-bottom: 1.4rem;
+            border-bottom: 1px solid var(--border);
+        }
 
-            .meta {
-                gap: 1rem;
-                font-size: 0.9rem;
-            }
+        .org-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .org-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .org-role {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        .org-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* RIGHT SIDEBAR */
+        .right-sidebar {
+            background: var(--bg-secondary);
+            padding: 3rem 2rem;
+            overflow-y: auto;
+            border-left: 1px solid var(--border);
+        }
+
+        .right-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .right-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* HOBBIES */
+        .hobbies-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .hobby-item {
+            padding-bottom: 0.8rem;
+        }
+
+        .hobby-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .hobby-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .hobby-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* SOCIALS */
+        .social-intro {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .socials {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .social-link {
+            padding: 0.8rem 0.6rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+        }
+
+        .social-icon {
+            font-size: 1rem;
+        }
+
+        .social-text {
+            font-size: 0.75rem;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1 class="name">farras naim</h1>
-            <p class="tagline">IT Risk & GRC. Thinking about systems, breaking things, fixing things.</p>
-            <div class="meta">
-                <span>Jakarta, ID</span>
-                <span>EY Indonesia</span>
-                <span>25</span>
+    <!-- LEFT SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-content">
+            <h1>farras naim</h1>
+            <div class="sidebar-photo">
+                <img src="./my-avatar.jpg" alt="Farras Naim">
+            </div>
+            <p class="sidebar-intro">
+                25, Jakarta. Senior auditor by day, gamer & traveler by night. I think about systems, break things to understand how they work, and stream Valorant.
+            </p>
+            <div class="sidebar-meta">
+                <span>🇮🇩 Jakarta</span>
+                <span>💼 EY Indonesia</span>
+                <span>🎮 Valorant & Twitch</span>
+            </div>
+
+            <div class="sidebar-connect">
+                <div class="sidebar-connect-title">Connect</div>
+                <div class="sidebar-connect-links">
+                    <a href="mailto:farrasnaim@outlook.com" class="sidebar-connect-link" title="Email">📧</a>
+                    <a href="https://linkedin.com/in/farrasnaim" target="_blank" class="sidebar-connect-link" title="LinkedIn">💼</a>
+                    <a href="https://instagram.com/farrasnaim" target="_blank" class="sidebar-connect-link" title="Instagram">📸</a>
+                    <a href="https://twitch.tv/YOURTWITCH" target="_blank" class="sidebar-connect-link" title="Twitch">📺</a>
+                    <a href="https://youtube.com/@YOURYOUTUBE" target="_blank" class="sidebar-connect-link" title="YouTube">▶️</a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-footer">
+            <p>farras naim • 2024</p>
+        </div>
+    </div>
+
+    <!-- MIDDLE CONTENT -->
+    <div class="middle-content">
+        <!-- WORK -->
+        <section>
+            <h2 class="section-title">Work</h2>
+
+            <div class="work-item">
+                <div class="work-period">2022 – Now</div>
+                <div class="work-role">Senior, Technology Risk</div>
+                <div class="work-company">EY Indonesia</div>
+                <div class="work-description">
+                    Leading ITGC and application control audits for banking clients. Dig into complex systems (SAP, Oracle, Dynamics) to figure out if they're actually doing what they're supposed to do. Work with teams on remediation strategies and control design.
+                </div>
+            </div>
+
+            <div class="work-item">
+                <div class="work-period">2022</div>
+                <div class="work-role">IT Governance & Compliance Intern</div>
+                <div class="work-company">PT Bank Jago Tbk</div>
+                <div class="work-description">
+                    Prepped audit docs for regulators (BI, OJK). Learned that compliance documentation and actual IT operations live in totally different worlds.
+                </div>
+            </div>
+
+            <div class="work-item">
+                <div class="work-period">2021–2022</div>
+                <div class="work-role">IT Governance & Compliance Intern</div>
+                <div class="work-company">PT XL Axiata Tbk</div>
+                <div class="work-description">
+                    Worked on ISO 27001 and security frameworks. Learned that making people care about security beats most technical controls.
+                </div>
+            </div>
+        </section>
+
+        <!-- COLLEGE -->
+        <section>
+            <h2 class="section-title">College & Orgs</h2>
+
+            <p class="college-intro">
+                Telkom University (2018–2022, GPA 3.74/4.00). Did a lot of org stuff:
+            </p>
+
+            <div class="college-subsection">
+                <h3 class="college-subsection-title">Freshman Orientation (PKKMB)</h3>
+
+                <div class="org-item">
+                    <div class="org-title">Coordinator, Creative Team</div>
+                    <div class="org-role">Jun – Sep 2021</div>
+                    <div class="org-desc">
+                        Managed team of 12 designing first online freshman week for 7000+ students.
+                    </div>
+                </div>
+
+                <div class="org-item">
+                    <div class="org-title">Liaison Officer</div>
+                    <div class="org-role">Aug – Sep 2020</div>
+                    <div class="org-desc">
+                        Supervised IS International Class during freshman week transition.
+                    </div>
+                </div>
+
+                <div class="org-item">
+                    <div class="org-title">Planning Team</div>
+                    <div class="org-role">Jun – Aug 2019</div>
+                    <div class="org-desc">
+                        Helped design orientation for 7000+ incoming students.
+                    </div>
+                </div>
+            </div>
+
+            <div class="college-subsection">
+                <h3 class="college-subsection-title">Other Roles</h3>
+
+                <div class="org-item">
+                    <div class="org-title">Lab Coordinator</div>
+                    <div class="org-role">Sep 2020 – Jun 2022</div>
+                    <div class="org-desc">
+                        Created practicum rules and managed lab discipline.
+                    </div>
+                </div>
+
+                <div class="org-item">
+                    <div class="org-title">Community Service</div>
+                    <div class="org-role">2021 • HMSI & EIM</div>
+                    <div class="org-desc">
+                        Ran donation programs for orphanages and disaster victims.
+                    </div>
+                </div>
+
+                <div class="org-item">
+                    <div class="org-title">Teaching & Mentoring</div>
+                    <div class="org-role">2020–2021</div>
+                    <div class="org-desc">
+                        Taught kids programming and MS Word via Zoom and in-person.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- RIGHT SIDEBAR -->
+    <div class="right-sidebar">
+        <!-- HOBBIES -->
+        <div class="right-section">
+            <h3 class="right-title">Free Time</h3>
+
+            <div class="hobbies-grid">
+                <div class="hobby-item">
+                    <div class="hobby-icon">🎮</div>
+                    <div class="hobby-title">Gaming</div>
+                    <div class="hobby-desc">
+                        Valorant streamer. Getting destroyed in comp is entertainment.
+                    </div>
+                </div>
+
+                <div class="hobby-item">
+                    <div class="hobby-icon">🌍</div>
+                    <div class="hobby-title">Solo Travel</div>
+                    <div class="hobby-desc">
+                        Love solo trips. Teaches you to navigate uncertainty.
+                    </div>
+                </div>
+
+                <div class="hobby-item">
+                    <div class="hobby-icon">⚙️</div>
+                    <div class="hobby-title">Systems & Tech</div>
+                    <div class="hobby-desc">
+                        Curious how complex systems work. Always learning.
+                    </div>
+                </div>
+
+                <div class="hobby-item">
+                    <div class="hobby-icon">☕</div>
+                    <div class="hobby-title">Coffee & Chat</div>
+                    <div class="hobby-desc">
+                        Good conversations about tech, life, travel. In Jakarta? Let's grab coffee.
+                    </div>
+                </div>
             </div>
         </div>
 
-        <section>
-            <p class="section-subtitle">
-                Senior auditor digging into enterprise systems to figure out if they're actually doing what they're supposed to do. I spend my time understanding how complex systems fail, designing controls that catch those failures, and helping organizations make better decisions about risk.
+        <!-- CONNECT -->
+        <div class="right-section">
+            <h3 class="right-title">Connect</h3>
+
+            <p class="social-intro">
+                Hit me up:
             </p>
-        </section>
 
-        <div class="divider"></div>
-
-        <section>
-            <h2 class="section-title">Experience</h2>
-
-            <div class="work-item">
-                <div class="work-date">2022 – Now</div>
-                <div class="work-title">Senior, Technology Risk</div>
-                <div class="work-company">EY Indonesia</div>
-                <div class="work-desc">
-                    Leading ITGC and application control audits for banking clients. Dig into SAP, Oracle, Dynamics environments to figure out if their systems are actually working as designed. Work with teams on remediation strategies and building control frameworks that actually make sense.
-                </div>
+            <div class="socials">
+                <a href="mailto:farrasnaim@outlook.com" class="social-link">
+                    <span class="social-icon">📧</span>
+                    <span class="social-text">Email</span>
+                </a>
+                <a href="https://linkedin.com/in/farrasnaim" target="_blank" class="social-link">
+                    <span class="social-icon">💼</span>
+                    <span class="social-text">LinkedIn</span>
+                </a>
+                <a href="https://instagram.com/farrasnaim" target="_blank" class="social-link">
+                    <span class="social-icon">📸</span>
+                    <span class="social-text">Instagram</span>
+                </a>
+                <a href="https://twitch.tv/YOURTWITCH" target="_blank" class="social-link">
+                    <span class="social-icon">📺</span>
+                    <span class="social-text">Twitch</span>
+                </a>
+                <a href="https://youtube.com/@YOURYOUTUBE" target="_blank" class="social-link">
+                    <span class="social-icon">▶️</span>
+                    <span class="social-text">YouTube</span>
+                </a>
             </div>
-
-            <div class="work-item">
-                <div class="work-date">2022</div>
-                <div class="work-title">IT Governance & Compliance Intern</div>
-                <div class="work-company">PT Bank Jago Tbk</div>
-                <div class="work-desc">
-                    Prepped audit documentation for regulators (BI, OJK). Quickly learned that what's in compliance docs and what actually happens in IT systems are two completely different worlds.
-                </div>
-            </div>
-
-            <div class="work-item">
-                <div class="work-date">2021–2022</div>
-                <div class="work-title">IT Governance & Compliance Intern</div>
-                <div class="work-company">PT XL Axiata Tbk</div>
-                <div class="work-desc">
-                    Worked on ISO 27001 surveillance and security frameworks. Found out that getting people to actually care about security through training beats most fancy technical controls.
-                </div>
-            </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <section>
-            <h2 class="section-title">What I do</h2>
-
-            <div class="interests">
-                <div class="interest-item">
-                    <span class="interest-label">Core Skills</span>
-                    <div class="skill-tags">
-                        <span class="tag">ITGC</span>
-                        <span class="tag">ITAC</span>
-                        <span class="tag">Risk Assessment</span>
-                        <span class="tag">Control Design</span>
-                        <span class="tag">SAP/Oracle</span>
-                    </div>
-                </div>
-
-                <div class="interest-item">
-                    <span class="interest-label">Also Into</span>
-                    <div class="skill-tags">
-                        <span class="tag">Systems Thinking</span>
-                        <span class="tag">Solo Travel</span>
-                        <span class="tag">Valorant</span>
-                        <span class="tag">Security</span>
-                        <span class="tag">Tech Trends</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <section>
-            <h2 class="section-title">Get in touch</h2>
-            <div class="cta">
-                <a href="mailto:farrasnaim@outlook.com" class="cta-btn">Email</a>
-                <a href="https://linkedin.com/in/farrasnaim" target="_blank" class="cta-btn secondary">LinkedIn</a>
-                <a href="https://instagram.com/farrasnaim" target="_blank" class="cta-btn secondary">Instagram</a>
-            </div>
-        </section>
-
-        <footer>
-            <p>farras naim • jakarta • 2024</p>
-        </footer>
+        </div>
     </div>
 </body>
 </html>
