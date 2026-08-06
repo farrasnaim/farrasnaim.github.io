@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Farras Naim — IT Risk & GRC person. Thinks about systems. Plays Valorant. Travels solo.">
+    <meta name="description" content="Farras Naim — IT Risk & GRC. Thinking about systems.">
     <title>Farras Naim</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-family='system-ui' font-weight='700'>F</text></svg>">
     <style>
         * {
             margin: 0;
@@ -14,14 +13,21 @@
         }
 
         :root {
-            --bg: #0f0f0f;
-            --surface: #1a1a1a;
-            --surface-light: #2d2d2d;
-            --text: #f5f5f5;
-            --text-muted: #a8a8a8;
-            --accent: #00d9ff;
-            --accent-2: #ff6b9d;
-            --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            --bg: #ffffff;
+            --text: #000000;
+            --text-muted: #666666;
+            --border: #e5e5e5;
+            --accent: #0000ff;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0a0a0a;
+                --text: #ffffff;
+                --text-muted: #999999;
+                --border: #222222;
+                --accent: #3b82f6;
+            }
         }
 
         html {
@@ -31,417 +37,298 @@
         body {
             background: var(--bg);
             color: var(--text);
-            font-family: var(--font);
-            line-height: 1.5;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
         }
 
         a {
             color: var(--accent);
             text-decoration: none;
-            transition: color 0.2s;
+            border-bottom: 1px solid var(--accent);
+            transition: opacity 0.2s;
         }
 
         a:hover {
-            color: var(--accent-2);
+            opacity: 0.7;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 700px;
             margin: 0 auto;
-            padding: 3rem 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            align-items: start;
-            min-height: 100vh;
+            padding: 4rem 2rem;
         }
 
-        .intro {
-            grid-column: 1 / -1;
-            margin-bottom: 1rem;
+        .header {
+            margin-bottom: 5rem;
         }
 
         .name {
-            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-size: 2.5rem;
             font-weight: 700;
+            line-height: 1.1;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #00d9ff 0%, #ff6b9d 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
             letter-spacing: -0.02em;
         }
 
         .tagline {
             font-size: 1.1rem;
             color: var(--text-muted);
-            margin-bottom: 0.5rem;
-            font-weight: 500;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
         }
 
-        .status {
-            font-size: 0.9rem;
-            color: var(--text-muted);
+        .meta {
             display: flex;
-            gap: 1rem;
+            gap: 2rem;
             flex-wrap: wrap;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
         }
 
-        .status span {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .section {
-            grid-column: 1 / -1;
+        section {
+            margin-bottom: 4rem;
         }
 
         .section-title {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 700;
-            margin-bottom: 1.2rem;
-            color: var(--text);
+            margin-bottom: 1.5rem;
+            margin-top: 0;
         }
 
-        .work-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.2rem;
+        .section-subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-weight: 400;
+            line-height: 1.7;
         }
 
-        .work-card {
-            background: var(--surface);
-            border: 1px solid var(--surface-light);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s;
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 3rem 0;
         }
 
-        .work-card:hover {
-            background: var(--surface-light);
-            border-color: var(--accent);
+        .work-item {
+            margin-bottom: 2.5rem;
+        }
+
+        .work-date {
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
         }
 
         .work-title {
+            font-size: 1.1rem;
             font-weight: 700;
             margin-bottom: 0.25rem;
-            color: var(--text);
-        }
-
-        .work-meta {
-            font-size: 0.85rem;
-            color: var(--accent);
-            margin-bottom: 0.75rem;
         }
 
         .work-company {
-            font-size: 0.85rem;
-            color: var(--accent-2);
+            font-size: 0.95rem;
+            color: var(--text-muted);
             margin-bottom: 0.75rem;
         }
 
         .work-desc {
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .interests {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .interest-item {
+            font-size: 0.95rem;
             line-height: 1.6;
         }
 
-        .tag-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.2rem;
-        }
-
-        .tag-card {
-            background: var(--surface);
-            border: 1px solid var(--surface-light);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s;
-        }
-
-        .tag-card:hover {
-            background: var(--surface-light);
-            border-color: var(--accent-2);
-        }
-
-        .tag-title {
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            font-size: 1rem;
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .tag {
-            background: rgba(0, 217, 255, 0.1);
-            color: var(--accent);
-            padding: 0.35rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            border: 1px solid rgba(0, 217, 255, 0.3);
-            transition: all 0.2s;
-        }
-
-        .tag:hover {
-            background: rgba(0, 217, 255, 0.2);
-            border-color: var(--accent);
-        }
-
-        .tag.alt {
-            background: rgba(255, 107, 157, 0.1);
-            color: var(--accent-2);
-            border-color: rgba(255, 107, 157, 0.3);
-        }
-
-        .tag.alt:hover {
-            background: rgba(255, 107, 157, 0.2);
-            border-color: var(--accent-2);
-        }
-
-        .connect-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-
-        .connect-btn {
-            background: var(--surface);
-            border: 2px solid var(--surface-light);
-            color: var(--text);
-            padding: 1rem;
-            border-radius: 8px;
-            font-size: 0.95rem;
+        .interest-label {
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            font-family: inherit;
-        }
-
-        .connect-btn:hover {
-            background: var(--surface-light);
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .connect-btn.primary {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: var(--bg);
-        }
-
-        .connect-btn.primary:hover {
-            background: var(--accent-2);
-            border-color: var(--accent-2);
-            color: var(--bg);
-        }
-
-        .vibe-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .vibe-card {
-            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(255, 107, 157, 0.1));
-            border: 1px solid var(--surface-light);
-            border-radius: 12px;
-            padding: 1.2rem;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .vibe-card:hover {
-            background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(255, 107, 157, 0.2));
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        .vibe-emoji {
-            font-size: 2rem;
+            display: block;
             margin-bottom: 0.5rem;
         }
 
-        .vibe-text {
-            font-weight: 600;
-            font-size: 0.9rem;
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
         }
 
-        .footer {
-            grid-column: 1 / -1;
-            border-top: 1px solid var(--surface-light);
-            padding-top: 2rem;
-            margin-top: 1rem;
-            text-align: center;
-            color: var(--text-muted);
+        .tag {
+            background: var(--border);
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
             font-size: 0.85rem;
+            color: var(--text-muted);
         }
 
-        @media (max-width: 768px) {
+        .cta {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .cta-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--accent);
+            color: var(--bg);
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-block;
+            border-bottom: none;
+        }
+
+        .cta-btn:hover {
+            opacity: 0.9;
+        }
+
+        .cta-btn.secondary {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        @media (max-width: 640px) {
             .container {
                 padding: 2rem 1.5rem;
-                grid-template-columns: 1fr;
             }
 
             .name {
                 font-size: 2rem;
             }
 
-            .intro {
-                margin-bottom: 0.5rem;
+            .interests {
+                grid-template-columns: 1fr;
             }
-        }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
+            .meta {
+                gap: 1rem;
+                font-size: 0.9rem;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .section {
-            animation: slideIn 0.5s ease-out;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- INTRO -->
-        <div class="intro">
-            <div class="name">farras</div>
-            <div class="tagline">IT Risk & GRC. Thinking about systems, breaking things, fixing things.</div>
-            <div class="status">
-                <span>📍 Jakarta</span>
-                <span>💼 @EY</span>
-                <span>🎮 Valorant enthusiast</span>
+        <div class="header">
+            <h1 class="name">farras naim</h1>
+            <p class="tagline">IT Risk & GRC. Thinking about systems, breaking things, fixing things.</p>
+            <div class="meta">
+                <span>Jakarta, ID</span>
+                <span>EY Indonesia</span>
+                <span>25</span>
             </div>
         </div>
 
-        <!-- CURRENT VIBE -->
-        <div class="section">
-            <div class="section-title">what i'm into rn</div>
-            <div class="vibe-grid">
-                <div class="vibe-card">
-                    <div class="vibe-emoji">🛡️</div>
-                    <div class="vibe-text">IT Controls & ITGC</div>
-                </div>
-                <div class="vibe-card">
-                    <div class="vibe-emoji">🔐</div>
-                    <div class="vibe-text">Cybersecurity Stuff</div>
-                </div>
-                <div class="vibe-card">
-                    <div class="vibe-emoji">🌍</div>
-                    <div class="vibe-text">Solo Traveling</div>
-                </div>
-                <div class="vibe-card">
-                    <div class="vibe-emoji">⚙️</div>
-                    <div class="vibe-text">How Systems Work</div>
-                </div>
-                <div class="vibe-card">
-                    <div class="vibe-emoji">🎮</div>
-                    <div class="vibe-text">Valorant Late Nights</div>
-                </div>
-                <div class="vibe-card">
-                    <div class="vibe-emoji">📚</div>
-                    <div class="vibe-text">Always Learning</div>
+        <section>
+            <p class="section-subtitle">
+                Senior auditor digging into enterprise systems to figure out if they're actually doing what they're supposed to do. I spend my time understanding how complex systems fail, designing controls that catch those failures, and helping organizations make better decisions about risk.
+            </p>
+        </section>
+
+        <div class="divider"></div>
+
+        <section>
+            <h2 class="section-title">Experience</h2>
+
+            <div class="work-item">
+                <div class="work-date">2022 – Now</div>
+                <div class="work-title">Senior, Technology Risk</div>
+                <div class="work-company">EY Indonesia</div>
+                <div class="work-desc">
+                    Leading ITGC and application control audits for banking clients. Dig into SAP, Oracle, Dynamics environments to figure out if their systems are actually working as designed. Work with teams on remediation strategies and building control frameworks that actually make sense.
                 </div>
             </div>
-        </div>
 
-        <!-- WORK -->
-        <div class="section">
-            <div class="section-title">work stuff</div>
-            <div class="work-grid">
-                <div class="work-card">
-                    <div class="work-meta">2022 – Now</div>
-                    <div class="work-title">Senior, Technology Risk</div>
-                    <div class="work-company">EY Indonesia</div>
-                    <div class="work-desc">Leading ITGC & application control audits. Basically I dig into enterprise systems and figure out if they're actually doing what they're supposed to do, or if they're just vibing.</div>
-                </div>
-                <div class="work-card">
-                    <div class="work-meta">2022</div>
-                    <div class="work-title">IT Governance Intern</div>
-                    <div class="work-company">PT Bank Jago Tbk</div>
-                    <div class="work-desc">Prepped audit docs for regulators (BI, OJK). Realized pretty quick that what's in compliance docs and what actually happens in IT systems are two completely different worlds.</div>
-                </div>
-                <div class="work-card">
-                    <div class="work-meta">2021–2022</div>
-                    <div class="work-title">IT Governance Intern</div>
-                    <div class="work-company">PT XL Axiata Tbk</div>
-                    <div class="work-desc">Worked on ISO 27001 and security stuff. Found out that getting people to actually care about security through training > most fancy technical controls.</div>
+            <div class="work-item">
+                <div class="work-date">2022</div>
+                <div class="work-title">IT Governance & Compliance Intern</div>
+                <div class="work-company">PT Bank Jago Tbk</div>
+                <div class="work-desc">
+                    Prepped audit documentation for regulators (BI, OJK). Quickly learned that what's in compliance docs and what actually happens in IT systems are two completely different worlds.
                 </div>
             </div>
-        </div>
 
-        <!-- SKILLS & INTERESTS -->
-        <div class="section">
-            <div class="section-title">my toolkit</div>
-            <div class="tag-group">
-                <div class="tag-card">
-                    <div class="tag-title">Technical Stuff</div>
-                    <div class="tags">
+            <div class="work-item">
+                <div class="work-date">2021–2022</div>
+                <div class="work-title">IT Governance & Compliance Intern</div>
+                <div class="work-company">PT XL Axiata Tbk</div>
+                <div class="work-desc">
+                    Worked on ISO 27001 surveillance and security frameworks. Found out that getting people to actually care about security through training beats most fancy technical controls.
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section>
+            <h2 class="section-title">What I do</h2>
+
+            <div class="interests">
+                <div class="interest-item">
+                    <span class="interest-label">Core Skills</span>
+                    <div class="skill-tags">
                         <span class="tag">ITGC</span>
                         <span class="tag">ITAC</span>
-                        <span class="tag">SAP/Oracle</span>
-                        <span class="tag">Control Testing</span>
                         <span class="tag">Risk Assessment</span>
+                        <span class="tag">Control Design</span>
+                        <span class="tag">SAP/Oracle</span>
                     </div>
                 </div>
-                <div class="tag-card">
-                    <div class="tag-title">Interests & Hobbies</div>
-                    <div class="tags">
-                        <span class="tag alt">Solo Travel</span>
-                        <span class="tag alt">Gaming</span>
-                        <span class="tag alt">Systems Thinking</span>
-                        <span class="tag alt">Security Frameworks</span>
-                        <span class="tag alt">Tech Trends</span>
+
+                <div class="interest-item">
+                    <span class="interest-label">Also Into</span>
+                    <div class="skill-tags">
+                        <span class="tag">Systems Thinking</span>
+                        <span class="tag">Solo Travel</span>
+                        <span class="tag">Valorant</span>
+                        <span class="tag">Security</span>
+                        <span class="tag">Tech Trends</span>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- CONNECT -->
-        <div class="section">
-            <div class="section-title">let's talk</div>
-            <div class="connect-grid">
-                <a href="mailto:farrasnaim@outlook.com" class="connect-btn primary">✉️ Email</a>
-                <a href="https://linkedin.com/in/farrasnaim" target="_blank" class="connect-btn">💼 LinkedIn</a>
-                <a href="https://instagram.com/farrasnaim" target="_blank" class="connect-btn">📸 Instagram</a>
+        <div class="divider"></div>
+
+        <section>
+            <h2 class="section-title">Get in touch</h2>
+            <div class="cta">
+                <a href="mailto:farrasnaim@outlook.com" class="cta-btn">Email</a>
+                <a href="https://linkedin.com/in/farrasnaim" target="_blank" class="cta-btn secondary">LinkedIn</a>
+                <a href="https://instagram.com/farrasnaim" target="_blank" class="cta-btn secondary">Instagram</a>
             </div>
-        </div>
+        </section>
 
-        <!-- FOOTER -->
-        <div class="footer">
-            <p>farras naim • jakarta • 2024 • perpetually thinking about systems & coffee consumption ☕</p>
-        </div>
+        <footer>
+            <p>farras naim • jakarta • 2024</p>
+        </footer>
     </div>
-
-    <script>
-        document.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                if (this.getAttribute('href').startsWith('#')) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    target?.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-    </script>
 </body>
 </html>
