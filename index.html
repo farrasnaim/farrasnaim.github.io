@@ -1175,7 +1175,24 @@
         // Jump to top functionality (mobile)
         if (jumpToTop) {
             jumpToTop.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                const start = window.scrollY;
+                const duration = 600; // ms
+                const startTime = performance.now();
+
+                const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+                const scroll = (currentTime) => {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const easeProgress = easeOutCubic(progress);
+                    window.scrollTo(0, start * (1 - easeProgress));
+
+                    if (progress < 1) {
+                        requestAnimationFrame(scroll);
+                    }
+                };
+
+                requestAnimationFrame(scroll);
             });
 
             window.addEventListener('scroll', () => {
