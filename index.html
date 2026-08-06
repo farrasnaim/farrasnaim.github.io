@@ -281,11 +281,21 @@
             letter-spacing: 0.01em;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
         }
 
         .stream-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(220, 38, 38, 0.3);
+        }
+
+        .btn-icon {
+            width: 1rem;
+            height: 1rem;
+            object-fit: contain;
         }
 
         /* CENTER CONTENT */
@@ -599,16 +609,21 @@
 
                     <div class="stream-card">
                         <div class="stream-icons">
-                            <img src="./twitch-icon.png" alt="Twitch">
-                            <img src="./youtube-icon.png" alt="YouTube">
+                            <span>📺</span>
                         </div>
                         <div class="stream-title">stream & videos</div>
                         <div class="stream-desc">
                             watch me crash out over Valorant, CS2, Minecraft, Roblox—whatever I'm doom-playing that night.
                         </div>
                         <div class="stream-buttons">
-                            <a href="https://twitch.tv/YOURTWITCH" target="_blank" class="stream-btn">twitch</a>
-                            <a href="https://youtube.com/@YOURYOUTUBE" target="_blank" class="stream-btn">youtube</a>
+                            <a href="https://twitch.tv/YOURTWITCH" target="_blank" class="stream-btn">
+                                <img src="./twitch-icon.png" alt="Twitch" class="btn-icon">
+                                <span>twitch</span>
+                            </a>
+                            <a href="https://youtube.com/@YOURYOUTUBE" target="_blank" class="stream-btn">
+                                <img src="./youtube-icon.png" alt="YouTube" class="btn-icon">
+                                <span>youtube</span>
+                            </a>
                         </div>
                     </div>
                 </div>
