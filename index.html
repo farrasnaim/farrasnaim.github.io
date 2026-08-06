@@ -373,11 +373,25 @@
             border-bottom: none;
         }
 
+        .subsection::before {
+            content: '';
+            position: absolute;
+            left: 0.35rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--accent-1);
+        }
+
+        .subsection {
+            position: relative;
+        }
+
         .org-item {
             background: transparent;
             border: none;
             border-radius: 0;
-            padding: 0 0 1.2rem 3rem;
+            padding: 0.4rem 0 0.4rem 2rem;
             transition: all 0.3s ease;
             margin-bottom: 0;
             position: relative;
@@ -386,33 +400,22 @@
         .org-item::before {
             content: '';
             position: absolute;
-            left: 0.75rem;
-            top: 0;
-            width: 0.8rem;
-            height: 0.8rem;
+            left: -0.25rem;
+            top: 0.5rem;
+            width: 0.7rem;
+            height: 0.7rem;
             background: var(--accent-1);
             border-radius: 50%;
             border: 2px solid var(--bg);
-            box-shadow: 0 0 0 2px var(--accent-1);
         }
 
         .org-item::after {
-            content: '';
-            position: absolute;
-            left: 1.15rem;
-            top: 1.4rem;
-            width: 1px;
-            height: 1.2rem;
-            background: var(--accent-1);
-        }
-
-        .org-item:last-child::after {
             display: none;
         }
 
         .org-item:hover::before {
             background: var(--accent-2);
-            box-shadow: 0 0 0 2px var(--bg), 0 0 8px var(--accent-2);
+            box-shadow: 0 0 8px var(--accent-2);
         }
 
         .org-title {
