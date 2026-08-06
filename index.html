@@ -581,11 +581,25 @@
         .hobbies-section-title {
             font-size: 0.9rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-3) 0%, var(--accent-1) 100%);
+            background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.01em;
+            position: relative;
+            padding-bottom: 0.8rem;
+            margin-bottom: 4rem;
+        }
+
+        .hobbies-section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+            border-radius: 2px;
         }
 
         /* THEME TOGGLE BUTTON */
