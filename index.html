@@ -13,29 +13,14 @@
         }
 
         :root {
-            --bg: #fafafa;
-            --text: #1a1a1a;
-            --text-muted: #717171;
-            --border: #e8e8e8;
-            --accent: #0066ff;
-            --accent-light: #f0f7ff;
-            --bg-secondary: #ffffff;
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg: #0d0d0d;
-                --text: #fafafa;
-                --text-muted: #a8a8a8;
-                --border: #2a2a2a;
-                --accent: #4a9eff;
-                --accent-light: #1a2e4d;
-                --bg-secondary: #1a1a1a;
-                --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-                --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-            }
+            --bg: #0a0a0a;
+            --bg-secondary: #121212;
+            --text: #ffffff;
+            --text-muted: #a8a8a8;
+            --border: #2a2a2a;
+            --accent-1: #00d9ff;
+            --accent-2: #ff6b9d;
+            --accent-3: #7c3aed;
         }
 
         html {
@@ -48,336 +33,389 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-            display: grid;
-            grid-template-columns: 22% 48% 30%;
-            min-height: 100vh;
-            gap: 0;
-            padding: 0 4%;
-            max-width: 1400px;
-            margin: 0 auto;
+            overflow-x: hidden;
         }
 
         a {
-            color: var(--accent);
+            color: var(--accent-1);
             text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.2s;
+            transition: all 0.3s ease;
         }
 
         a:hover {
-            border-bottom-color: var(--accent);
+            color: var(--accent-2);
         }
 
-        /* LEFT SIDEBAR */
-        .sidebar {
-            background: var(--bg-secondary);
-            padding: 1.8rem 1.2rem;
-            position: sticky;
-            top: 2rem;
-            height: fit-content;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            margin: 2rem 0.5rem;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 4%;
         }
 
-        .sidebar-content {
-            flex: 1;
-        }
-
-        .sidebar h1 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 0.8rem;
-            letter-spacing: -0.01em;
-        }
-
-        .sidebar-photo {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
+        /* HERO SECTION */
+        .hero {
+            padding: 4rem 0 3rem;
+            position: relative;
             overflow: hidden;
-            margin-bottom: 1rem;
-            box-shadow: var(--shadow-sm);
         }
 
-        .sidebar-photo img {
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 280px 1fr 320px;
+            gap: 2.5rem;
+            align-items: start;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .profile-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .profile-photo {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1.2rem;
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(255, 107, 157, 0.1));
+        }
+
+        .profile-photo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
         }
 
-        .sidebar-intro {
-            font-size: 0.85rem;
+        .profile-name {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 0.6rem;
+            background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .profile-bio {
+            font-size: 0.9rem;
             color: var(--text-muted);
             line-height: 1.6;
-            margin-bottom: 1.4rem;
-            padding-bottom: 1.4rem;
-            border-bottom: 1px solid var(--border);
+            position: relative;
+            z-index: 2;
         }
 
-        .sidebar-meta {
-            display: none;
+        /* CONNECT CARD */
+        .connect-card {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 16px;
+            padding: 1.8rem 1.5rem;
+            backdrop-filter: blur(10px);
         }
 
-        .sidebar-connect {
+        .connect-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 1.2rem;
+            color: var(--accent-1);
+        }
+
+        .connect-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .connect-link {
+            padding: 0.7rem;
+            background: rgba(0, 217, 255, 0.08);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
-            gap: 0.6rem;
-        }
-
-        .sidebar-connect-title {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--text);
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin-bottom: 0.8rem;
-        }
-
-        .sidebar-connect-links {
-            display: flex;
-            gap: 0.6rem;
-            flex-wrap: wrap;
-        }
-
-        .sidebar-connect-link {
-            font-size: 1.1rem;
-            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            width: 2.2rem;
-            height: 2.2rem;
-            border-radius: 8px;
-            background: var(--accent-light);
-            border: 1px solid transparent;
+            gap: 0.3rem;
             transition: all 0.3s ease;
-            color: var(--accent);
-        }
-
-        .sidebar-connect-link:hover {
-            background: var(--accent);
-            color: var(--bg-secondary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .sidebar-promo {
-            margin-top: 1.4rem;
-            padding-top: 1.4rem;
-            border-top: 1px solid var(--border);
-        }
-
-        .sidebar-promo-item {
-            margin-bottom: 1rem;
-        }
-
-        .sidebar-promo-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .sidebar-promo-icon {
-            font-size: 1.5rem;
-            margin-bottom: 0.6rem;
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .sidebar-promo-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 0.4rem;
-        }
-
-        .sidebar-promo-desc {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 0.8rem;
-        }
-
-        .sidebar-promo-links {
-            display: flex;
-            gap: 0.6rem;
-        }
-
-        .sidebar-promo-link {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: var(--accent);
-            color: var(--bg-secondary);
-            border-radius: 7px;
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.04em;
-            transition: all 0.3s ease;
+            color: var(--accent-1);
+        }
+
+        .connect-link:hover {
+            background: rgba(0, 217, 255, 0.2);
+            border-color: var(--accent-1);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 217, 255, 0.2);
+        }
+
+        .connect-link-icon {
+            font-size: 1.2rem;
+        }
+
+        /* STREAM CARD */
+        .stream-card {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1) 0%, rgba(0, 217, 255, 0.08) 100%);
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            border-radius: 16px;
+            padding: 1.8rem 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .stream-icons {
+            display: flex;
+            gap: 0.6rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .stream-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: var(--text);
+        }
+
+        .stream-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .stream-buttons {
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .stream-btn {
             flex: 1;
-            text-align: center;
-            border: 1px solid var(--accent);
+            padding: 0.6rem;
+            background: linear-gradient(135deg, var(--accent-2) 0%, var(--accent-1) 100%);
+            color: var(--bg);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .sidebar-promo-link:hover {
-            opacity: 0.9;
-            border-bottom: none;
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
+        .stream-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 107, 157, 0.3);
         }
 
-        .sidebar-footer {
-            display: none;
+        /* CENTER CONTENT */
+        .hero-center {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
         }
 
-        /* MIDDLE CONTENT */
-        .middle-content {
-            padding: 3.5rem 2.8rem;
-            overflow-y: auto;
-        }
-
-        section {
-            margin-bottom: 4rem;
+        .section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
         .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            position: relative;
             padding-bottom: 0.8rem;
-            border-bottom: 2px solid var(--accent);
-            letter-spacing: -0.01em;
         }
 
-        /* WORK SECTION */
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+            border-radius: 2px;
+        }
+
+        /* WORK ITEMS */
         .work-item {
-            margin-bottom: 2.5rem;
-            padding-bottom: 2.5rem;
-            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(0, 217, 255, 0.15);
+            border-radius: 12px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
 
-        .work-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
+        .work-item:hover {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.08) 0%, rgba(124, 58, 237, 0.08) 100%);
+            border-color: rgba(0, 217, 255, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 217, 255, 0.1);
         }
 
         .work-period {
             font-size: 0.75rem;
-            color: var(--accent);
+            color: var(--accent-1);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
         }
 
         .work-role {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            margin-bottom: 0.3rem;
-            letter-spacing: -0.01em;
+            margin-bottom: 0.4rem;
+            color: var(--text);
         }
 
         .work-company {
             font-size: 0.9rem;
             color: var(--text-muted);
-            margin-bottom: 0.8rem;
-            font-weight: 500;
+            margin-bottom: 1rem;
+            font-weight: 600;
         }
 
         .work-description {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--text-muted);
             line-height: 1.7;
         }
 
         /* COLLEGE SECTION */
         .college-intro {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--text-muted);
             line-height: 1.7;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
-        .college-subsection {
-            margin-bottom: 2.5rem;
+        .subsection {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
         }
 
-        .college-subsection-title {
+        .subsection-title {
             font-size: 1.1rem;
             font-weight: 700;
-            margin-bottom: 1.2rem;
-            padding-bottom: 0.6rem;
-            border-bottom: 1px solid var(--border);
-            letter-spacing: -0.01em;
+            color: var(--accent-2);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
         }
 
         .org-item {
-            margin-bottom: 1.6rem;
-            padding-bottom: 1.6rem;
-            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid var(--accent-1);
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            transition: all 0.3s ease;
         }
 
-        .org-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
+        .org-item:hover {
+            background: rgba(0, 217, 255, 0.08);
+            border-left-color: var(--accent-2);
+            transform: translateX(4px);
         }
 
         .org-title {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 700;
+            color: var(--text);
             margin-bottom: 0.3rem;
-            letter-spacing: -0.01em;
         }
 
         .org-role {
-            font-size: 0.8rem;
-            color: var(--accent);
+            font-size: 0.75rem;
+            color: var(--accent-1);
             font-weight: 600;
-            margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            margin-bottom: 0.4rem;
         }
 
         .org-desc {
             font-size: 0.9rem;
             color: var(--text-muted);
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         /* RIGHT SIDEBAR */
-        .right-sidebar {
-            background: var(--bg-secondary);
-            padding: 3.5rem 2.2rem;
-            overflow-y: auto;
-            border-left: 1px solid var(--border);
+        .hero-right {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
-        .right-section {
-            margin-bottom: 3rem;
-        }
-
-        .right-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 1.4rem;
-            padding-bottom: 0.6rem;
-            border-bottom: 1px solid var(--border);
-            letter-spacing: -0.01em;
-        }
-
-        /* HOBBIES */
-        .hobbies-grid {
+        .hobby-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 1.8rem;
+            gap: 1.2rem;
         }
 
         .hobby-item {
-            padding-bottom: 0;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(0, 217, 255, 0.08) 100%);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 1.4rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .hobby-item:hover {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.15) 0%, rgba(0, 217, 255, 0.12) 100%);
+            border-color: rgba(124, 58, 237, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.15);
         }
 
         .hobby-icon {
@@ -387,288 +425,230 @@
         }
 
         .hobby-title {
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
-            letter-spacing: -0.01em;
+            color: var(--text);
         }
 
         .hobby-desc {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
-        /* SOCIALS */
-        .social-intro {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 1.2rem;
-        }
-
-        .socials {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.9rem;
-        }
-
-        .social-link {
-            padding: 0.9rem 0.7rem;
-            background: var(--accent-light);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
+        /* HOBBIES SECTION TITLE */
+        .hobbies-header {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-            color: var(--accent);
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
         }
 
-        .social-link:hover {
-            background: var(--accent);
-            color: var(--bg-secondary);
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .social-icon {
-            font-size: 1.1rem;
-        }
-
-        .social-text {
-            font-size: 0.75rem;
+        .hobbies-section-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-3) 0%, var(--accent-1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
         }
     </style>
 </head>
 <body>
-    <!-- LEFT SIDEBAR -->
-    <div class="sidebar">
-        <div class="sidebar-content">
-            <h1>farras naim</h1>
-            <div class="sidebar-photo">
-                <img src="./my-avatar.jpg" alt="Farras Naim">
-            </div>
-            <p class="sidebar-intro">
-                2000s living in Jakarta. Senior auditor dissecting systems & controls by day. Gamer, solo traveler, and chronic overthinker by nature. I break things to understand how they actually work, and stream the whole chaotic process.
-            </p>
-            <div class="sidebar-meta">
-                <span>🇮🇩 Jakarta</span>
-                <span>💼 EY Indonesia</span>
-                <span>🎮 Valorant & Twitch</span>
-            </div>
-
-            <div class="sidebar-connect">
-                <div class="sidebar-connect-title">Connect</div>
-                <div class="sidebar-connect-links">
-                    <a href="mailto:farrasnaim@outlook.com" class="sidebar-connect-link" title="Email">📧</a>
-                    <a href="https://linkedin.com/in/farrasnaim" target="_blank" class="sidebar-connect-link" title="LinkedIn">💼</a>
-                    <a href="https://instagram.com/farrasnaim" target="_blank" class="sidebar-connect-link" title="Instagram">📸</a>
-                </div>
-            </div>
-
-            <div class="sidebar-promo">
-                <div class="sidebar-promo-item">
-                    <div class="sidebar-promo-icon">
-                        <span>📺</span>
-                        <span>▶️</span>
+    <div class="container">
+        <section class="hero">
+            <div class="hero-content">
+                <!-- LEFT SIDEBAR -->
+                <div class="hero-sidebar">
+                    <div class="profile-card">
+                        <div class="profile-photo">
+                            <img src="./my-avatar.jpg" alt="Farras Naim">
+                        </div>
+                        <h1 class="profile-name">farras</h1>
+                        <p class="profile-bio">
+                            2000s kid from Jakarta. Senior auditor dissecting systems & controls by day. Gamer, solo traveler, and chronic overthinker by nature. I break things to understand how they actually work, and stream the whole chaotic process.
+                        </p>
                     </div>
-                    <div class="sidebar-promo-title">Stream & Videos</div>
-                    <div class="sidebar-promo-desc">
-                        Watch me crash out over Valorant, CS2, Minecraft, Roblox—whatever I'm doom-playing that night.
+
+                    <div class="connect-card">
+                        <div class="connect-title">Connect</div>
+                        <div class="connect-links">
+                            <a href="mailto:farrasnaim@outlook.com" class="connect-link" title="Email">
+                                <span class="connect-link-icon">📧</span>
+                                <span>Email</span>
+                            </a>
+                            <a href="https://linkedin.com/in/farrasnaim" target="_blank" class="connect-link" title="LinkedIn">
+                                <span class="connect-link-icon">💼</span>
+                                <span>LinkedIn</span>
+                            </a>
+                            <a href="https://instagram.com/farrasnaim" target="_blank" class="connect-link" title="Instagram">
+                                <span class="connect-link-icon">📸</span>
+                                <span>Instagram</span>
+                            </a>
+                        </div>
                     </div>
-                    <div class="sidebar-promo-links">
-                        <a href="https://twitch.tv/YOURTWITCH" target="_blank" class="sidebar-promo-link">Twitch</a>
-                        <a href="https://youtube.com/@YOURYOUTUBE" target="_blank" class="sidebar-promo-link">YouTube</a>
+
+                    <div class="stream-card">
+                        <div class="stream-icons">
+                            <span>📺</span>
+                            <span>▶️</span>
+                        </div>
+                        <div class="stream-title">Stream & Videos</div>
+                        <div class="stream-desc">
+                            Watch me crash out over Valorant, CS2, Minecraft, Roblox—whatever I'm doom-playing that night.
+                        </div>
+                        <div class="stream-buttons">
+                            <a href="https://twitch.tv/YOURTWITCH" target="_blank" class="stream-btn">Twitch</a>
+                            <a href="https://youtube.com/@YOURYOUTUBE" target="_blank" class="stream-btn">YouTube</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="sidebar-footer">
-            <p>farras naim • 2024</p>
-        </div>
-    </div>
 
-    <!-- MIDDLE CONTENT -->
-    <div class="middle-content">
-        <!-- WORK -->
-        <section>
-            <h2 class="section-title">Work</h2>
+                <!-- CENTER CONTENT -->
+                <div class="hero-center">
+                    <!-- WORK -->
+                    <div class="section">
+                        <h2 class="section-title">Work</h2>
 
-            <div class="work-item">
-                <div class="work-period">2022 – Now</div>
-                <div class="work-role">Senior, Technology Risk</div>
-                <div class="work-company">EY Indonesia</div>
-                <div class="work-description">
-                    Leading ITGC and application control audits for banking clients. Dig into complex systems (SAP, Oracle, Dynamics) to figure out if they're actually doing what they're supposed to do. Work with teams on remediation strategies and control design.
+                        <div class="work-item">
+                            <div class="work-period">2022 – Now</div>
+                            <div class="work-role">Senior, Technology Risk</div>
+                            <div class="work-company">EY Indonesia</div>
+                            <div class="work-description">
+                                Leading ITGC and application control audits for banking clients. Dig into complex systems (SAP, Oracle, Dynamics) to figure out if they're actually doing what they're supposed to do. Work with teams on remediation strategies and control design.
+                            </div>
+                        </div>
+
+                        <div class="work-item">
+                            <div class="work-period">2022</div>
+                            <div class="work-role">IT Governance & Compliance Intern</div>
+                            <div class="work-company">PT Bank Jago Tbk</div>
+                            <div class="work-description">
+                                Prepped audit docs for regulators (BI, OJK). Learned that compliance documentation and actual IT operations live in totally different worlds.
+                            </div>
+                        </div>
+
+                        <div class="work-item">
+                            <div class="work-period">2021–2022</div>
+                            <div class="work-role">IT Governance & Compliance Intern</div>
+                            <div class="work-company">PT XL Axiata Tbk</div>
+                            <div class="work-description">
+                                Worked on ISO 27001 and security frameworks. Learned that making people care about security beats most technical controls.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COLLEGE -->
+                    <div class="section">
+                        <h2 class="section-title">College & Orgs</h2>
+
+                        <p class="college-intro">
+                            Telkom University (2018–2022, GPA 3.74/4.00). Did a lot of org stuff:
+                        </p>
+
+                        <div class="subsection">
+                            <h3 class="subsection-title">Freshman Orientation</h3>
+
+                            <div class="org-item">
+                                <div class="org-title">Coordinator, Creative Team</div>
+                                <div class="org-role">Jun – Sep 2021</div>
+                                <div class="org-desc">
+                                    Managed team of 12 designing first online freshman week for 7000+ students.
+                                </div>
+                            </div>
+
+                            <div class="org-item">
+                                <div class="org-title">Liaison Officer</div>
+                                <div class="org-role">Aug – Sep 2020</div>
+                                <div class="org-desc">
+                                    Supervised IS International Class during freshman week transition.
+                                </div>
+                            </div>
+
+                            <div class="org-item">
+                                <div class="org-title">Planning Team</div>
+                                <div class="org-role">Jun – Aug 2019</div>
+                                <div class="org-desc">
+                                    Helped design orientation for 7000+ incoming students.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="subsection">
+                            <h3 class="subsection-title">Other Roles</h3>
+
+                            <div class="org-item">
+                                <div class="org-title">Lab Coordinator</div>
+                                <div class="org-role">Sep 2020 – Jun 2022</div>
+                                <div class="org-desc">
+                                    Created practicum rules and managed lab discipline.
+                                </div>
+                            </div>
+
+                            <div class="org-item">
+                                <div class="org-title">Community Service</div>
+                                <div class="org-role">2021 • HMSI & EIM</div>
+                                <div class="org-desc">
+                                    Ran donation programs for orphanages and disaster victims.
+                                </div>
+                            </div>
+
+                            <div class="org-item">
+                                <div class="org-title">Teaching & Mentoring</div>
+                                <div class="org-role">2020–2021</div>
+                                <div class="org-desc">
+                                    Taught kids programming and MS Word via Zoom and in-person.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="work-item">
-                <div class="work-period">2022</div>
-                <div class="work-role">IT Governance & Compliance Intern</div>
-                <div class="work-company">PT Bank Jago Tbk</div>
-                <div class="work-description">
-                    Prepped audit docs for regulators (BI, OJK). Learned that compliance documentation and actual IT operations live in totally different worlds.
-                </div>
-            </div>
+                <!-- RIGHT SIDEBAR -->
+                <div class="hero-right">
+                    <div class="hobbies-header">
+                        <h2 class="hobbies-section-title">Free Time</h2>
+                    </div>
 
-            <div class="work-item">
-                <div class="work-period">2021–2022</div>
-                <div class="work-role">IT Governance & Compliance Intern</div>
-                <div class="work-company">PT XL Axiata Tbk</div>
-                <div class="work-description">
-                    Worked on ISO 27001 and security frameworks. Learned that making people care about security beats most technical controls.
+                    <div class="hobby-grid">
+                        <div class="hobby-item">
+                            <span class="hobby-icon">🎮</span>
+                            <div class="hobby-title">Gaming</div>
+                            <div class="hobby-desc">
+                                Valorant streamer. Getting destroyed in comp is entertainment.
+                            </div>
+                        </div>
+
+                        <div class="hobby-item">
+                            <span class="hobby-icon">🌍</span>
+                            <div class="hobby-title">Solo Travel</div>
+                            <div class="hobby-desc">
+                                Love solo trips. Teaches you to navigate uncertainty.
+                            </div>
+                        </div>
+
+                        <div class="hobby-item">
+                            <span class="hobby-icon">⚙️</span>
+                            <div class="hobby-title">Systems & Tech</div>
+                            <div class="hobby-desc">
+                                Curious how complex systems work. Always learning.
+                            </div>
+                        </div>
+
+                        <div class="hobby-item">
+                            <span class="hobby-icon">☕</span>
+                            <div class="hobby-title">Coffee & Chat</div>
+                            <div class="hobby-desc">
+                                Good conversations about tech, life, travel. In Jakarta? Let's grab coffee.
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
-
-        <!-- COLLEGE -->
-        <section>
-            <h2 class="section-title">College & Orgs</h2>
-
-            <p class="college-intro">
-                Telkom University (2018–2022, GPA 3.74/4.00). Did a lot of org stuff:
-            </p>
-
-            <div class="college-subsection">
-                <h3 class="college-subsection-title">Freshman Orientation (PKKMB)</h3>
-
-                <div class="org-item">
-                    <div class="org-title">Coordinator, Creative Team</div>
-                    <div class="org-role">Jun – Sep 2021</div>
-                    <div class="org-desc">
-                        Managed team of 12 designing first online freshman week for 7000+ students.
-                    </div>
-                </div>
-
-                <div class="org-item">
-                    <div class="org-title">Liaison Officer</div>
-                    <div class="org-role">Aug – Sep 2020</div>
-                    <div class="org-desc">
-                        Supervised IS International Class during freshman week transition.
-                    </div>
-                </div>
-
-                <div class="org-item">
-                    <div class="org-title">Planning Team</div>
-                    <div class="org-role">Jun – Aug 2019</div>
-                    <div class="org-desc">
-                        Helped design orientation for 7000+ incoming students.
-                    </div>
-                </div>
-            </div>
-
-            <div class="college-subsection">
-                <h3 class="college-subsection-title">Other Roles</h3>
-
-                <div class="org-item">
-                    <div class="org-title">Lab Coordinator</div>
-                    <div class="org-role">Sep 2020 – Jun 2022</div>
-                    <div class="org-desc">
-                        Created practicum rules and managed lab discipline.
-                    </div>
-                </div>
-
-                <div class="org-item">
-                    <div class="org-title">Community Service</div>
-                    <div class="org-role">2021 • HMSI & EIM</div>
-                    <div class="org-desc">
-                        Ran donation programs for orphanages and disaster victims.
-                    </div>
-                </div>
-
-                <div class="org-item">
-                    <div class="org-title">Teaching & Mentoring</div>
-                    <div class="org-role">2020–2021</div>
-                    <div class="org-desc">
-                        Taught kids programming and MS Word via Zoom and in-person.
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- RIGHT SIDEBAR -->
-    <div class="right-sidebar">
-        <!-- HOBBIES -->
-        <div class="right-section">
-            <h3 class="right-title">Free Time</h3>
-
-            <div class="hobbies-grid">
-                <div class="hobby-item">
-                    <div class="hobby-icon">🎮</div>
-                    <div class="hobby-title">Gaming</div>
-                    <div class="hobby-desc">
-                        Valorant streamer. Getting destroyed in comp is entertainment.
-                    </div>
-                </div>
-
-                <div class="hobby-item">
-                    <div class="hobby-icon">🌍</div>
-                    <div class="hobby-title">Solo Travel</div>
-                    <div class="hobby-desc">
-                        Love solo trips. Teaches you to navigate uncertainty.
-                    </div>
-                </div>
-
-                <div class="hobby-item">
-                    <div class="hobby-icon">⚙️</div>
-                    <div class="hobby-title">Systems & Tech</div>
-                    <div class="hobby-desc">
-                        Curious how complex systems work. Always learning.
-                    </div>
-                </div>
-
-                <div class="hobby-item">
-                    <div class="hobby-icon">☕</div>
-                    <div class="hobby-title">Coffee & Chat</div>
-                    <div class="hobby-desc">
-                        Good conversations about tech, life, travel. In Jakarta? Let's grab coffee.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- CONNECT -->
-        <div class="right-section">
-            <h3 class="right-title">Connect</h3>
-
-            <p class="social-intro">
-                Hit me up:
-            </p>
-
-            <div class="socials">
-                <a href="mailto:farrasnaim@outlook.com" class="social-link">
-                    <span class="social-icon">📧</span>
-                    <span class="social-text">Email</span>
-                </a>
-                <a href="https://linkedin.com/in/farrasnaim" target="_blank" class="social-link">
-                    <span class="social-icon">💼</span>
-                    <span class="social-text">LinkedIn</span>
-                </a>
-                <a href="https://instagram.com/farrasnaim" target="_blank" class="social-link">
-                    <span class="social-icon">📸</span>
-                    <span class="social-text">Instagram</span>
-                </a>
-                <a href="https://twitch.tv/YOURTWITCH" target="_blank" class="social-link">
-                    <span class="social-icon">📺</span>
-                    <span class="social-text">Twitch</span>
-                </a>
-                <a href="https://youtube.com/@YOURYOUTUBE" target="_blank" class="social-link">
-                    <span class="social-icon">▶️</span>
-                    <span class="social-text">YouTube</span>
-                </a>
-            </div>
-        </div>
     </div>
 </body>
 </html>
