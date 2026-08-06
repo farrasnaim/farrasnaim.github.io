@@ -612,6 +612,233 @@
         .theme-toggle:active {
             transform: scale(0.95);
         }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+                max-width: 100%;
+            }
+
+            .hero {
+                padding: 2rem 0;
+            }
+
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                grid-template-columns: none;
+            }
+
+            .hero-sidebar {
+                gap: 1rem;
+                order: 1;
+                margin-bottom: 2rem;
+            }
+
+            .profile-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .profile-photo {
+                margin-bottom: 0.8rem;
+            }
+
+            .profile-name {
+                font-size: 0.85rem;
+            }
+
+            .profile-bio {
+                font-size: 0.85rem;
+            }
+
+            .connect-card,
+            .stream-card {
+                padding: 1.2rem 1rem;
+            }
+
+            .connect-title {
+                font-size: 0.85rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .connect-links {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            .connect-link {
+                font-size: 0.75rem;
+                min-height: 3rem;
+                padding: 0.4rem;
+            }
+
+            .stream-title {
+                font-size: 0.85rem;
+            }
+
+            .stream-desc {
+                font-size: 0.85rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .stream-btn {
+                font-size: 0.8rem;
+                padding: 0.5rem;
+            }
+
+            .btn-icon {
+                width: 0.9rem;
+                height: 0.9rem;
+            }
+
+            .button-divider {
+                font-size: 0.8rem;
+            }
+
+            .hero-center {
+                gap: 2rem;
+                order: 2;
+                width: 100%;
+            }
+
+            .hero-main {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .section {
+                gap: 0.3rem;
+            }
+
+            .section-title {
+                font-size: 0.85rem;
+            }
+
+            .work-item {
+                padding: 0.8rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .work-period {
+                font-size: 0.85rem;
+            }
+
+            .work-role {
+                font-size: 0.85rem;
+            }
+
+            .work-company {
+                font-size: 0.85rem;
+            }
+
+            .work-description {
+                font-size: 0.8rem;
+            }
+
+            .college-intro {
+                font-size: 0.85rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .org-title {
+                font-size: 0.8rem;
+            }
+
+            .org-role {
+                font-size: 0.75rem;
+            }
+
+            .hero-hobbies {
+                gap: 0;
+                order: 3;
+                margin-top: 1rem;
+            }
+
+            .hobbies-section-title {
+                font-size: 0.85rem;
+            }
+
+            .hobby-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .hobby-item {
+                padding: 0.8rem;
+            }
+
+            .hobby-icon {
+                font-size: 1rem;
+            }
+
+            .hobby-title {
+                font-size: 0.8rem;
+            }
+
+            .hobby-desc {
+                font-size: 0.75rem;
+            }
+
+            /* Hide floating blobs on mobile */
+            body::before,
+            body::after {
+                display: none;
+            }
+
+            /* Hide theme toggle on web (desktop) */
+            .theme-toggle {
+                display: none;
+            }
+
+            /* Show jump-to-top button on web only */
+            .jump-to-top {
+                display: none;
+            }
+        }
+
+        /* DESKTOP ONLY - Show jump-to-top, hide theme toggle */
+        @media (min-width: 769px) {
+            .theme-toggle {
+                display: none;
+            }
+
+            .jump-to-top {
+                position: fixed;
+                bottom: 2rem;
+                right: 2rem;
+                width: 3.5rem;
+                height: 3.5rem;
+                border-radius: 50%;
+                background: var(--accent-1);
+                border: none;
+                color: var(--bg);
+                font-size: 1.5rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 16px rgba(220, 38, 38, 0.3);
+                z-index: 1000;
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            .jump-to-top:hover {
+                transform: scale(1.1);
+                box-shadow: 0 6px 24px rgba(220, 38, 38, 0.4);
+            }
+
+            .jump-to-top:active {
+                transform: scale(0.95);
+            }
+
+            .jump-to-top.show {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
     </style>
 </head>
 <body>
@@ -841,41 +1068,28 @@
             </div>
         </section>
 
-        <!-- THEME TOGGLE BUTTON -->
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+        <!-- JUMP TO TOP BUTTON (Desktop only) -->
+        <button class="jump-to-top" id="jumpToTop" aria-label="Jump to top">↑</button>
     </div>
 
     <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const html = document.documentElement;
+        const jumpToTop = document.getElementById('jumpToTop');
 
-        // Check for saved theme preference or default to system preference
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        // Jump to top functionality
+        if (jumpToTop) {
+            jumpToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
 
-        // Set initial theme
-        html.setAttribute('data-theme', initialTheme);
-        themeToggle.textContent = initialTheme === 'dark' ? '☀️' : '🌙';
-
-        // Theme toggle handler
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-        });
-
-        // Listen for system theme changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            if (!localStorage.getItem('theme')) {
-                const newTheme = e.matches ? 'dark' : 'light';
-                html.setAttribute('data-theme', newTheme);
-                themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-            }
-        });
+            // Show/hide jump-to-top button based on scroll position
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    jumpToTop.classList.add('show');
+                } else {
+                    jumpToTop.classList.remove('show');
+                }
+            });
+        }
     </script>
 </body>
 </html>
