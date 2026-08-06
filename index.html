@@ -632,13 +632,13 @@
             }
 
             .hero-sidebar {
-                gap: 1rem;
-                order: 1;
-                margin-bottom: 2rem;
+                display: contents;
             }
 
             .profile-card {
                 padding: 1.5rem 1rem;
+                order: 1;
+                margin-bottom: 1.5rem;
             }
 
             .profile-photo {
@@ -654,9 +654,16 @@
                 font-size: 0.85rem;
             }
 
-            .connect-card,
+            .connect-card {
+                padding: 1.2rem 1rem;
+                order: 2;
+                margin-bottom: 1.5rem;
+            }
+
             .stream-card {
                 padding: 1.2rem 1rem;
+                order: 5;
+                margin-top: 1.5rem;
             }
 
             .connect-title {
@@ -699,7 +706,7 @@
 
             .hero-center {
                 gap: 2rem;
-                order: 2;
+                order: 3;
                 width: 100%;
             }
 
@@ -779,8 +786,14 @@
                 border: none;
                 border-left: 3px solid var(--accent-1);
                 border-radius: 0;
-                padding: 0.8rem 0.8rem 0.8rem 1rem;
+                padding: 0.6rem 0.6rem 0.6rem 0.8rem;
+                margin-bottom: 0.4rem;
+                margin-top: 0.4rem;
                 text-align: left;
+            }
+
+            .hobby-item:first-of-type {
+                margin-top: 0.8rem;
             }
 
             .hobby-icon {
