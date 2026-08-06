@@ -400,13 +400,15 @@
         .org-item::before {
             content: '';
             position: absolute;
-            left: -0.25rem;
+            left: 0rem;
             top: 0.5rem;
             width: 0.7rem;
             height: 0.7rem;
             background: var(--accent-1);
             border-radius: 50%;
             border: 2px solid var(--bg);
+            transform: translateX(-50%);
+            margin-left: 0.35rem;
         }
 
         .org-item::after {
