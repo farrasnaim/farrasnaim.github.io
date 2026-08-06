@@ -175,7 +175,8 @@
         .sidebar-promo-icon {
             font-size: 1.4rem;
             margin-bottom: 0.4rem;
-            display: block;
+            display: flex;
+            gap: 0.5rem;
         }
 
         .sidebar-promo-title {
@@ -192,6 +193,11 @@
             margin-bottom: 0.5rem;
         }
 
+        .sidebar-promo-links {
+            display: flex;
+            gap: 0.6rem;
+        }
+
         .sidebar-promo-link {
             display: inline-block;
             padding: 0.4rem 0.8rem;
@@ -203,6 +209,8 @@
             text-transform: uppercase;
             letter-spacing: 0.03em;
             transition: all 0.2s;
+            flex: 1;
+            text-align: center;
         }
 
         .sidebar-promo-link:hover {
@@ -447,21 +455,18 @@
 
             <div class="sidebar-promo">
                 <div class="sidebar-promo-item">
-                    <span class="sidebar-promo-icon">📺</span>
-                    <div class="sidebar-promo-title">Twitch</div>
+                    <div class="sidebar-promo-icon">
+                        <span>📺</span>
+                        <span>▶️</span>
+                    </div>
+                    <div class="sidebar-promo-title">Stream & Videos</div>
                     <div class="sidebar-promo-desc">
                         Watch me crash out over Valorant, CS2, Minecraft, Roblox—whatever I'm doom-playing that night.
                     </div>
-                    <a href="https://twitch.tv/YOURTWITCH" target="_blank" class="sidebar-promo-link">Watch Live</a>
-                </div>
-
-                <div class="sidebar-promo-item">
-                    <span class="sidebar-promo-icon">▶️</span>
-                    <div class="sidebar-promo-title">YouTube</div>
-                    <div class="sidebar-promo-desc">
-                        Watch me crash out over Valorant, CS2, Minecraft, Roblox—whatever I'm doom-playing that night.
+                    <div class="sidebar-promo-links">
+                        <a href="https://twitch.tv/YOURTWITCH" target="_blank" class="sidebar-promo-link">Twitch</a>
+                        <a href="https://youtube.com/@YOURYOUTUBE" target="_blank" class="sidebar-promo-link">YouTube</a>
                     </div>
-                    <a href="https://youtube.com/@YOURYOUTUBE" target="_blank" class="sidebar-promo-link">Subscribe</a>
                 </div>
             </div>
         </div>
