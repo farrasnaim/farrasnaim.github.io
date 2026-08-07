@@ -17,7 +17,7 @@
        Real parts. `part` must match the data-part attribute on the SVG.   */
     var RIG = [
         { part: 'pc', label: 'tower', name: 'the main PC', spec: 'i7-14700F · RTX 5060 8GB · 32GB DDR4 · 1TB NVMe',
-          why: 'a 20-core i7-14700F next to a mid-range RTX 5060, which looks unbalanced until you notice what it actually does all day. <strong>the cores are for work, the GPU is for the evening</strong> — audit workbooks and VMs eat threads, valorant does not eat much of anything. a 360mm AIO in a darkFlash C280 so the whole thing stays quiet while it does both.' },
+          why: 'nothing from the office ever touches this machine — <strong>BYOD stops at my phone and iPad</strong>, so work stays on the ThinkPad and this one is entirely mine. the 20 cores are for everything else: recording, editing, a game and a stream at the same time without the frame rate noticing. a 360mm AIO in a darkFlash C280 keeps it quiet while it does that.' },
 
         { part: 'monitor', label: 'display', name: 'ASUS ROG Strix XG27WCS', spec: '27" QHD · 180 Hz · on an Oximus dual arm',
           why: '1440p at 27" over 4K on purpose — <strong>at this size the extra pixels cost frames without adding clarity</strong>, and I read spreadsheets far more than I look at textures. 180Hz is the valorant half of the argument. it sits on a dual monitor arm because the desk surface is worth more than the stand was.' },
@@ -26,10 +26,10 @@
           why: 'tenkeyless so the mouse sits closer to my shoulder. <strong>a numpad I touch twice a month is not worth the wrist angle</strong>, and tri-mode means the same board follows the ThinkPad when I work somewhere else without re-learning a layout.' },
 
         { part: 'mouse', label: 'mouse', name: 'LAMZU MAYA X', spec: 'wireless · 8K polling · Artisan Ninja FX Raiden',
-          why: 'light beats high DPI every time — <strong>nobody has lost a duel because their sensor read 6000 instead of 8000</strong>, but everyone has lost one dragging a brick. the Artisan pad is the part people skip and then notice immediately: a control-speed surface makes small corrections repeatable.' },
+          why: 'an 8K wireless mouse on an Artisan pad. both cost more than I would like to say out loud, both are genuinely excellent, and <strong>my aim in valorant and CS2 has not moved a single rank because of either of them</strong>. turns out the bottleneck was never the hardware. worth it anyway — at least now I know exactly whose fault it is.' },
 
-        { part: 'audio', label: 'audio', name: 'Sony WH-1000XM6', spec: 'wireless · active noise cancelling',
-          why: 'noise cancelling is the actual feature, and it is not for music. <strong>open-plan audit rooms and a laptop fan are the two sounds I most need gone</strong>. wireless because I stand up mid-call more than I would like to admit, and they live on top of the tower so there is one obvious place they belong.' },
+        { part: 'audio', label: 'audio', name: 'WH-1000XM6 &amp; 7Hz G1', spec: 'ANC over-ears · IEMs for everything else',
+          why: 'two pairs, two jobs. the Sonys are for shutting a room up — <strong>open-plan audit floors and a laptop fan are the two sounds I most need gone</strong> — and they live on top of the tower so there is one obvious place they belong. the 7Hz G1 IEMs are what I actually wear for long sessions: lighter, cooler, and no headband fighting my glasses.' },
 
         { part: 'laptop', label: 'work laptop', name: 'ThinkPad T14 Gen 3', spec: 'i7-1265U · 32GB · since 2022',
           why: 'the machine that has been with me since I joined EY in 2022, and the one that has taken the most abuse. <strong>32GB is the only reason million-row Excel workbooks open at all</strong> — the CPU is a low-power U-series chip, so memory is what stops a pivot table from ending the afternoon. it keeps the desk honest: the tower is mine, this one is the job.' },
@@ -47,15 +47,15 @@
        rewrite — everything else here is data rather than recollection.   */
     var TRIPS = [
         { city: 'Jakarta', country: 'Indonesia', lat: -6.21, lon: 106.85, when: 'home base', home: true,
-          note: 'CGK is the start and end of every line on this map. the domestic flights are not plotted — this is the international log only.',
+          note: 'home. every line on this map leaves from here and comes back to it, and the good part of any trip is still the drive back from CGK at 2am.',
           legs: [] },
 
         { city: 'Cairo', country: 'Egypt', lat: 30.04, lon: 31.24, when: 'apr 2025',
-          note: 'the longest single leg I have flown — over eleven hours in one go.',
+          note: 'eleven hours in one go, the longest leg I have flown. stopped here to see the pyramids before carrying on to Saudi for Umrah — standing in front of something that old rearranges your sense of scale a bit.',
           legs: [ { d: '2 apr 2025', r: 'CGK → CAI', f: 'MS 978 · B789', t: '11h 18m' } ] },
 
         { city: 'Jeddah', country: 'Saudi Arabia', lat: 21.49, lon: 39.19, when: 'apr 2025',
-          note: 'nine days on the ground between landing from Cairo and flying back out — the longest I have stayed anywhere abroad.',
+          note: 'Umrah, and the reason for the whole trip. I went with my brothers — my class group from university — which is not something any of us, or anyone who knew us, saw coming. nine days on the ground; the longest I have stayed anywhere abroad.',
           legs: [ { d: '3 apr 2025',  r: 'CAI → JED', f: 'MS 665 · A333',  t: '2h 07m' },
                   { d: '12 apr 2025', r: 'JED → DOH', f: 'QR 1185 · A333', t: '1h 59m' } ] },
 
@@ -71,10 +71,12 @@
                   { d: '12 apr 2025', r: 'DOH → BKK', f: 'QR 838 · B77W',  t: '6h 12m' },
                   { d: '13 apr 2025', r: 'DMK → CGK', f: 'ID 7630 · A320', t: '3h 26m' } ] },
 
-        { city: 'Kuala Lumpur', country: 'Malaysia', lat: 3.14, lon: 101.69, when: 'nov 2025',
-          note: 'first half of a two-country run — flew in from Jakarta, left overland-adjacent on a different airline entirely.',
-          legs: [ { d: '6 nov 2025', r: 'CGK → KUL', f: '8B 675 · A321', t: '2h 18m' },
-                  { d: '9 nov 2025', r: 'KUL → SGN', f: 'MH 758 · B738', t: '2h 55m' } ] },
+        { city: 'Kuala Lumpur', country: 'Malaysia', lat: 3.14, lon: 101.69, when: 'jun 2024 · nov 2025',
+          note: 'where the solo travelling actually started. a two-night trial run in 2024 to find out whether I could do this on my own, and then again in 2025 as the first stop of a two-country loop.',
+          legs: [ { d: '14 jun 2024', r: 'CGK → KUL', f: '8B 673 · TransNusa', t: '2h 05m' },
+                  { d: '16 jun 2024', r: 'KUL → CGK', f: '8B 680 · TransNusa', t: '2h 15m' },
+                  { d: '6 nov 2025',  r: 'CGK → KUL', f: '8B 675 · A321',      t: '2h 18m' },
+                  { d: '9 nov 2025',  r: 'KUL → SGN', f: 'MH 758 · B738',      t: '2h 55m' } ] },
 
         { city: 'Ho Chi Minh City', country: 'Vietnam', lat: 10.82, lon: 106.63, when: 'nov 2025',
           note: 'second half of the same trip, and the most recent stamp in the book.',
@@ -184,20 +186,27 @@
        ===================================================================== */
     (function role() {
         var el = $('#roleWord');
-        if (!el || reduce.matches) return;
+        if (!el) return;
         var words = (el.dataset.words || '').split(',').filter(Boolean);
         if (words.length < 2) return;
         var i = 0;
 
-        el.style.transition = 'opacity .32s ease';
+        /* Swapping a word is a content change, not the kind of movement
+           prefers-reduced-motion exists to stop — so the rotation still runs
+           there, just without the crossfade. */
+        var fade = !reduce.matches;
+        if (fade) el.style.transition = 'opacity .32s ease';
+
         setInterval(function () {
             if (document.hidden) return;
-            el.style.opacity = '0';
-            setTimeout(function () {
+            var swap = function () {
                 i = (i + 1) % words.length;
                 el.textContent = words[i];
-                el.style.opacity = '1';
-            }, 320);
+                if (fade) el.style.opacity = '1';
+            };
+            if (!fade) return swap();
+            el.style.opacity = '0';
+            setTimeout(swap, 320);
         }, 2900);
     })();
 
@@ -475,7 +484,7 @@
                 '<div><p class="stat__n">' + away.length + '</p><p class="stat__l">cities</p></div>' +
                 '<div><p class="stat__n">' + Object.keys(countries).length + '</p><p class="stat__l">countries</p></div>' +
                 '<div><p class="stat__n">' + Object.keys(uniqueLegs).length + '</p><p class="stat__l">intl. legs</p></div>' +
-                '<div><p class="stat__n">100%</p><p class="stat__l">solo</p></div>';
+                '<div><p class="stat__n">2024</p><p class="stat__l">first solo trip</p></div>';
         }
 
         var rt;
