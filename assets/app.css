@@ -191,16 +191,6 @@ body.has-pointer .spotlight { opacity: 1; }
 
 .nav__tools { display: flex; align-items: center; gap: 0.4rem; }
 
-kbd {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    padding: 0.1rem 0.3rem;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    background: var(--surface);
-    line-height: 1.4;
-}
-
 .icon-btn {
     display: grid; place-items: center;
     width: 34px; height: 34px;
