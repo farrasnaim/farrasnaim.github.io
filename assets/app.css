@@ -605,6 +605,9 @@ section { position: relative; z-index: 2; }
     100% { opacity: 0;   transform: scale(1); }
 }
 .pin:hover .pin__dot, .pin.is-active .pin__dot { transform: scale(1.55); }
+/* pins stack in DOM order, so a later neighbour (Ho Chi Minh City is added
+   last) paints over an earlier pin's hover label — lift the engaged pin */
+.pin:hover, .pin:focus-visible, .pin.is-active { z-index: 3; }
 /* home pin reads as "not a trip" — tracks the text colour so it stays
    visible in both themes rather than being hard-coded white */
 .pin.is-home .pin__dot {
