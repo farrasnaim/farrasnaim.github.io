@@ -3,8 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Farras Naim — IT auditor, gamer, solo traveler, organization enthusiast">
-    <title>Farras Naim</title>
+    <meta name="description" content="Farras Naim — senior technology risk auditor in Jakarta. IT general control & application control audits by day; gamer, solo traveler and streamer by night.">
+    <title>Farras Naim — Senior, Technology Risk</title>
+    <link rel="canonical" href="https://farrasnaim.github.io/">
+    <meta name="theme-color" content="#dc2626">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2032%2032'%3E%3Crect%20width%3D'32'%20height%3D'32'%20rx%3D'7'%20fill%3D'%23dc2626'%2F%3E%3Ctext%20x%3D'16'%20y%3D'24'%20font-family%3D'system-ui%2Csans-serif'%20font-size%3D'21'%20font-weight%3D'700'%20fill%3D'%23ffffff'%20text-anchor%3D'middle'%3Ef%3C%2Ftext%3E%3C%2Fsvg%3E">
+    <link rel="apple-touch-icon" href="./assets/my-avatar.jpg">
+
+    <!-- Open Graph / social link previews -->
+    <meta property="og:type" content="profile">
+    <meta property="og:site_name" content="Farras Naim">
+    <meta property="og:title" content="Farras Naim — Senior, Technology Risk">
+    <meta property="og:description" content="Senior technology risk auditor in Jakarta. IT general control & application control audits by day; gamer, solo traveler and streamer by night.">
+    <meta property="og:url" content="https://farrasnaim.github.io/">
+    <meta property="og:image" content="https://farrasnaim.github.io/assets/my-avatar.jpg">
+    <meta property="og:image:alt" content="Farras Naim">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Farras Naim — Senior, Technology Risk">
+    <meta name="twitter:description" content="Senior technology risk auditor in Jakarta. IT general control & application control audits by day; gamer, solo traveler and streamer by night.">
+    <meta name="twitter:image" content="https://farrasnaim.github.io/assets/my-avatar.jpg">
+
+    <!-- Applied before first paint so a saved theme never flashes the wrong colors -->
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem('theme');
+                var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {
+                /* localStorage blocked (private mode) — fall back to the media query in CSS */
+            }
+        })();
+    </script>
     <style>
         * {
             margin: 0;
@@ -21,6 +52,25 @@
             --accent-1: #b91c1c;
             --accent-2: #991b1b;
             --accent-3: #7f1d1d;
+        }
+
+        /* TYPE SCALE
+           One ratio for the whole page so hierarchy comes from size, not just
+           weight and color. Values fluidly shrink on small screens via clamp(). */
+        :root {
+            --fs-display: clamp(1.5rem, 1.2rem + 1.4vw, 1.875rem);  /* name */
+            --fs-title:   clamp(1.05rem, 0.98rem + 0.35vw, 1.2rem); /* section headings */
+            --fs-lead:    1.0625rem;                                /* work role, card titles */
+            --fs-body:    0.9375rem;                                /* running text */
+            --fs-sm:      0.875rem;                                 /* secondary text */
+            --fs-xs:      0.75rem;                                  /* eyebrows, dates, meta */
+
+            /* Fixed control stack: offset + 2 buttons + gap, plus breathing
+               room. Content reserves this so the buttons never sit on text. */
+            --fab-size: 3rem;
+            --fab-gap: 0.6rem;
+            --fab-offset: 1.5rem;
+            --fab-reserve: calc(var(--fab-offset) * 2 + var(--fab-size) * 2 + var(--fab-gap));
         }
 
         @media (prefers-color-scheme: dark) {
@@ -131,9 +181,11 @@
             padding: 0 4%;
         }
 
-        /* HERO SECTION */
+        /* HERO SECTION
+           Bottom padding clears the fixed control stack so it never sits on
+           top of the last card. */
         .hero {
-            padding: 4rem 0 3rem;
+            padding: 4rem 0 var(--fab-reserve);
             position: relative;
             overflow: hidden;
         }
@@ -191,9 +243,10 @@
         }
 
         .profile-name {
-            font-size: 0.9rem;
+            font-size: var(--fs-display);
             font-weight: 800;
-            margin-bottom: 0.6rem;
+            line-height: 1.15;
+            margin-bottom: 0.7rem;
             background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -202,7 +255,7 @@
         }
 
         .profile-bio {
-            font-size: 0.9rem;
+            font-size: var(--fs-body);
             color: var(--text-muted);
             line-height: 1.7;
             position: relative;
@@ -219,9 +272,10 @@
         }
 
         .connect-title {
-            font-size: 0.9rem;
+            font-size: var(--fs-xs);
             font-weight: 700;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
             margin-bottom: 1.2rem;
             color: var(--accent-1);
         }
@@ -241,13 +295,13 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 0.2rem;
+            gap: 0.35rem;
             transition: all 0.3s ease;
-            font-size: 0.85rem;
+            font-size: var(--fs-xs);
             font-weight: 600;
             letter-spacing: 0.01em;
             color: var(--accent-1);
-            min-height: 3.5rem;
+            min-height: 3.75rem;
         }
 
         .connect-link:hover {
@@ -257,8 +311,17 @@
             box-shadow: 0 8px 24px rgba(220, 38, 38, 0.2);
         }
 
+        /* Line icons inherit currentColor so they track the accent on hover
+           and stay legible in both themes. */
         .connect-link-icon {
-            font-size: 0.9rem;
+            width: 1.15rem;
+            height: 1.15rem;
+            display: block;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         /* STREAM CARD */
@@ -284,17 +347,17 @@
         }
 
         .stream-title {
-            font-size: 0.9rem;
+            font-size: var(--fs-lead);
             font-weight: 700;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.4rem;
             color: var(--text);
         }
 
         .stream-desc {
-            font-size: 0.9rem;
+            font-size: var(--fs-sm);
             color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.1rem;
         }
 
         .stream-buttons {
@@ -309,8 +372,8 @@
             color: var(--bg);
             border: none;
             border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.9rem;
+            font-weight: 700;
+            font-size: var(--fs-sm);
             letter-spacing: 0.01em;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -335,7 +398,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
+            font-size: var(--fs-xs);
             color: var(--text-muted);
             font-weight: 500;
         }
@@ -347,14 +410,21 @@
             gap: 3rem;
         }
 
+        /* Two independent columns rather than grid rows, so the short work
+           column can be filled by "free time" instead of leaving the page
+           lopsided against the much taller undergrad list. */
         .hero-main {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.8rem;
+            gap: 1.8rem 2.5rem;
+            align-items: start;
         }
 
-        .hero-hobbies {
-            grid-column: 1 / -1;
+        .col {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            min-width: 0;
         }
 
         .section {
@@ -363,21 +433,18 @@
             gap: 1.2rem;
         }
 
-        .section > .section-title {
-            margin-bottom: 0.8rem;
-        }
-
         .section-title {
-            font-size: 0.9rem;
+            font-size: var(--fs-title);
             font-weight: 800;
             background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: -0.01em;
+            line-height: 1.25;
             position: relative;
-            padding-bottom: 0.8rem;
-            margin-bottom: 3rem;
+            padding-bottom: 0.7rem;
+            margin-bottom: 1rem;
         }
 
         .section-title::after {
@@ -414,95 +481,84 @@
         }
 
         .work-period {
-            font-size: 0.9rem;
+            font-size: var(--fs-xs);
             color: var(--accent-1);
             font-weight: 700;
-            letter-spacing: 0.02em;
-            margin-bottom: 0.6rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
         }
 
         .work-role {
-            font-size: 0.9rem;
+            font-size: var(--fs-lead);
             font-weight: 700;
-            margin-bottom: 0.4rem;
+            line-height: 1.3;
+            margin-bottom: 0.2rem;
             color: var(--text);
         }
 
         .work-company {
-            font-size: 0.9rem;
+            font-size: var(--fs-sm);
             color: var(--text-muted);
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             font-weight: 600;
         }
 
         .work-description {
-            font-size: 0.9rem;
+            font-size: var(--fs-body);
             color: var(--text-muted);
             line-height: 1.7;
         }
 
         /* COLLEGE SECTION */
         .college-intro {
-            font-size: 0.9rem;
+            font-size: var(--fs-body);
             color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 0.6rem;
+            line-height: 1.7;
+            margin-bottom: 1.2rem;
         }
 
         .subsection {
             display: grid;
             grid-template-columns: 1fr;
             gap: 0;
-        }
-
-        .subsection-title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--accent-2);
-            letter-spacing: 0.02em;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0;
-            border-bottom: none;
+            position: relative;
         }
 
         .subsection::before {
             content: '';
             position: absolute;
             left: 0.35rem;
-            top: 0;
-            bottom: 0;
+            top: 0.5rem;
+            bottom: 0.5rem;
             width: 2px;
             background: var(--accent-1);
-        }
-
-        .subsection {
-            position: relative;
         }
 
         .org-item {
             background: transparent;
             border: none;
             border-radius: 0;
-            padding: 0.4rem 0 0.4rem 2rem;
+            padding: 0 0 1.1rem 2rem;
             transition: all 0.3s ease;
             margin-bottom: 0;
             position: relative;
+        }
+
+        .org-item:last-child {
+            padding-bottom: 0;
         }
 
         .org-item::before {
             content: '';
             position: absolute;
             left: 0.01rem;
-            top: 0.5rem;
+            top: 0.35rem;
             width: 0.7rem;
             height: 0.7rem;
             background: var(--accent-1);
             border-radius: 50%;
             border: 2px solid var(--bg);
-        }
-
-        .org-item::after {
-            display: none;
         }
 
         .org-item:hover::before {
@@ -511,22 +567,26 @@
         }
 
         .org-title {
-            font-size: 0.85rem;
+            font-size: var(--fs-body);
             font-weight: 700;
             color: var(--text);
-            margin-bottom: 0.2rem;
-            line-height: 1.3;
+            margin-bottom: 0.15rem;
+            line-height: 1.35;
         }
 
         .org-role {
-            font-size: 0.8rem;
+            font-size: var(--fs-xs);
             color: var(--accent-1);
-            font-weight: 600;
-            letter-spacing: 0.01em;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 0.35rem;
         }
 
         .org-desc {
-            display: none;
+            font-size: var(--fs-sm);
+            color: var(--text-muted);
+            line-height: 1.6;
         }
 
         .hobby-grid {
@@ -552,84 +612,80 @@
         }
 
         .hobby-icon {
-            font-size: 1.3rem;
-            margin-bottom: 0.3rem;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
             display: block;
+            line-height: 1;
         }
 
         .hobby-title {
-            font-size: 0.85rem;
+            font-size: var(--fs-lead);
             font-weight: 700;
             margin-bottom: 0.3rem;
             color: var(--text);
         }
 
         .hobby-desc {
-            font-size: 0.8rem;
+            font-size: var(--fs-sm);
             color: var(--text-muted);
-            line-height: 1.4;
+            line-height: 1.6;
         }
 
-        /* HOBBIES SECTION TITLE */
-        .hobbies-header {
+        /* FLOATING CONTROLS
+           Stacked in one corner column so the two buttons can never overlap
+           each other, and both are available at every breakpoint. */
+        .floating-controls {
+            position: fixed;
+            bottom: var(--fab-offset);
+            right: var(--fab-offset);
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
+            gap: var(--fab-gap);
+            z-index: 1000;
         }
 
-        .hobbies-section-title {
-            font-size: 0.9rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.01em;
-            position: relative;
-            padding-bottom: 0.8rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .hobbies-section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-            border-radius: 2px;
-        }
-
-        /* THEME TOGGLE BUTTON */
-        .theme-toggle {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 3.5rem;
-            height: 3.5rem;
+        .fab {
+            width: var(--fab-size);
+            height: var(--fab-size);
             border-radius: 50%;
             background: var(--accent-1);
             border: none;
             color: var(--bg);
-            font-size: 1.5rem;
+            font-size: 1.25rem;
+            line-height: 1;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease, visibility 0.3s ease;
             box-shadow: 0 4px 16px rgba(220, 38, 38, 0.3);
-            z-index: 1000;
         }
 
-        .theme-toggle:hover {
-            transform: scale(1.1);
+        .fab:hover {
+            transform: scale(1.08);
             box-shadow: 0 6px 24px rgba(220, 38, 38, 0.4);
         }
 
-        .theme-toggle:active {
+        .fab:active {
             transform: scale(0.95);
+        }
+
+        .fab:focus-visible {
+            outline: 3px solid var(--accent-1);
+            outline-offset: 3px;
+        }
+
+        /* Jump-to-top only earns its place once there is something to jump back to */
+        .jump-to-top {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .jump-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
         }
 
         /* FADE IN ANIMATION */
@@ -644,23 +700,33 @@
             }
         }
 
-        @keyframes fadeOut {
-            from {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            to {
-                opacity: 0;
-                transform: translateY(20px);
-            }
+        /* Only elements JS has opted in get hidden, so the page still renders
+           in full if scripting is unavailable. */
+        .reveal {
+            opacity: 0;
         }
 
-        .fade-in {
+        .reveal.fade-in {
             animation: fadeIn 0.6s ease-out forwards;
         }
 
-        .fade-out {
-            animation: fadeOut 0.6s ease-in forwards;
+        /* Respect users who ask for less motion: no transforms, no reveal delay. */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .reveal {
+                opacity: 1;
+            }
         }
 
         /* DESKTOP SPECIFIC */
@@ -678,7 +744,7 @@
             }
 
             .hero {
-                padding: 2rem 0;
+                padding: 2rem 0 var(--fab-reserve);
             }
 
             .hero-content {
@@ -704,14 +770,6 @@
                 max-width: 150px;
             }
 
-            .profile-name {
-                font-size: 1.1rem;
-            }
-
-            .profile-bio {
-                font-size: 0.85rem;
-            }
-
             .connect-card {
                 padding: 1.5rem 1rem;
                 order: 2;
@@ -727,7 +785,6 @@
             }
 
             .connect-title {
-                font-size: 0.85rem;
                 margin-bottom: 0.8rem;
             }
 
@@ -736,32 +793,17 @@
             }
 
             .connect-link {
-                font-size: 0.75rem;
-                min-height: 3rem;
-                padding: 0.4rem;
-            }
-
-            .stream-title {
-                font-size: 0.85rem;
+                min-height: 3.25rem;
+                padding: 0.5rem 0.4rem;
             }
 
             .stream-desc {
-                font-size: 0.85rem;
-                margin-bottom: 0.8rem;
+                margin-bottom: 0.9rem;
             }
 
+            /* Comfortable tap target on touch screens */
             .stream-btn {
-                font-size: 0.8rem;
-                padding: 0.5rem;
-            }
-
-            .btn-icon {
-                width: 0.9rem;
-                height: 0.9rem;
-            }
-
-            .button-divider {
-                font-size: 0.8rem;
+                padding: 0.7rem 0.5rem;
             }
 
             .hero-center {
@@ -770,18 +812,36 @@
                 width: 100%;
             }
 
+            /* Collapse the two desktop columns and reorder so the reading
+               order stays work -> undergrad -> free time. */
             .hero-main {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+                display: flex;
+                flex-direction: column;
+                gap: 2.5rem;
+            }
+
+            .col {
+                display: contents;
+            }
+
+            .section-work {
+                order: 1;
+            }
+
+            .section-college {
+                order: 2;
+            }
+
+            .hero-hobbies {
+                order: 3;
             }
 
             .section {
-                gap: 0.15rem;
+                gap: 0.5rem;
             }
 
             .section-title {
-                font-size: 0.9rem;
-                margin-bottom: 0.3rem;
+                margin-bottom: 0.6rem;
             }
 
             .work-item {
@@ -789,58 +849,18 @@
                 border: none;
                 border-left: 3px solid var(--accent-1);
                 border-radius: 0;
-                padding: 0.6rem 0.6rem 0.6rem 0.8rem;
-                margin-bottom: 0.4rem;
-                margin-top: 0.4rem;
-            }
-
-            .work-item:first-of-type {
-                margin-top: 0.8rem;
-            }
-
-            .work-period {
-                font-size: 0.8rem;
-            }
-
-            .work-role {
-                font-size: 0.85rem;
-            }
-
-            .work-company {
-                font-size: 0.8rem;
-            }
-
-            .work-description {
-                font-size: 0.85rem;
+                padding: 0.1rem 0 0.1rem 1rem;
+                margin-bottom: 1.4rem;
+                margin-top: 0;
             }
 
             .college-intro {
-                font-size: 0.85rem;
-                margin-bottom: 0.4rem;
-            }
-
-            .org-title {
-                font-size: 0.85rem;
-            }
-
-            .org-role {
-                font-size: 0.8rem;
-            }
-
-            .hero-hobbies {
-                gap: 0;
-                order: 3;
-                margin-top: 1rem;
-            }
-
-            .hobbies-section-title {
-                font-size: 0.9rem;
-                margin-bottom: 0.3rem;
+                margin-bottom: 1rem;
             }
 
             .hobby-grid {
                 grid-template-columns: 1fr;
-                gap: 0.8rem;
+                gap: 1.4rem;
             }
 
             .hobby-item {
@@ -848,89 +868,22 @@
                 border: none;
                 border-left: 3px solid var(--accent-1);
                 border-radius: 0;
-                padding: 0.6rem 0.6rem 0.6rem 0.8rem;
-                margin-bottom: 0.4rem;
-                margin-top: 0.4rem;
+                padding: 0.1rem 0 0.1rem 1rem;
+                margin-bottom: 0;
+                margin-top: 0;
                 text-align: left;
             }
 
-            .hobby-item:first-of-type {
-                margin-top: 0.8rem;
-            }
-
-            .hobby-icon {
-                font-size: 1rem;
-            }
-
-            .hobby-title {
-                font-size: 0.85rem;
-            }
-
-            .hobby-desc {
-                font-size: 0.85rem;
+            .hobby-item:hover {
+                background: transparent;
+                transform: none;
+                box-shadow: none;
             }
 
             /* Hide floating blobs on mobile */
             body::before,
             body::after {
                 display: none;
-            }
-
-            /* Mobile: Show jump-to-top, hide theme toggle */
-            .theme-toggle {
-                display: none;
-            }
-
-            .jump-to-top {
-                position: fixed;
-                bottom: 1.5rem;
-                right: 1.5rem;
-                width: 2.5rem;
-                height: 2.5rem;
-                border-radius: 50%;
-                background: var(--accent-1);
-                border: none;
-                color: var(--bg);
-                font-size: 1rem;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: all 0.3s ease;
-                box-shadow: 0 4px 16px rgba(220, 38, 38, 0.3);
-                z-index: 1000;
-                opacity: 0;
-                visibility: hidden;
-            }
-
-            .jump-to-top.show {
-                opacity: 1;
-                visibility: visible;
-            }
-        }
-
-        /* DESKTOP ONLY - Show theme toggle, hide jump-to-top */
-        @media (min-width: 769px) {
-            .theme-toggle {
-                display: flex;
-            }
-
-            .jump-to-top {
-                display: none;
-            }
-
-            .jump-to-top:hover {
-                transform: scale(1.1);
-                box-shadow: 0 6px 24px rgba(220, 38, 38, 0.4);
-            }
-
-            .jump-to-top:active {
-                transform: scale(0.95);
-            }
-
-            .jump-to-top.show {
-                opacity: 1;
-                visibility: visible;
             }
         }
     </style>
@@ -943,7 +896,7 @@
                 <div class="hero-sidebar">
                     <div class="profile-card">
                         <div class="profile-photo">
-                            <img src="./assets/my-avatar.jpg" alt="Farras Naim">
+                            <img src="./assets/my-avatar.jpg" alt="Farras Naim" width="280" height="280" fetchpriority="high" decoding="async">
                         </div>
                         <h1 class="profile-name">farras naim</h1>
                         <p class="profile-bio">
@@ -955,22 +908,33 @@
                         <div class="connect-title">connect</div>
                         <div class="connect-links">
                             <a href="mailto:farrasnaim@outlook.com" class="connect-link" title="Email">
-                                <span class="connect-link-icon">📧</span>
+                                <svg class="connect-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                    <path d="m2 7 10 6 10-6"></path>
+                                </svg>
                                 <span>email</span>
                             </a>
-                            <a href="https://linkedin.com/in/farrasnaim" target="_blank" class="connect-link" title="LinkedIn">
-                                <span class="connect-link-icon">💼</span>
+                            <a href="https://linkedin.com/in/farrasnaim" target="_blank" rel="noopener noreferrer" class="connect-link" title="LinkedIn">
+                                <svg class="connect-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                    <rect x="2" y="9" width="4" height="12"></rect>
+                                    <circle cx="4" cy="4" r="2"></circle>
+                                </svg>
                                 <span>LinkedIn</span>
                             </a>
-                            <a href="https://instagram.com/farrasnaim" target="_blank" class="connect-link" title="Instagram">
-                                <span class="connect-link-icon">📸</span>
+                            <a href="https://instagram.com/farrasnaim" target="_blank" rel="noopener noreferrer" class="connect-link" title="Instagram">
+                                <svg class="connect-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <rect x="2" y="2" width="20" height="20" rx="5"></rect>
+                                    <circle cx="12" cy="12" r="4"></circle>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                </svg>
                                 <span>instagram</span>
                             </a>
                         </div>
                     </div>
 
                     <div class="stream-card">
-                        <div class="stream-icons">
+                        <div class="stream-icons" aria-hidden="true">
                             <span>📺</span>
                         </div>
                         <div class="stream-title">stream & videos</div>
@@ -978,13 +942,13 @@
                             watch me crash out over Valorant, CS2, Minecraft, Roblox—whatever I'm doom-playing that night.
                         </div>
                         <div class="stream-buttons">
-                            <a href="https://www.twitch.tv/rughseel" target="_blank" class="stream-btn">
-                                <img src="./assets/twitch-icon.png" alt="Twitch" class="btn-icon">
+                            <a href="https://www.twitch.tv/rughseel" target="_blank" rel="noopener noreferrer" class="stream-btn">
+                                <img src="./assets/twitch-icon.png" alt="" class="btn-icon" width="16" height="16" loading="lazy" decoding="async">
                                 <span>twitch</span>
                             </a>
                             <span class="button-divider">or</span>
-                            <a href="https://www.youtube.com/@farrasnaim/streams" target="_blank" class="stream-btn">
-                                <img src="./assets/youtube-icon.png" alt="YouTube" class="btn-icon">
+                            <a href="https://www.youtube.com/@farrasnaim/streams" target="_blank" rel="noopener noreferrer" class="stream-btn">
+                                <img src="./assets/youtube-icon.png" alt="" class="btn-icon" width="16" height="16" loading="lazy" decoding="async">
                                 <span>youtube</span>
                             </a>
                         </div>
@@ -994,9 +958,10 @@
                 <!-- CENTER CONTENT -->
                 <div class="hero-center">
                     <div class="hero-main">
+                      <div class="col">
                         <!-- WORK -->
-                        <div class="section">
-                            <h2 class="section-title">what i did for living</h2>
+                        <div class="section section-work">
+                            <h2 class="section-title">what i do for a living</h2>
 
                             <div class="work-item">
                                 <div class="work-period">sep 2022 – now</div>
@@ -1026,8 +991,49 @@
                             </div>
                         </div>
 
+                        <!-- FREE TIME -->
+                        <div class="section hero-hobbies">
+                            <h2 class="section-title">free time</h2>
+
+                            <div class="hobby-grid">
+                                <div class="hobby-item">
+                                    <span class="hobby-icon" aria-hidden="true">🎮</span>
+                                    <div class="hobby-title">gaming</div>
+                                    <div class="hobby-desc">
+                                        playing games to decompress after work stress. valorant, CS2, anything really.
+                                    </div>
+                                </div>
+
+                                <div class="hobby-item">
+                                    <span class="hobby-icon" aria-hidden="true">🌍</span>
+                                    <div class="hobby-title">solo travel</div>
+                                    <div class="hobby-desc">
+                                        love solo trips. teaches you to navigate uncertainty.
+                                    </div>
+                                </div>
+
+                                <div class="hobby-item">
+                                    <span class="hobby-icon" aria-hidden="true">⚙️</span>
+                                    <div class="hobby-title">systems & tech</div>
+                                    <div class="hobby-desc">
+                                        curious how complex systems work. always learning.
+                                    </div>
+                                </div>
+
+                                <div class="hobby-item">
+                                    <span class="hobby-icon" aria-hidden="true">☕</span>
+                                    <div class="hobby-title">caffeine addict</div>
+                                    <div class="hobby-desc">
+                                        iced americano no sugar. honestly just need caffeine to function as a human being.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+
+                      <div class="col">
                         <!-- COLLEGE -->
-                        <div class="section">
+                        <div class="section section-college">
                             <h2 class="section-title">undergrad activities</h2>
 
                             <p class="college-intro">
@@ -1116,151 +1122,142 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- FREE TIME -->
-                    <div class="hero-hobbies">
-                        <div class="hobbies-header">
-                            <h2 class="hobbies-section-title">free time</h2>
-                        </div>
-
-                        <div class="hobby-grid">
-                            <div class="hobby-item">
-                                <span class="hobby-icon">🎮</span>
-                                <div class="hobby-title">gaming</div>
-                                <div class="hobby-desc">
-                                    playing games to decompress after work stress. valorant, CS2, anything really.
-                                </div>
-                            </div>
-
-                            <div class="hobby-item">
-                                <span class="hobby-icon">🌍</span>
-                                <div class="hobby-title">solo travel</div>
-                                <div class="hobby-desc">
-                                    love solo trips. teaches you to navigate uncertainty.
-                                </div>
-                            </div>
-
-                            <div class="hobby-item">
-                                <span class="hobby-icon">⚙️</span>
-                                <div class="hobby-title">systems & tech</div>
-                                <div class="hobby-desc">
-                                    curious how complex systems work. always learning.
-                                </div>
-                            </div>
-
-                            <div class="hobby-item">
-                                <span class="hobby-icon">☕</span>
-                                <div class="hobby-title">caffeine addict</div>
-                                <div class="hobby-desc">
-                                    iced americano no sugar. honestly just need caffeine to function as a human being.
-                                </div>
-                            </div>
-                        </div>
+                      </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- JUMP TO TOP BUTTON (Mobile only) -->
-        <button class="jump-to-top" id="jumpToTop" aria-label="Jump to top">↑</button>
-
-        <!-- THEME TOGGLE BUTTON (Desktop only) -->
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+        <!-- FLOATING CONTROLS (all breakpoints) -->
+        <div class="floating-controls">
+            <button type="button" class="fab jump-to-top" id="jumpToTop" aria-label="Jump to top">↑</button>
+            <button type="button" class="fab theme-toggle" id="themeToggle" aria-label="Switch theme" aria-pressed="false">🌙</button>
+        </div>
     </div>
 
     <script>
-        const jumpToTop = document.getElementById('jumpToTop');
-        const themeToggle = document.getElementById('themeToggle');
-        const html = document.documentElement;
+        (function () {
+            'use strict';
 
-        // Fade in animation on scroll (mobile)
-        if (window.innerWidth <= 768) {
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
+            var html = document.documentElement;
+            var jumpToTop = document.getElementById('jumpToTop');
+            var themeToggle = document.getElementById('themeToggle');
+            var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.remove('fade-out');
-                        entry.target.classList.add('fade-in');
-                    } else {
-                        entry.target.classList.remove('fade-in');
-                        entry.target.classList.add('fade-out');
-                    }
+            /* ---- Reveal on scroll -------------------------------------------
+               Reveals once and then stops observing. The previous version also
+               faded elements back out on exit, which made already-read content
+               disappear behind you as you scrolled. */
+            function initReveal() {
+                /* Headings and intro copy are deliberately excluded: they stay
+                   painted so the page structure is stable on load and when
+                   landing mid-page. */
+                var targets = document.querySelectorAll('.work-item, .hobby-item, .org-item');
+
+                if (reduceMotion.matches || !('IntersectionObserver' in window)) {
+                    return; // leave everything visible
+                }
+
+                Array.prototype.forEach.call(targets, function (el) {
+                    el.classList.add('reveal');
                 });
-            }, observerOptions);
 
-            // Observe work items, hobby items, sections
-            document.querySelectorAll('.work-item, .hobby-item, .section').forEach(el => {
-                observer.observe(el);
-            });
-        }
+                var observer = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (!entry.isIntersecting) return;
+                        entry.target.classList.add('fade-in');
+                        observer.unobserve(entry.target);
+                    });
+                }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
 
-        // Jump to top functionality (mobile)
-        if (jumpToTop) {
-            jumpToTop.addEventListener('click', () => {
-                const start = window.scrollY;
-                const duration = 600; // ms
-                const startTime = performance.now();
+                Array.prototype.forEach.call(targets, function (el) {
+                    observer.observe(el);
+                });
+            }
 
-                const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+            /* ---- Jump to top ------------------------------------------------ */
+            function initJumpToTop() {
+                if (!jumpToTop) return;
 
-                const scroll = (currentTime) => {
-                    const elapsed = currentTime - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    const easeProgress = easeOutCubic(progress);
-                    window.scrollTo(0, start * (1 - easeProgress));
-
-                    if (progress < 1) {
-                        requestAnimationFrame(scroll);
+                jumpToTop.addEventListener('click', function () {
+                    if (reduceMotion.matches) {
+                        window.scrollTo(0, 0);
+                        return;
                     }
+
+                    var start = window.scrollY;
+                    var duration = 600;
+                    var startTime = performance.now();
+                    var easeOutCubic = function (t) { return 1 - Math.pow(1 - t, 3); };
+
+                    (function step(now) {
+                        var progress = Math.min((now - startTime) / duration, 1);
+                        window.scrollTo(0, start * (1 - easeOutCubic(progress)));
+                        if (progress < 1) requestAnimationFrame(step);
+                    })(startTime);
+                });
+
+                var ticking = false;
+                function updateVisibility() {
+                    jumpToTop.classList.toggle('show', window.scrollY > 300);
+                    ticking = false;
+                }
+
+                window.addEventListener('scroll', function () {
+                    if (ticking) return;
+                    ticking = true;
+                    requestAnimationFrame(updateVisibility);
+                }, { passive: true });
+
+                updateVisibility();
+            }
+
+            /* ---- Theme toggle -----------------------------------------------
+               The head script already applied the stored theme before paint;
+               this only keeps the button label and storage in sync. */
+            function initTheme() {
+                if (!themeToggle) return;
+
+                var systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+                function readStored() {
+                    try { return localStorage.getItem('theme'); } catch (e) { return null; }
+                }
+
+                function paint(theme) {
+                    html.setAttribute('data-theme', theme);
+                    themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+                    themeToggle.setAttribute('aria-pressed', String(theme === 'dark'));
+                    themeToggle.setAttribute(
+                        'aria-label',
+                        theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
+                    );
+                }
+
+                paint(html.getAttribute('data-theme') || (systemDark.matches ? 'dark' : 'light'));
+
+                themeToggle.addEventListener('click', function () {
+                    var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                    try { localStorage.setItem('theme', next); } catch (e) { /* private mode */ }
+                    paint(next);
+                });
+
+                // Follow the OS only while the visitor hasn't made an explicit choice
+                var onSystemChange = function (e) {
+                    if (!readStored()) paint(e.matches ? 'dark' : 'light');
                 };
 
-                requestAnimationFrame(scroll);
-            });
-
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 300) {
-                    jumpToTop.classList.add('show');
-                } else {
-                    jumpToTop.classList.remove('show');
+                if (systemDark.addEventListener) {
+                    systemDark.addEventListener('change', onSystemChange);
+                } else if (systemDark.addListener) {
+                    systemDark.addListener(onSystemChange); // Safari < 14
                 }
-            });
-        }
+            }
 
-        // Theme toggle functionality (desktop)
-        if (themeToggle) {
-            // Check for saved theme preference or default to system preference
-            const savedTheme = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-
-            // Set initial theme
-            html.setAttribute('data-theme', initialTheme);
-            themeToggle.textContent = initialTheme === 'dark' ? '☀️' : '🌙';
-
-            // Theme toggle handler
-            themeToggle.addEventListener('click', () => {
-                const currentTheme = html.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-                html.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-                themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-            });
-
-            // Listen for system theme changes
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                if (!localStorage.getItem('theme')) {
-                    const newTheme = e.matches ? 'dark' : 'light';
-                    html.setAttribute('data-theme', newTheme);
-                    themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-                }
-            });
-        }
+            initReveal();
+            initJumpToTop();
+            initTheme();
+        })();
     </script>
 </body>
 </html>
