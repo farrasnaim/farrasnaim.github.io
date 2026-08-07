@@ -198,7 +198,7 @@
 
         .hero-content {
             display: grid;
-            grid-template-columns: clamp(270px, 19vw, 320px) 1fr;
+            grid-template-columns: clamp(270px, 19vw, 400px) 1fr;
             gap: 3.5rem;
             align-items: start;
             position: relative;
@@ -232,8 +232,12 @@
             pointer-events: none;
         }
 
+        /* The photo is square and fluid, so a wider card would otherwise make
+           it taller too — capping it lets the extra width go to the text and
+           shortens the card instead of growing it. */
         .profile-photo {
             width: 100%;
+            max-width: 260px;
             aspect-ratio: 1;
             border-radius: 12px;
             overflow: hidden;
@@ -741,6 +745,15 @@
         @media (min-width: 769px) {
             .section {
                 gap: 0.8rem;
+            }
+        }
+
+        /* Past this width the centered container leaves a wide margin, so the
+           fixed buttons sit clear of all content and the tall bottom reserve
+           is just dead space keeping the page from fitting one screen. */
+        @media (min-width: 1800px) {
+            .hero {
+                padding-bottom: 4rem;
             }
         }
 
