@@ -272,21 +272,23 @@
         }
 
         .connect-title {
-            font-size: var(--fs-xs);
+            font-size: var(--fs-sm);
             font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
+            letter-spacing: 0.02em;
             margin-bottom: 1.2rem;
             color: var(--accent-1);
         }
 
+        /* Flex rather than a fixed column count so the same rules fit both
+           cards: 2 chips split in half, 3 split in thirds. */
         .connect-links {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            display: flex;
             gap: 0.8rem;
         }
 
         .connect-link {
+            flex: 1 1 0;
+            min-width: 0;
             padding: 0.5rem;
             background: rgba(220, 38, 38, 0.08);
             border: 1px solid rgba(220, 38, 38, 0.3);
@@ -788,10 +790,6 @@
                 margin-bottom: 0.8rem;
             }
 
-            .connect-links {
-                grid-template-columns: 1fr 1fr 1fr;
-            }
-
             .connect-link {
                 min-height: 3.25rem;
                 padding: 0.5rem 0.4rem;
@@ -920,8 +918,14 @@
                                     <rect x="2" y="9" width="4" height="12"></rect>
                                     <circle cx="4" cy="4" r="2"></circle>
                                 </svg>
-                                <span>LinkedIn</span>
+                                <span>linkedin</span>
                             </a>
+                        </div>
+                    </div>
+
+                    <div class="connect-card">
+                        <div class="connect-title">socials</div>
+                        <div class="connect-links">
                             <a href="https://instagram.com/farrasnaim" target="_blank" rel="noopener noreferrer" class="connect-link" title="Instagram">
                                 <svg class="connect-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                                     <rect x="2" y="2" width="20" height="20" rx="5"></rect>
@@ -929,6 +933,22 @@
                                     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                                 </svg>
                                 <span>instagram</span>
+                            </a>
+                            <a href="https://www.tiktok.com/@farrasnaim" target="_blank" rel="noopener noreferrer" class="connect-link" title="TikTok">
+                                <svg class="connect-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <path d="M15 3v10.5a4 4 0 1 1-4-4"></path>
+                                    <path d="M15 3c.4 2.4 2.3 4.3 4.7 4.5"></path>
+                                </svg>
+                                <span>tiktok</span>
+                            </a>
+                            <a href="https://open.spotify.com/user/farrasnaim" target="_blank" rel="noopener noreferrer" class="connect-link" title="Spotify">
+                                <svg class="connect-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <circle cx="12" cy="12" r="9"></circle>
+                                    <path d="M7.5 9.2c3-.9 6.4-.6 9 .9"></path>
+                                    <path d="M8 12.6c2.5-.7 5.2-.5 7.4.8"></path>
+                                    <path d="M8.5 15.7c1.9-.5 4-.3 5.6.6"></path>
+                                </svg>
+                                <span>spotify</span>
                             </a>
                         </div>
                     </div>
