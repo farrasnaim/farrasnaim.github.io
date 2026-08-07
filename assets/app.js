@@ -52,37 +52,37 @@
 
         { city: 'Cairo', country: 'Egypt', lat: 30.04, lon: 31.24, when: 'apr 2025',
           note: 'the longest single leg I have flown — over eleven hours in one go. we stopped here for the pyramids before carrying on to Saudi for Umrah, and standing in front of them is still the closest I have come to not believing a place was real.',
-          legs: [ { d: '2 apr 2025', r: 'CGK → CAI', f: 'MS 978 · B789', t: '11h 18m' },
-                  { d: '3 apr 2025', r: 'CAI → JED', f: 'MS 665 · A333', t: '2h 07m' } ] },
+          legs: [ { d: '2 apr 2025', r: 'CGK → CAI', f: 'EgyptAir · MS 978 · B789', t: '11h 18m' },
+                  { d: '3 apr 2025', r: 'CAI → JED', f: 'EgyptAir · MS 665 · A333', t: '2h 07m' } ] },
 
         { city: 'Jeddah', country: 'Saudi Arabia', lat: 21.49, lon: 39.19, when: 'apr 2025',
           note: 'Umrah with my brothers — the same classmates I spent four years of campus with. none of us, and none of the people who knew us, really saw that trip coming. nine days on the ground between landing from Cairo and flying back out, which is still the longest I have stayed anywhere abroad.',
-          legs: [ { d: '3 apr 2025',  r: 'CAI → JED', f: 'MS 665 · A333',  t: '2h 07m' },
-                  { d: '12 apr 2025', r: 'JED → DOH', f: 'QR 1185 · A333', t: '1h 59m' } ] },
+          legs: [ { d: '3 apr 2025',  r: 'CAI → JED', f: 'EgyptAir · MS 665 · A333',  t: '2h 07m' },
+                  { d: '12 apr 2025', r: 'JED → DOH', f: 'Qatar Airways · QR 1185 · A333', t: '1h 59m' } ] },
 
         { city: 'Doha', country: 'Qatar', lat: 25.29, lon: 51.53, when: 'apr 2025',
           note: 'technically a connection, but I cleared immigration and booked a room at the Best Western by the airport — a few hours of sleep and a shower, and enough of the city to say I was actually there, before the Bangkok leg.',
-          legs: [ { d: '12 apr 2025', r: 'JED → DOH', f: 'QR 1185 · A333', t: '1h 59m' },
-                  { d: '12 apr 2025', r: 'DOH → BKK', f: 'QR 838 · B77W',  t: '6h 12m' } ] },
+          legs: [ { d: '12 apr 2025', r: 'JED → DOH', f: 'Qatar Airways · QR 1185 · A333', t: '1h 59m' },
+                  { d: '12 apr 2025', r: 'DOH → BKK', f: 'Qatar Airways · QR 838 · B77W',  t: '6h 12m' } ] },
 
         { city: 'Bangkok', country: 'Thailand', lat: 13.76, lon: 100.50, when: 'nov 2024 · apr 2025',
           note: 'the only city out here I went back to. first on a direct hop from Jakarta, then again as the last stop on the way home from Doha.',
-          legs: [ { d: '28 nov 2024', r: 'CGK → DMK', f: 'SL 117 · B738',  t: '3h 21m' },
-                  { d: '1 dec 2024',  r: 'DMK → CGK', f: 'QZ 253 · A320',  t: '3h 25m' },
-                  { d: '12 apr 2025', r: 'DOH → BKK', f: 'QR 838 · B77W',  t: '6h 12m' },
-                  { d: '13 apr 2025', r: 'DMK → CGK', f: 'ID 7630 · A320', t: '3h 26m' } ] },
+          legs: [ { d: '28 nov 2024', r: 'CGK → DMK', f: 'Thai Lion Air · SL 117 · B738',  t: '3h 21m' },
+                  { d: '1 dec 2024',  r: 'DMK → CGK', f: 'Indonesia AirAsia · QZ 253 · A320',  t: '3h 25m' },
+                  { d: '12 apr 2025', r: 'DOH → BKK', f: 'Qatar Airways · QR 838 · B77W',  t: '6h 12m' },
+                  { d: '13 apr 2025', r: 'DMK → CGK', f: 'Batik Air · ID 7630 · A320', t: '3h 26m' } ] },
 
         { city: 'Kuala Lumpur', country: 'Malaysia', lat: 3.14, lon: 101.69, when: 'jun 2024 · nov 2025',
           note: 'where the solo travelling actually started. a two-night trial run in 2024 to find out whether I could do this on my own, and then again in 2025 as the first stop of a two-country loop.',
-          legs: [ { d: '14 jun 2024', r: 'CGK → KUL', f: '8B 673 · A320', t: '2h 05m' },
-                  { d: '16 jun 2024', r: 'KUL → CGK', f: '8B 680 · A320', t: '2h 15m' },
-                  { d: '6 nov 2025',  r: 'CGK → KUL', f: '8B 675 · A321',      t: '2h 18m' },
-                  { d: '9 nov 2025',  r: 'KUL → SGN', f: 'MH 758 · B738',      t: '2h 55m' } ] },
+          legs: [ { d: '14 jun 2024', r: 'CGK → KUL', f: 'TransNusa · 8B 673 · A320', t: '2h 05m' },
+                  { d: '16 jun 2024', r: 'KUL → CGK', f: 'TransNusa · 8B 680 · A320', t: '2h 15m' },
+                  { d: '6 nov 2025',  r: 'CGK → KUL', f: 'TransNusa · 8B 675 · A321',      t: '2h 18m' },
+                  { d: '9 nov 2025',  r: 'KUL → SGN', f: 'Malaysia Airlines · MH 758 · B738',      t: '2h 55m' } ] },
 
         { city: 'Ho Chi Minh City', country: 'Vietnam', lat: 10.82, lon: 106.63, when: 'nov 2025',
           note: 'second half of the same trip, and the most recent stamp in the book.',
-          legs: [ { d: '9 nov 2025',  r: 'KUL → SGN', f: 'MH 758 · B738', t: '2h 55m' },
-                  { d: '12 nov 2025', r: 'SGN → CGK', f: 'VN 631 · A321', t: '2h 53m' } ] }
+          legs: [ { d: '9 nov 2025',  r: 'KUL → SGN', f: 'Malaysia Airlines · MH 758 · B738', t: '2h 55m' },
+                  { d: '12 nov 2025', r: 'SGN → CGK', f: 'Vietnam Airlines · VN 631 · A321', t: '2h 53m' } ] }
     ];
 
     /* Coarse continent outlines [lon, lat] — rasterised into dots below.
