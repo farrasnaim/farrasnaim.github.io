@@ -191,26 +191,6 @@ body.has-pointer .spotlight { opacity: 1; }
 
 .nav__tools { display: flex; align-items: center; gap: 0.4rem; }
 
-.kbd-btn {
-    display: flex; align-items: center; gap: 0.5rem;
-    padding: 0.38rem 0.7rem;
-    border: 1px solid var(--line);
-    border-radius: 100px;
-    font-size: var(--fs-xs);
-    color: var(--muted);
-    transition: border-color 0.25s var(--ease), color 0.25s var(--ease), background 0.25s var(--ease);
-}
-.kbd-btn:hover { color: var(--text); border-color: var(--line-hi); background: var(--surface); }
-kbd {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    padding: 0.1rem 0.3rem;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    background: var(--surface);
-    line-height: 1.4;
-}
-
 .icon-btn {
     display: grid; place-items: center;
     width: 34px; height: 34px;
@@ -228,9 +208,9 @@ html[data-theme="light"] .icon-btn .sun { display: none; }
 /* ---------- SECTION CHROME -------------------------------------------- */
 section { position: relative; z-index: 2; }
 
-.sec { padding: clamp(5rem, 9vw, 8.5rem) 0; }
+.sec { padding: clamp(3rem, 4.8vw, 4.6rem) 0; }
 
-.sec__head { margin-bottom: clamp(2.2rem, 4vw, 3.4rem); max-width: 62ch; }
+.sec__head { margin-bottom: clamp(1.5rem, 2.6vw, 2.3rem); max-width: 62ch; }
 
 .eyebrow {
     display: inline-flex; align-items: center; gap: 0.55rem;
@@ -257,7 +237,7 @@ section { position: relative; z-index: 2; }
 .hero {
     min-height: 100svh;
     display: flex; flex-direction: column; justify-content: center;
-    padding: 8rem 0 4rem;
+    padding: 7rem 0 2.5rem;
     position: relative; z-index: 2;
 }
 
@@ -265,7 +245,7 @@ section { position: relative; z-index: 2; }
 
 .hero__avatar {
     position: relative;
-    width: clamp(78px, 9vw, 104px);
+    width: clamp(104px, 11.5vw, 138px);
     aspect-ratio: 1;
     border-radius: 50%;
     overflow: hidden;
@@ -328,13 +308,22 @@ section { position: relative; z-index: 2; }
     transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), color 0.3s var(--ease);
 }
 .chip:hover { transform: translateY(-2px); border-color: var(--accent-line); color: var(--text); }
-.chip__dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+.chip svg {
+    width: 13px; height: 13px; flex-shrink: 0;
+    fill: none; stroke: var(--accent);
+    stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
+}
 
 .hero__cue {
-    margin-top: clamp(3rem, 7vw, 5rem);
+    margin-top: clamp(1.9rem, 4vw, 3rem);
     display: inline-flex; align-items: center; gap: 0.7rem;
     font-size: var(--fs-xs); color: var(--faint);
     font-family: var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase;
+}
+.hero__cueIcon {
+    width: 13px; height: 13px; margin-left: -0.28rem;
+    fill: none; stroke: currentColor;
+    stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round;
 }
 .hero__cueLine {
     width: 46px; height: 1px; background: linear-gradient(90deg, var(--accent), transparent);
@@ -454,10 +443,23 @@ section { position: relative; z-index: 2; }
 .tl-body__inner { overflow: hidden; }
 .tl-body p {
     color: var(--muted);
-    padding: 1.1rem 3rem 0.4rem 0;
-    max-width: 62ch;
+    padding: 1.1rem 0 0.4rem 0;
+    max-width: 76ch;
 }
 .tl-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0.9rem 0 1.5rem; list-style: none; }
+
+/* On wide screens an entry with tags splits into prose + tags so the right
+   half of the row isn't left empty. Entries without tags just run wider. */
+@media (min-width: 900px) {
+    .tl-body__inner:has(.tl-tags) {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr);
+        gap: 0 2.6rem;
+        align-items: start;
+    }
+    .tl-body__inner:has(.tl-tags) p { max-width: none; }
+    .tl-body__inner:has(.tl-tags) .tl-tags { padding-top: 1.15rem; align-content: start; }
+}
 .tag {
     font-family: var(--font-mono);
     font-size: 0.68rem;
@@ -731,7 +733,11 @@ section { position: relative; z-index: 2; }
 .btn--solid { background: var(--accent); border-color: var(--accent); color: #fff; }
 .btn--solid:hover { box-shadow: 0 8px 26px var(--accent-glow); }
 .btn--ghost:hover { border-color: var(--line-hi); background: var(--surface-hi); }
-.btn img { width: 15px; height: 15px; }
+.btn svg {
+    width: 16px; height: 16px; flex-shrink: 0;
+    fill: none; stroke: currentColor;
+    stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
+}
 
 .links { display: grid; gap: 0.5rem; }
 .linkRow {
@@ -806,6 +812,12 @@ section { position: relative; z-index: 2; }
     font-size: var(--fs-xs); color: var(--faint);
     position: relative; z-index: 2;
 }
+.foot__hint { display: inline-flex; align-items: center; gap: 0.42rem; }
+.foot__hint svg {
+    width: 13px; height: 13px;
+    fill: none; stroke: currentColor;
+    stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round;
+}
 
 /* ---------- REVEAL ----------------------------------------------------
    Scoped to .js (set by the inline head script) so that with scripting
@@ -825,8 +837,7 @@ section { position: relative; z-index: 2; }
     :root { --shell: min(100% - 1.6rem, 1180px); }
     .nav { padding: 0.55rem 0.6rem; }
     .nav__links { display: none; }
-    .kbd-btn span { display: none; }
-    .hero { min-height: auto; padding: 7.5rem 0 3rem; }
+    .hero { min-height: auto; padding: 6.5rem 0 2rem; }
     .tl { padding-left: 1.7rem; }
     .tl-node { left: -1.7rem; }
     .tl-body p { padding-right: 0; }

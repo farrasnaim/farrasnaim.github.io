@@ -17,7 +17,7 @@
        Real parts. `part` must match the data-part attribute on the SVG.   */
     var RIG = [
         { part: 'pc', label: 'tower', name: 'the main PC', spec: 'i7-14700F · RTX 5060 8GB · 32GB DDR4 · 1TB NVMe',
-          why: 'a 20-core i7-14700F next to a mid-range RTX 5060, which looks unbalanced until you notice what it actually does all day. <strong>the cores are for work, the GPU is for the evening</strong> — audit workbooks and VMs eat threads, valorant does not eat much of anything. a 360mm AIO in a darkFlash C280 so the whole thing stays quiet while it does both.' },
+          why: 'a 20-core i7-14700F next to a mid-range RTX 5060, which looks unbalanced until you remember that nothing from the office ever touches it. <strong>work stays on the work laptop — BYOD here stops at a phone and an iPad</strong>, so this machine has exactly one job description: games, streams, and whatever I have decided to reinstall at 1am. a 360mm AIO in a darkFlash C280 keeps it quiet through all of it.' },
 
         { part: 'monitor', label: 'display', name: 'ASUS ROG Strix XG27WCS', spec: '27" QHD · 180 Hz · on an Oximus dual arm',
           why: '1440p at 27" over 4K on purpose — <strong>at this size the extra pixels cost frames without adding clarity</strong>, and I read spreadsheets far more than I look at textures. 180Hz is the valorant half of the argument. it sits on a dual monitor arm because the desk surface is worth more than the stand was.' },
@@ -26,10 +26,10 @@
           why: 'tenkeyless so the mouse sits closer to my shoulder. <strong>a numpad I touch twice a month is not worth the wrist angle</strong>, and tri-mode means the same board follows the ThinkPad when I work somewhere else without re-learning a layout.' },
 
         { part: 'mouse', label: 'mouse', name: 'LAMZU MAYA X', spec: 'wireless · 8K polling · Artisan Ninja FX Raiden',
-          why: 'light beats high DPI every time — <strong>nobody has lost a duel because their sensor read 6000 instead of 8000</strong>, but everyone has lost one dragging a brick. the Artisan pad is the part people skip and then notice immediately: a control-speed surface makes small corrections repeatable.' },
+          why: 'an expensive mouse sitting on an expensive pad, and I still cannot aim. the LAMZU is genuinely light, the 8K polling is genuinely real, and the Artisan Raiden is the control-speed surface everyone skips and then immediately notices. <strong>none of it has ever landed a shot my hands were not already going to miss</strong> — valorant and CS2 have both made this very clear to me. the gear stopped being the variable a long time ago. it is a skill issue and I have made peace with it.' },
 
-        { part: 'audio', label: 'audio', name: 'Sony WH-1000XM6', spec: 'wireless · active noise cancelling',
-          why: 'noise cancelling is the actual feature, and it is not for music. <strong>open-plan audit rooms and a laptop fan are the two sounds I most need gone</strong>. wireless because I stand up mid-call more than I would like to admit, and they live on top of the tower so there is one obvious place they belong.' },
+        { part: 'audio', label: 'audio', name: 'Sony WH-1000XM6 + 7Hz G1', spec: 'wireless ANC over-ears · wired IEMs',
+          why: 'noise cancelling is the actual feature, and it is not for music. <strong>open-plan audit rooms and a laptop fan are the two sounds I most need gone</strong>, and the XM6 survives me standing up mid-call. the 7Hz G1 covers the other half: wired IEMs for when I want to hear the footsteps themselves rather than a pleasant interpretation of them. both live on top of the tower so there is one obvious place they belong.' },
 
         { part: 'laptop', label: 'work laptop', name: 'ThinkPad T14 Gen 3', spec: 'i7-1265U · 32GB · since 2022',
           why: 'the machine that has been with me since I joined EY in 2022, and the one that has taken the most abuse. <strong>32GB is the only reason million-row Excel workbooks open at all</strong> — the CPU is a low-power U-series chip, so memory is what stops a pivot table from ending the afternoon. it keeps the desk honest: the tower is mine, this one is the job.' },
@@ -47,15 +47,15 @@
        rewrite — everything else here is data rather than recollection.   */
     var TRIPS = [
         { city: 'Jakarta', country: 'Indonesia', lat: -6.21, lon: 106.85, when: 'home base', home: true,
-          note: 'CGK is the start and end of every line on this map. the domestic flights are not plotted — this is the international log only.',
+          note: 'home. every line on this map leaves from here and comes back to here, usually at an hour that made a lot more sense when I booked it.',
           legs: [] },
 
         { city: 'Cairo', country: 'Egypt', lat: 30.04, lon: 31.24, when: 'apr 2025',
-          note: 'the longest single leg I have flown — over eleven hours in one go.',
+          note: 'the longest single leg I have flown — over eleven hours in one go. we stopped here for the pyramids before carrying on to Saudi for Umrah, and standing in front of them is still the closest I have come to not believing a place was real.',
           legs: [ { d: '2 apr 2025', r: 'CGK → CAI', f: 'MS 978 · B789', t: '11h 18m' } ] },
 
         { city: 'Jeddah', country: 'Saudi Arabia', lat: 21.49, lon: 39.19, when: 'apr 2025',
-          note: 'nine days on the ground between landing from Cairo and flying back out — the longest I have stayed anywhere abroad.',
+          note: 'Umrah with my brothers — the same classmates I spent four years of campus with. none of us, and none of the people who knew us, really saw that trip coming. nine days on the ground between landing from Cairo and flying back out, which is still the longest I have stayed anywhere abroad.',
           legs: [ { d: '3 apr 2025',  r: 'CAI → JED', f: 'MS 665 · A333',  t: '2h 07m' },
                   { d: '12 apr 2025', r: 'JED → DOH', f: 'QR 1185 · A333', t: '1h 59m' } ] },
 
@@ -184,20 +184,28 @@
        ===================================================================== */
     (function role() {
         var el = $('#roleWord');
-        if (!el || reduce.matches) return;
+        if (!el) return;
         var words = (el.dataset.words || '').split(',').filter(Boolean);
         if (words.length < 2) return;
         var i = 0;
 
-        el.style.transition = 'opacity .32s ease';
+        /* The rotation is content rather than decoration, so it keeps running
+           even when the OS asks for reduced motion — only the cross-fade is
+           dropped there. Gating the whole thing on `reduce` made the line look
+           broken on any machine with animation effects switched off. */
+        var fade = !reduce.matches;
+        if (fade) el.style.transition = 'opacity .32s ease';
+
+        function step() {
+            i = (i + 1) % words.length;
+            el.textContent = words[i];
+        }
+
         setInterval(function () {
             if (document.hidden) return;
+            if (!fade) { step(); return; }
             el.style.opacity = '0';
-            setTimeout(function () {
-                i = (i + 1) % words.length;
-                el.textContent = words[i];
-                el.style.opacity = '1';
-            }, 320);
+            setTimeout(function () { step(); el.style.opacity = '1'; }, 320);
         }, 2900);
     })();
 
@@ -475,7 +483,7 @@
                 '<div><p class="stat__n">' + away.length + '</p><p class="stat__l">cities</p></div>' +
                 '<div><p class="stat__n">' + Object.keys(countries).length + '</p><p class="stat__l">countries</p></div>' +
                 '<div><p class="stat__n">' + Object.keys(uniqueLegs).length + '</p><p class="stat__l">intl. legs</p></div>' +
-                '<div><p class="stat__n">100%</p><p class="stat__l">solo</p></div>';
+                '<div><p class="stat__n">mostly</p><p class="stat__l">solo</p></div>';
         }
 
         var rt;
