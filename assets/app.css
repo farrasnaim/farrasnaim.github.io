@@ -19,9 +19,17 @@
     --faint:         #7c7c86;   /* 4.84:1 on --bg; was #5c5c66 at 3.03 */
 
     --accent:        #f04444;
+    /* solid fills that carry white text need to be darker than --accent:
+       #fff on #f04444 is 3.7:1, on #d32020 it's 5.9:1 (AA) */
+    --accent-solid:  #d32020;
+    /* mid stop of the hero gradient; needs a darker light-theme override */
+    --accent-2:      #ff8a5c;
     --accent-soft:   rgba(240, 68, 68, 0.14);
     --accent-line:   rgba(240, 68, 68, 0.34);
     --accent-glow:   rgba(240, 68, 68, 0.30);
+
+    --shadow-pop:    rgba(0, 0, 0, 0.6);
+    --vignette:      rgba(0, 0, 0, 0.4);
 
     --campus:        #d1893a;
     --campus-soft:   rgba(209, 137, 58, 0.14);
@@ -60,9 +68,12 @@ html[data-theme="light"] {
     --muted:         #63636e;
     --faint:         #6e6e79;   /* 4.87:1 on --bg; was #8e8e99 at 3.13 */
     --accent:        #d32020;
+    --accent-2:      #c2410c;   /* 5.0:1 on #fbfbfc; #ff8a5c was 2.2:1 */
     --accent-soft:   rgba(211, 32, 32, 0.09);
     --accent-line:   rgba(211, 32, 32, 0.3);
     --accent-glow:   rgba(211, 32, 32, 0.18);
+    --shadow-pop:    rgba(20, 20, 30, 0.22);
+    --vignette:      rgba(0, 0, 0, 0.15);
     --campus:        #9a5f18;
     --campus-soft:   rgba(154, 95, 24, 0.1);
     --campus-line:   rgba(154, 95, 24, 0.3);
@@ -94,6 +105,9 @@ img { max-width: 100%; display: block; }
     outline-offset: 3px;
     border-radius: 4px;
 }
+/* sections receive programmatic focus after a palette jump; they're focus
+   targets, not controls, so don't ring the whole section */
+[tabindex="-1"]:focus-visible { outline: none; }
 
 .shell { width: var(--shell); margin-inline: auto; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -102,16 +116,17 @@ img { max-width: 100%; display: block; }
 /* Fixed, pointer-events-none layers that sit behind everything. */
 .atmos { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
 
+/* No blur filter: the radial gradient's own falloff provides the softness,
+   without rasterizing an 80px Gaussian over ~900px layers at first paint. */
 .atmos__glow {
     position: absolute;
     width: 70vw; height: 70vw;
     max-width: 900px; max-height: 900px;
     border-radius: 50%;
-    filter: blur(80px);
     opacity: 0.5;
 }
-.atmos__glow--a { top: -22vw; left: -12vw; background: radial-gradient(circle, var(--accent-soft) 0%, transparent 68%); }
-.atmos__glow--b { bottom: -28vw; right: -14vw; background: radial-gradient(circle, rgba(90, 60, 200, 0.10) 0%, transparent 68%); }
+.atmos__glow--a { top: -22vw; left: -12vw; background: radial-gradient(circle, var(--accent-soft) 0%, transparent 60%); }
+.atmos__glow--b { bottom: -28vw; right: -14vw; background: radial-gradient(circle, rgba(90, 60, 200, 0.10) 0%, transparent 60%); }
 
 .atmos__grid {
     position: absolute; inset: 0;
@@ -201,6 +216,9 @@ body.has-pointer .spotlight { opacity: 1; }
 }
 .icon-btn:hover { color: var(--text); border-color: var(--line-hi); transform: translateY(-2px); }
 .icon-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+/* shown only under 720px, where the nav links are gone and the palette
+   becomes the site menu — an unlabeled magnifier reads as search, not menu */
+.icon-btn__label { display: none; }
 .icon-btn .moon { display: none; }
 html[data-theme="light"] .icon-btn .moon { display: block; }
 html[data-theme="light"] .icon-btn .sun { display: none; }
@@ -254,7 +272,7 @@ section { position: relative; z-index: 2; }
 .hero__avatar img { width: 100%; height: 100%; object-fit: cover; }
 .hero__avatar::after {
     content: ''; position: absolute; inset: 0; border-radius: 50%;
-    box-shadow: inset 0 0 24px rgba(0,0,0,0.4);
+    box-shadow: inset 0 0 24px var(--vignette);
 }
 
 .hero__title {
@@ -265,7 +283,7 @@ section { position: relative; z-index: 2; }
 }
 .hero__title em {
     font-style: normal;
-    background: linear-gradient(120deg, var(--accent) 0%, #ff8a5c 55%, var(--accent) 100%);
+    background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 55%, var(--accent) 100%);
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -433,14 +451,21 @@ section { position: relative; z-index: 2; }
 .tl-item.is-open .tl-plus { transform: rotate(180deg); border-color: var(--accent-line); color: var(--accent); }
 .tl-item.is-open .tl-plus .bar--v { opacity: 0; transform: scaleY(0); }
 
-/* grid-template-rows 0fr -> 1fr gives a real auto-height transition */
+/* grid-template-rows 0fr -> 1fr gives a real auto-height transition.
+   The collapsed state is scoped to .js: without scripting there is no way
+   to expand, so everything renders open and readable instead. */
 .tl-body {
     display: grid;
-    grid-template-rows: 0fr;
     transition: grid-template-rows 0.48s var(--ease);
 }
+.js .tl-body { grid-template-rows: 0fr; }
 .tl-item.is-open .tl-body { grid-template-rows: 1fr; }
+/* visibility keeps clipped-closed content out of the accessibility tree so
+   aria-expanded="false" is true for screen readers; it transitions discretely,
+   staying visible through the closing animation and flipping instantly on open */
 .tl-body__inner { overflow: hidden; }
+.js .tl-body__inner { visibility: hidden; transition: visibility 0.48s; }
+.tl-item.is-open .tl-body__inner { visibility: visible; transition: none; }
 .tl-body p {
     color: var(--muted);
     padding: 1.1rem 0 0.4rem 0;
@@ -502,10 +527,13 @@ section { position: relative; z-index: 2; }
 }
 .hot-ring { fill: none; stroke: var(--accent); stroke-width: 1.2; opacity: 0; transform-box: fill-box; transform-origin: center; }
 .rig-part:not(.is-active) .hot-ring { animation: hotpulse 2.6s var(--ease-io) infinite; }
+/* scale instead of the CSS r property — r isn't animatable everywhere, and
+   the ring already has transform-box: fill-box. stroke-width shrinks in step
+   so the painted ring stays a hairline instead of thickening as it grows. */
 @keyframes hotpulse {
-    0%   { opacity: 0.65; r: 5; }
-    70%  { opacity: 0;    r: 15; }
-    100% { opacity: 0;    r: 15; }
+    0%   { opacity: 0.65; transform: scale(1); stroke-width: 1.2; }
+    70%  { opacity: 0;    transform: scale(3); stroke-width: 0.4; }
+    100% { opacity: 0;    transform: scale(3); stroke-width: 0.4; }
 }
 .rig-part:hover .hot, .rig-part.is-active .hot { r: 7; }
 
@@ -534,7 +562,7 @@ section { position: relative; z-index: 2; }
     transition: all 0.25s var(--ease);
 }
 .rig__listBtn:hover { color: var(--text); border-color: var(--line-hi); }
-.rig__listBtn.is-active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.rig__listBtn.is-active { background: var(--accent-solid); border-color: var(--accent-solid); color: #fff; }
 
 /* ---------- TRAVEL ---------------------------------------------------- */
 .trip { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
@@ -688,15 +716,22 @@ section { position: relative; z-index: 2; }
 .card:hover { transform: translateY(-4px); border-color: var(--line-hi); }
 .card:hover::before { opacity: 1; }
 
+/* the actual toggle control; the surrounding div carries the card chrome */
+.card__head { display: block; width: 100%; text-align: left; }
+
 .card__icon { font-size: 1.35rem; line-height: 1; margin-bottom: 0.9rem; display: block; }
 .card__title { font-size: var(--fs-h3); font-weight: 600; letter-spacing: -0.02em; }
 .card__desc { color: var(--muted); font-size: var(--fs-sm); margin-top: 0.4rem; }
 .card__more {
-    display: grid; grid-template-rows: 0fr;
+    display: grid;
     transition: grid-template-rows 0.45s var(--ease);
 }
+.js .card__more { grid-template-rows: 0fr; }
 .card.is-open .card__more { grid-template-rows: 1fr; }
+/* same discrete-visibility trick as .tl-body__inner, same .js scoping */
 .card__more > div { overflow: hidden; }
+.js .card__more > div { visibility: hidden; transition: visibility 0.45s; }
+.card.is-open .card__more > div { visibility: visible; transition: none; }
 .card__more p { color: var(--faint); font-size: var(--fs-sm); padding-top: 0.85rem; }
 .card__cue { margin-top: 0.9rem; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); display: flex; align-items: center; gap: 0.4rem; }
 .card__cue svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2.2; transition: transform 0.4s var(--ease); }
@@ -730,7 +765,7 @@ section { position: relative; z-index: 2; }
     transition: transform 0.3s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease);
 }
 .btn:hover { transform: translateY(-2px); }
-.btn--solid { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn--solid { background: var(--accent-solid); border-color: var(--accent-solid); color: #fff; }
 .btn--solid:hover { box-shadow: 0 8px 26px var(--accent-glow); }
 .btn--ghost:hover { border-color: var(--line-hi); background: var(--surface-hi); }
 .btn svg {
@@ -757,29 +792,42 @@ section { position: relative; z-index: 2; }
 .linkRow__go svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 1.8; }
 
 /* ---------- COMMAND PALETTE ------------------------------------------- */
+/* A native <dialog> in the top layer. The dialog itself is stretched into a
+   full-viewport, transparent positioning surface (so outside-clicks hit it),
+   and the scrim lives on ::backdrop. */
 .cmdk {
-    position: fixed; inset: 0; z-index: 90;
-    display: grid; place-items: start center;
-    padding-top: clamp(4rem, 14vh, 9rem);
-    background: color-mix(in srgb, var(--bg-deep) 62%, transparent);
+    position: fixed; inset: 0;
+    width: 100%; height: 100%;
+    max-width: none; max-height: none;
+    margin: 0; border: 0; padding: clamp(4rem, 14vh, 9rem) 1rem 1rem;
+    background: transparent;
+    justify-items: center; align-items: start;
+}
+.cmdk[open] { display: grid; }
+/* engines without <dialog> have no UA rule hiding the closed state; without
+   this the palette would render permanently there as a stray overlay */
+.cmdk:not([open]) { display: none; }
+.cmdk::backdrop {
+    background: rgba(5, 5, 7, 0.62); /* engines without color-mix() */
+    /* the var() fallback value keeps this declaration valid in engines whose
+       ::backdrop can't see custom properties (else it computes to transparent) */
+    background: color-mix(in srgb, var(--bg-deep, #050507) 62%, transparent);
     backdrop-filter: blur(7px);
     -webkit-backdrop-filter: blur(7px);
-    opacity: 0; visibility: hidden;
-    transition: opacity 0.28s var(--ease), visibility 0.28s;
 }
-.cmdk.is-open { opacity: 1; visibility: visible; }
 
 .cmdk__box {
-    width: min(100% - 2rem, 560px);
+    width: min(100%, 560px);
     border: 1px solid var(--line-hi);
     border-radius: 15px;
     background: var(--bg);
-    box-shadow: 0 24px 70px rgba(0,0,0,0.6);
+    box-shadow: 0 24px 70px var(--shadow-pop);
     overflow: hidden;
-    transform: translateY(-12px) scale(0.98);
-    transition: transform 0.34s var(--ease);
 }
-.cmdk.is-open .cmdk__box { transform: none; }
+.cmdk[open] .cmdk__box { animation: cmdkIn 0.34s var(--ease); }
+@keyframes cmdkIn {
+    from { opacity: 0; transform: translateY(-12px) scale(0.98); }
+}
 
 .cmdk__input {
     width: 100%;
@@ -837,6 +885,13 @@ section { position: relative; z-index: 2; }
     :root { --shell: min(100% - 1.6rem, 1180px); }
     .nav { padding: 0.55rem 0.6rem; }
     .nav__links { display: none; }
+    #cmdkOpen {
+        width: auto;
+        display: inline-flex; align-items: center; gap: 0.4rem;
+        padding: 0 0.8rem;
+        border-radius: 100px;
+    }
+    .icon-btn__label { display: inline; font-size: var(--fs-xs); }
     .hero { min-height: auto; padding: 6.5rem 0 2rem; }
     .tl { padding-left: 1.7rem; }
     .tl-node { left: -1.7rem; }
@@ -858,4 +913,24 @@ section { position: relative; z-index: 2; }
     .spotlight { display: none; }
     /* expansion still needs to work, just instantly */
     .tl-body, .card__more { transition: none; }
+}
+
+/* ---------- PRINT ------------------------------------------------------
+   Un-hide the reveal-on-scroll blocks (unscrolled sections would print
+   blank) and force light colors so dark-theme text isn't white-on-white. */
+@media print {
+    :root {
+        --bg: #fff; --bg-deep: #fff;
+        --text: #111; --muted: #444; --faint: #555;
+        --line: rgba(0, 0, 0, 0.15); --line-hi: rgba(0, 0, 0, 0.3);
+    }
+    .js .rv { opacity: 1 !important; transform: none !important; animation: none !important; }
+    .atmos, .spotlight, .nav, .cmdk { display: none !important; }
+    .hero { min-height: auto; }
+    /* printers drop backgrounds: un-clip the gradient headline and re-ink
+       labels whose color relies on a painted fill behind them */
+    .hero__title em { background: none; -webkit-text-fill-color: currentColor; color: #111; }
+    .btn--solid, .filter[aria-pressed="true"], .rig__listBtn.is-active {
+        color: #111 !important; border-color: #333 !important;
+    }
 }

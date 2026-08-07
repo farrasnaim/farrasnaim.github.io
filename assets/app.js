@@ -52,7 +52,8 @@
 
         { city: 'Cairo', country: 'Egypt', lat: 30.04, lon: 31.24, when: 'apr 2025',
           note: 'the longest single leg I have flown — over eleven hours in one go. we stopped here for the pyramids before carrying on to Saudi for Umrah, and standing in front of them is still the closest I have come to not believing a place was real.',
-          legs: [ { d: '2 apr 2025', r: 'CGK → CAI', f: 'MS 978 · B789', t: '11h 18m' } ] },
+          legs: [ { d: '2 apr 2025', r: 'CGK → CAI', f: 'MS 978 · B789', t: '11h 18m' },
+                  { d: '3 apr 2025', r: 'CAI → JED', f: 'MS 665 · A333', t: '2h 07m' } ] },
 
         { city: 'Jeddah', country: 'Saudi Arabia', lat: 21.49, lon: 39.19, when: 'apr 2025',
           note: 'Umrah with my brothers — the same classmates I spent four years of campus with. none of us, and none of the people who knew us, really saw that trip coming. nine days on the ground between landing from Cairo and flying back out, which is still the longest I have stayed anywhere abroad.',
@@ -73,8 +74,8 @@
 
         { city: 'Kuala Lumpur', country: 'Malaysia', lat: 3.14, lon: 101.69, when: 'jun 2024 · nov 2025',
           note: 'where the solo travelling actually started. a two-night trial run in 2024 to find out whether I could do this on my own, and then again in 2025 as the first stop of a two-country loop.',
-          legs: [ { d: '14 jun 2024', r: 'CGK → KUL', f: '8B 673 · TransNusa', t: '2h 05m' },
-                  { d: '16 jun 2024', r: 'KUL → CGK', f: '8B 680 · TransNusa', t: '2h 15m' },
+          legs: [ { d: '14 jun 2024', r: 'CGK → KUL', f: '8B 673 · A320', t: '2h 05m' },
+                  { d: '16 jun 2024', r: 'KUL → CGK', f: '8B 680 · A320', t: '2h 15m' },
                   { d: '6 nov 2025',  r: 'CGK → KUL', f: '8B 675 · A321',      t: '2h 18m' },
                   { d: '9 nov 2025',  r: 'KUL → SGN', f: 'MH 758 · B738',      t: '2h 55m' } ] },
 
@@ -107,7 +108,28 @@
     ];
 
     /* =====================================================================
-       1. THEME
+       1. REVEAL ON SCROLL — reveals once, never hides again.
+       Runs before every other module so that an exception anywhere later
+       can never leave the .rv-hidden page blank.
+       ===================================================================== */
+    (function reveal() {
+        var els = $$('.rv');
+        if (reduce.matches || !('IntersectionObserver' in window)) {
+            els.forEach(function (e) { e.classList.add('is-in'); });
+            return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+                if (!en.isIntersecting) return;
+                en.target.classList.add('is-in');
+                io.unobserve(en.target);
+            });
+        }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+        els.forEach(function (e) { io.observe(e); });
+    })();
+
+    /* =====================================================================
+       2. THEME
        ===================================================================== */
     (function theme() {
         var btn = $('#themeToggle');
@@ -120,7 +142,8 @@
         }
         function paint(t) {
             document.documentElement.setAttribute('data-theme', t);
-            btn.setAttribute('aria-pressed', String(t === 'dark'));
+            /* the label alone carries the state; pairing aria-pressed with a
+               swapped action label reads as contradictory in screen readers */
             btn.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
             var meta = $('meta[name="theme-color"]');
             if (meta) meta.setAttribute('content', t === 'dark' ? '#08080b' : '#fbfbfc');
@@ -137,25 +160,6 @@
         var onSys = function (e) { if (!read()) { paint(e.matches ? 'light' : 'dark'); drawMap(); } };
         if (media.addEventListener) media.addEventListener('change', onSys);
         else if (media.addListener) media.addListener(onSys);
-    })();
-
-    /* =====================================================================
-       2. REVEAL ON SCROLL — reveals once, never hides again
-       ===================================================================== */
-    (function reveal() {
-        var els = $$('.rv');
-        if (reduce.matches || !('IntersectionObserver' in window)) {
-            els.forEach(function (e) { e.classList.add('is-in'); });
-            return;
-        }
-        var io = new IntersectionObserver(function (entries) {
-            entries.forEach(function (en) {
-                if (!en.isIntersecting) return;
-                en.target.classList.add('is-in');
-                io.unobserve(en.target);
-            });
-        }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
-        els.forEach(function (e) { io.observe(e); });
     })();
 
     /* =====================================================================
@@ -198,13 +202,31 @@
         var fade = !reduce.matches;
         if (fade) el.style.transition = 'opacity .32s ease';
 
+        /* Reserve the widest word's width once so swaps never shift the caret
+           or the line's right edge (tiny CLS entries otherwise). */
+        el.style.display = 'inline-block';
+        var widest = 0;
+        words.forEach(function (w) {
+            el.textContent = w;
+            widest = Math.max(widest, el.offsetWidth);
+        });
+        el.style.minWidth = widest + 'px';
+        el.textContent = words[0];
+
+        /* Idle the interval while the hero is offscreen, not just when the
+           tab is hidden. */
+        var inView = true;
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (en) { inView = en[0].isIntersecting; }).observe(el);
+        }
+
         function step() {
             i = (i + 1) % words.length;
             el.textContent = words[i];
         }
 
         setInterval(function () {
-            if (document.hidden) return;
+            if (document.hidden || !inView) return;
             if (!fade) { step(); return; }
             el.style.opacity = '0';
             setTimeout(function () { step(); el.style.opacity = '1'; }, 320);
@@ -275,10 +297,13 @@
        ===================================================================== */
     (function cards() {
         $$('.card').forEach(function (card) {
-            card.addEventListener('click', function () {
-                var open = card.classList.toggle('is-open');
-                card.setAttribute('aria-expanded', String(open));
-            });
+            var head = $('.card__head', card);
+            if (head) {
+                head.addEventListener('click', function () {
+                    var open = card.classList.toggle('is-open');
+                    head.setAttribute('aria-expanded', String(open));
+                });
+            }
             card.addEventListener('pointermove', function (e) {
                 var r = card.getBoundingClientRect();
                 card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
@@ -297,13 +322,23 @@
         var groups = $$('.rig-part');
         var card = document.createElement('div');
         card.className = 'rig__card';
+        /* announce panel swaps to screen readers, same as #tripCard */
+        card.setAttribute('aria-live', 'polite');
         panel.insertBefore(card, list);
 
         function show(part) {
             var d = RIG.filter(function (x) { return x.part === part; })[0];
             if (!d) return;
-            groups.forEach(function (g) { g.classList.toggle('is-active', g.dataset.part === part); });
-            $$('.rig__listBtn', list).forEach(function (b) { b.classList.toggle('is-active', b.dataset.part === part); });
+            groups.forEach(function (g) {
+                var on = g.dataset.part === part;
+                g.classList.toggle('is-active', on);
+                g.setAttribute('aria-pressed', String(on));
+            });
+            $$('.rig__listBtn', list).forEach(function (b) {
+                var on = b.dataset.part === part;
+                b.classList.toggle('is-active', on);
+                b.setAttribute('aria-pressed', String(on));
+            });
             if (hint) hint.style.display = 'none';
             card.innerHTML =
                 '<p class="rig__kicker">' + d.label + '</p>' +
@@ -319,12 +354,14 @@
             b.className = 'rig__listBtn';
             b.dataset.part = d.part;
             b.textContent = d.label;
+            b.setAttribute('aria-pressed', 'false');
             b.addEventListener('click', function () { show(d.part); });
             list.appendChild(b);
         });
 
         groups.forEach(function (g) {
             var part = g.dataset.part;
+            g.setAttribute('aria-pressed', 'false');
             g.addEventListener('click', function () { show(part); });
             g.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(part); }
@@ -365,6 +402,26 @@
             };
         }
 
+        /* The land lattice depends only on the step value, so cache the
+           projected points per step — theme toggles and resizes then skip
+           the ~13k point-in-polygon tests and just replay coordinates. */
+        var landCache = {};
+        function landPoints(step) {
+            var key = String(step);
+            if (!landCache[key]) {
+                var pts = [];
+                for (var lat = LAT_TOP; lat >= LAT_BOT; lat -= step) {
+                    for (var lon = -180; lon <= 180; lon += step) {
+                        if (!isLand(lon, lat)) continue;
+                        var p = project(lon, lat);
+                        pts.push(p.x, p.y);
+                    }
+                }
+                landCache[key] = pts;
+            }
+            return landCache[key];
+        }
+
         drawMap = function () {
             var w = wrap.clientWidth, h = wrap.clientHeight;
             if (!w || !h) return;
@@ -380,14 +437,11 @@
             var r = w < 520 ? 1.0 : 1.3;
             ctx.fillStyle = dot;
 
-            for (var lat = LAT_TOP; lat >= LAT_BOT; lat -= step) {
-                for (var lon = -180; lon <= 180; lon += step) {
-                    if (!isLand(lon, lat)) continue;
-                    var p = project(lon, lat);
-                    ctx.beginPath();
-                    ctx.arc(p.x * w, p.y * h, r, 0, Math.PI * 2);
-                    ctx.fill();
-                }
+            var pts = landPoints(step);
+            for (var i = 0; i < pts.length; i += 2) {
+                ctx.beginPath();
+                ctx.arc(pts[i] * w, pts[i + 1] * h, r, 0, Math.PI * 2);
+                ctx.fill();
             }
         };
 
@@ -489,10 +543,15 @@
         }
 
         var rt;
-        window.addEventListener('resize', function () {
+        function relayout() {
             clearTimeout(rt);
             rt = setTimeout(function () { drawMap(); layoutPins(); }, 140);
-        });
+        }
+        /* ResizeObserver catches container size changes that never fire a
+           window resize (embedded webviews, some zoom paths); fall back to
+           the window event where it's unavailable. */
+        if ('ResizeObserver' in window) new ResizeObserver(relayout).observe(wrap);
+        else window.addEventListener('resize', relayout);
 
         drawMap();
         layoutPins();
@@ -504,30 +563,34 @@
        ===================================================================== */
     (function palette() {
         var box = $('#cmdk'), input = $('#cmdkInput'), list = $('#cmdkList'), opener = $('#cmdkOpen');
-        if (!box || !input || !list) return;
-        box.removeAttribute('hidden');
+        if (!box || !input || !list || typeof box.showModal !== 'function') return;
 
         var ITEMS = [
-            { icon: '◐', label: 'Journey — work & campus', hint: 'section', go: function () { jump('#journey'); } },
-            { icon: '◧', label: 'The rig — desk setup',    hint: 'section', go: function () { jump('#rig'); } },
-            { icon: '◍', label: 'The map — travel',        hint: 'section', go: function () { jump('#travel'); } },
-            { icon: '◔', label: 'Off hours',               hint: 'section', go: function () { jump('#offhours'); } },
-            { icon: '◈', label: 'Connect',                 hint: 'section', go: function () { jump('#connect'); } },
-            { icon: '✉', label: 'Email me',                hint: 'link', go: function () { location.href = 'mailto:farrasnaim@outlook.com'; } },
-            { icon: 'in', label: 'LinkedIn',               hint: 'link', go: function () { win('https://linkedin.com/in/farrasnaim'); } },
-            { icon: '◎', label: 'Instagram',               hint: 'link', go: function () { win('https://instagram.com/farrasnaim'); } },
-            { icon: '♪', label: 'TikTok',                  hint: 'link', go: function () { win('https://www.tiktok.com/@farrasnaim'); } },
-            { icon: '♫', label: 'Spotify',                 hint: 'link', go: function () { win('https://open.spotify.com/user/farrasnaim'); } },
-            { icon: '▶', label: 'Twitch stream',           hint: 'link', go: function () { win('https://www.twitch.tv/rughseel'); } },
-            { icon: '▷', label: 'YouTube',                 hint: 'link', go: function () { win('https://www.youtube.com/@farrasnaim/streams'); } },
-            { icon: '◑', label: 'Toggle theme',            hint: 'action', go: function () { $('#themeToggle').click(); } },
-            { icon: '⤒', label: 'Back to top',             hint: 'action', go: function () { jump('#top'); } }
+            { icon: '◐', label: 'journey — work & campus', hint: 'section', go: function () { jump('#journey'); } },
+            { icon: '◧', label: 'the rig — desk setup',    hint: 'section', go: function () { jump('#rig'); } },
+            { icon: '◍', label: 'the map — travel',        hint: 'section', go: function () { jump('#travel'); } },
+            { icon: '◔', label: 'off hours',               hint: 'section', go: function () { jump('#offhours'); } },
+            { icon: '◈', label: 'connect',                 hint: 'section', go: function () { jump('#connect'); } },
+            { icon: '✉', label: 'email me',                hint: 'link', go: function () { location.href = 'mailto:farrasnaim@outlook.com'; } },
+            { icon: 'in', label: 'linkedin',               hint: 'link', go: function () { win('https://linkedin.com/in/farrasnaim'); } },
+            { icon: '◎', label: 'instagram',               hint: 'link', go: function () { win('https://instagram.com/farrasnaim'); } },
+            { icon: '♪', label: 'tiktok',                  hint: 'link', go: function () { win('https://www.tiktok.com/@farrasnaim'); } },
+            { icon: '♫', label: 'spotify',                 hint: 'link', go: function () { win('https://open.spotify.com/user/farrasnaim'); } },
+            { icon: '▶', label: 'twitch stream',           hint: 'link', go: function () { win('https://www.twitch.tv/rughseel'); } },
+            { icon: '▷', label: 'youtube',                 hint: 'link', go: function () { win('https://www.youtube.com/@farrasnaim/streams'); } },
+            { icon: '◑', label: 'toggle theme',            hint: 'action', go: function () { $('#themeToggle').click(); } },
+            { icon: '⤒', label: 'back to top',             hint: 'action', go: function () { jump('#top'); } }
         ];
 
         function win(u) { window.open(u, '_blank', 'noopener'); }
         function jump(sel) {
             var el = $(sel);
-            if (el) el.scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth', block: 'start' });
+            if (!el) return;
+            /* move focus along with the scroll so keyboard and screen-reader
+               users land in the section they picked */
+            el.setAttribute('tabindex', '-1');
+            el.focus({ preventScroll: true });
+            el.scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth', block: 'start' });
         }
 
         var shown = [], sel = 0;
@@ -538,18 +601,29 @@
                 return !needle || it.label.toLowerCase().indexOf(needle) > -1 || it.hint.indexOf(needle) > -1;
             });
             sel = 0;
-            if (!shown.length) { list.innerHTML = '<p class="cmdk__empty">nothing matches that.</p>'; return; }
+            if (!shown.length) {
+                list.innerHTML = '<p class="cmdk__empty">nothing matches that.</p>';
+                input.removeAttribute('aria-activedescendant');
+                return;
+            }
             list.innerHTML = shown.map(function (it, i) {
-                return '<button class="cmdk__item" role="option" aria-selected="' + (i === 0) + '" data-i="' + i + '">' +
+                /* tabindex="-1": options are targeted via aria-activedescendant
+                   from the input, so they must not be tab stops themselves */
+                return '<button class="cmdk__item" role="option" tabindex="-1" id="cmdk-opt-' + i + '" aria-selected="' + (i === 0) + '" data-i="' + i + '">' +
                        '<i>' + it.icon + '</i>' + it.label + '<small>' + it.hint + '</small></button>';
             }).join('');
+            input.setAttribute('aria-activedescendant', 'cmdk-opt-0');
             $$('.cmdk__item', list).forEach(function (b) {
                 b.addEventListener('click', function () { run(+b.dataset.i); });
                 b.addEventListener('mousemove', function () { mark(+b.dataset.i); });
             });
         }
         function mark(i) {
+            if (i < 0 || i >= shown.length) return;
             sel = i;
+            /* mirror the visual highlight for the combobox pattern — focus
+               stays on the input, so SRs follow aria-activedescendant */
+            input.setAttribute('aria-activedescendant', 'cmdk-opt-' + i);
             $$('.cmdk__item', list).forEach(function (b, n) { b.setAttribute('aria-selected', String(n === i)); });
         }
         function run(i) {
@@ -557,19 +631,27 @@
             close();
             if (it) setTimeout(it.go, 120);
         }
+        /* showModal() supplies the modal contract: Tab containment, inert
+           background, native Escape, and focus restore to the opener */
         function open() {
-            box.classList.add('is-open');
+            if (box.open) return;
+            box.showModal();
             input.value = '';
             render('');
-            setTimeout(function () { input.focus(); }, 40);
+            input.focus();
         }
-        function close() { box.classList.remove('is-open'); }
+        function close() { if (box.open) box.close(); }
 
         if (opener) opener.addEventListener('click', open);
-        box.addEventListener('click', function (e) { if (e.target === box) close(); });
+        /* pointerdown, not click: a click's target resolves to the common
+           ancestor when a drag starts in the input and releases on the
+           backdrop, which used to dismiss the palette mid-text-selection */
+        box.addEventListener('pointerdown', function (e) { if (e.target === box) close(); });
         input.addEventListener('input', function () { render(input.value); });
 
         input.addEventListener('keydown', function (e) {
+            /* nothing to move through or run when the filter matched nothing */
+            if (!shown.length && (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter')) { e.preventDefault(); return; }
             if (e.key === 'ArrowDown') { e.preventDefault(); mark(Math.min(sel + 1, shown.length - 1)); scrollSel(); }
             else if (e.key === 'ArrowUp') { e.preventDefault(); mark(Math.max(sel - 1, 0)); scrollSel(); }
             else if (e.key === 'Enter') { e.preventDefault(); run(sel); }
@@ -583,9 +665,7 @@
         document.addEventListener('keydown', function (e) {
             if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
                 e.preventDefault();
-                box.classList.contains('is-open') ? close() : open();
-            } else if (e.key === 'Escape' && box.classList.contains('is-open')) {
-                close();
+                box.open ? close() : open();
             }
         });
     })();
