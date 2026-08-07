@@ -492,12 +492,14 @@
             box-shadow: 0 12px 32px rgba(220, 38, 38, 0.1);
         }
 
+        /* Lowercase like the rest of the page. Tracking is dialled back from
+           the uppercase setting, and the size bumped a step, since lowercase
+           reads smaller than caps at the same font-size. */
         .work-period {
-            font-size: var(--fs-xs);
+            font-size: var(--fs-sm);
             color: var(--accent-1);
             font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
+            letter-spacing: 0.01em;
             margin-bottom: 0.5rem;
         }
 
@@ -587,11 +589,10 @@
         }
 
         .org-role {
-            font-size: var(--fs-xs);
+            font-size: var(--fs-sm);
             color: var(--accent-1);
             font-weight: 700;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
+            letter-spacing: 0.01em;
             margin-bottom: 0.35rem;
         }
 
