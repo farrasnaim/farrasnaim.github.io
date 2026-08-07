@@ -9,6 +9,19 @@
     var $  = function (s, r) { return (r || document).querySelector(s); };
     var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
+    /* Contact address, assembled from the split parts on #emailLink so a
+       harvestable "user@domain" string lives neither in the HTML nor in this
+       file. app.js is deferred, so the DOM is ready by the time this runs. */
+    var EMAIL = '';
+    (function email() {
+        var link = $('#emailLink');
+        if (!link) return;
+        EMAIL = (link.dataset.user || '') + '@' + (link.dataset.domain || '');
+        link.href = 'mailto:' + EMAIL;
+        var text = $('#emailText', link);
+        if (text) text.textContent = EMAIL;
+    })();
+
     /* =====================================================================
        CONTENT YOU'LL WANT TO EDIT
        ===================================================================== */
@@ -571,7 +584,7 @@
             { icon: '◍', label: 'the map — travel',        hint: 'section', go: function () { jump('#travel'); } },
             { icon: '◔', label: 'off hours',               hint: 'section', go: function () { jump('#offhours'); } },
             { icon: '◈', label: 'connect',                 hint: 'section', go: function () { jump('#connect'); } },
-            { icon: '✉', label: 'email me',                hint: 'link', go: function () { location.href = 'mailto:farrasnaim@outlook.com'; } },
+            { icon: '✉', label: 'email me',                hint: 'link', go: function () { if (EMAIL) location.href = 'mailto:' + EMAIL; } },
             { icon: 'in', label: 'linkedin',               hint: 'link', go: function () { win('https://linkedin.com/in/farrasnaim'); } },
             { icon: '◎', label: 'instagram',               hint: 'link', go: function () { win('https://instagram.com/farrasnaim'); } },
             { icon: '♪', label: 'tiktok',                  hint: 'link', go: function () { win('https://www.tiktok.com/@farrasnaim'); } },

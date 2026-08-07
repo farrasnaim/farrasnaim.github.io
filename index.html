@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Content-Security-Policy (defense-in-depth). GitHub Pages can't set HTTP
+         headers, so this is delivered via <meta>; note frame-ancestors/HSTS
+         only work as real headers and are intentionally omitted here. The
+         script-src hash covers the inline head bootstrap above; recompute it
+         (sha256 of that script's contents) if that script ever changes. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-GyzXZXeDv1gyR/q2HzVbVocjgHAO4A2Xf5p3k7/drHs='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
     <meta name="description" content="Farras Naim — IT guy in Jakarta. Technology risk by day; gamer, solo traveler and streamer otherwise. An interactive look at the work, the desk and the map.">
     <title>Farras Naim — Senior, Technology Risk</title>
     <link rel="canonical" href="https://farrasnaim.github.io/">
@@ -34,13 +40,24 @@
     <!-- Applied before first paint so a saved theme never flashes the wrong colors -->
     <script>
         (function () {
+            var el = document.documentElement;
             /* Marks that scripting is available. Reveal-on-scroll hides elements
                until observed, so those styles are scoped to .js — without this
                the page would render blank when JS is off or fails. */
-            document.documentElement.className += ' js';
+            el.className += ' js';
+            /* If app.js fails to load, undo that so the reveal styles never
+               leave the page blank. Resource error events don't bubble, so we
+               catch them in the capture phase — this replaces the inline
+               onerror attribute the Content-Security-Policy would block. */
+            window.addEventListener('error', function (ev) {
+                var t = ev.target;
+                if (t && t.tagName === 'SCRIPT' && /app\.js/.test(t.src || '')) {
+                    el.classList.remove('js');
+                }
+            }, true);
             try {
                 var saved = localStorage.getItem('theme');
-                if (saved) document.documentElement.setAttribute('data-theme', saved);
+                if (saved) el.setAttribute('data-theme', saved);
             } catch (e) { /* private mode — fall back to the dark default */ }
         })();
     </script>
@@ -585,9 +602,12 @@
             </div>
 
             <div class="links">
-                <a class="linkRow" href="mailto:farrasnaim@outlook.com">
+                <!-- Address split across data-* and assembled by JS so no
+                     harvestable mailto:/user@domain string sits in the source.
+                     The visible "at / dot" fallback stays readable without JS. -->
+                <a class="linkRow" id="emailLink" href="#connect" data-user="farrasnaim" data-domain="outlook.com" rel="nofollow">
                     <svg class="brand" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
-                    <span><span class="linkRow__t">email</span><br><span class="linkRow__h">farrasnaim@outlook.com</span></span>
+                    <span><span class="linkRow__t">email</span><br><span class="linkRow__h" id="emailText">farrasnaim <span aria-hidden="true">at</span> outlook <span aria-hidden="true">dot</span> com</span></span>
                     <span class="linkRow__go"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
                 </a>
                 <a class="linkRow" href="https://linkedin.com/in/farrasnaim" target="_blank" rel="noopener noreferrer">
@@ -633,8 +653,8 @@
     </div>
 </dialog>
 
-<!-- onerror: if this file fails to fetch, drop the 'js' class so the
-     reveal-on-scroll styles never leave the page hidden -->
-<script src="./assets/app.js" defer onerror="document.documentElement.classList.remove('js')"></script>
+<!-- Load failure is handled by the capturing error listener in the head
+     script (an inline onerror here would be blocked by the CSP). -->
+<script src="./assets/app.js" defer></script>
 </body>
 </html>
