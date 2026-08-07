@@ -71,10 +71,12 @@
                   { d: '12 apr 2025', r: 'DOH → BKK', f: 'QR 838 · B77W',  t: '6h 12m' },
                   { d: '13 apr 2025', r: 'DMK → CGK', f: 'ID 7630 · A320', t: '3h 26m' } ] },
 
-        { city: 'Kuala Lumpur', country: 'Malaysia', lat: 3.14, lon: 101.69, when: 'nov 2025',
-          note: 'first half of a two-country run — flew in from Jakarta, left overland-adjacent on a different airline entirely.',
-          legs: [ { d: '6 nov 2025', r: 'CGK → KUL', f: '8B 675 · A321', t: '2h 18m' },
-                  { d: '9 nov 2025', r: 'KUL → SGN', f: 'MH 758 · B738', t: '2h 55m' } ] },
+        { city: 'Kuala Lumpur', country: 'Malaysia', lat: 3.14, lon: 101.69, when: 'jun 2024 · nov 2025',
+          note: 'where the solo travelling actually started. a two-night trial run in 2024 to find out whether I could do this on my own, and then again in 2025 as the first stop of a two-country loop.',
+          legs: [ { d: '14 jun 2024', r: 'CGK → KUL', f: '8B 673 · TransNusa', t: '2h 05m' },
+                  { d: '16 jun 2024', r: 'KUL → CGK', f: '8B 680 · TransNusa', t: '2h 15m' },
+                  { d: '6 nov 2025',  r: 'CGK → KUL', f: '8B 675 · A321',      t: '2h 18m' },
+                  { d: '9 nov 2025',  r: 'KUL → SGN', f: 'MH 758 · B738',      t: '2h 55m' } ] },
 
         { city: 'Ho Chi Minh City', country: 'Vietnam', lat: 10.82, lon: 106.63, when: 'nov 2025',
           note: 'second half of the same trip, and the most recent stamp in the book.',
