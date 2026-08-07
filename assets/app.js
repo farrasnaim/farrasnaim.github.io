@@ -59,8 +59,8 @@
           legs: [ { d: '3 apr 2025',  r: 'CAI → JED', f: 'MS 665 · A333',  t: '2h 07m' },
                   { d: '12 apr 2025', r: 'JED → DOH', f: 'QR 1185 · A333', t: '1h 59m' } ] },
 
-        { city: 'Doha', country: 'Qatar', lat: 25.29, lon: 51.53, when: 'apr 2025 · connection',
-          note: 'in and out the same day. counted here because the passport was stamped, not because I saw anything.',
+        { city: 'Doha', country: 'Qatar', lat: 25.29, lon: 51.53, when: 'apr 2025',
+          note: 'technically a connection, but I cleared immigration and booked a room at the Best Western by the airport — a few hours of sleep and a shower, and enough of the city to say I was actually there, before the Bangkok leg.',
           legs: [ { d: '12 apr 2025', r: 'JED → DOH', f: 'QR 1185 · A333', t: '1h 59m' },
                   { d: '12 apr 2025', r: 'DOH → BKK', f: 'QR 838 · B77W',  t: '6h 12m' } ] },
 
@@ -438,31 +438,25 @@
             var t = TRIPS[i];
             pins.forEach(function (p, n) { p.classList.toggle('is-active', n === i); });
 
-            var legs = t.legs.length
-                ? '<div class="legs"><p class="legs__t">flights</p>' +
-                  t.legs.map(function (l) {
-                      /* order matters: d, r, t fill row one; f spans row two */
-                      return '<div class="leg">' +
-                                 '<span class="leg__d">' + l.d + '</span>' +
-                                 '<span class="leg__r">' + l.r + '</span>' +
-                                 '<span class="leg__t">' + l.t + '</span>' +
-                                 '<span class="leg__f">' + l.f + '</span>' +
-                             '</div>';
-                  }).join('') + '</div>'
-                : '';
+            var route = t.legs.length
+                ? '<ol class="route">' + t.legs.map(function (l) {
+                      return '<li class="route__leg">' +
+                                 '<span class="route__node" aria-hidden="true"></span>' +
+                                 '<span class="route__d">' + l.d + '</span>' +
+                                 '<span class="route__r">' + l.r + '</span>' +
+                                 '<span class="route__f">' + l.f + '</span>' +
+                                 '<span class="route__t">' + l.t + '</span>' +
+                             '</li>';
+                  }).join('') + '</ol>'
+                : '<p class="route__none">every line on this map starts and ends here.</p>';
 
             card.innerHTML =
-                '<div class="trip__shots">' +
-                    '<div class="shot">photo — add yours</div>' +
-                    '<div class="shot">photo</div>' +
-                    '<div class="shot">photo</div>' +
-                '</div>' +
-                '<div>' +
+                '<div class="trip__head">' +
                     '<p class="trip__when">' + t.when + '</p>' +
-                    '<h3 class="trip__place">' + t.city + ', ' + t.country + '</h3>' +
+                    '<h3 class="trip__place">' + t.city + '<span>' + t.country + '</span></h3>' +
                     '<p class="trip__note">' + t.note + '</p>' +
-                    legs +
-                '</div>';
+                '</div>' +
+                route;
 
             card.classList.remove('is-shown');
             requestAnimationFrame(function () { card.classList.add('is-shown'); });

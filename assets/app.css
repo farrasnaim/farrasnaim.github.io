@@ -16,7 +16,7 @@
 
     --text:          #ededf0;
     --muted:         #8b8b96;
-    --faint:         #5c5c66;
+    --faint:         #7c7c86;   /* 4.84:1 on --bg; was #5c5c66 at 3.03 */
 
     --accent:        #f04444;
     --accent-soft:   rgba(240, 68, 68, 0.14);
@@ -58,7 +58,7 @@ html[data-theme="light"] {
     --line-hi:       rgba(10, 10, 20, 0.2);
     --text:          #16161a;
     --muted:         #63636e;
-    --faint:         #8e8e99;
+    --faint:         #6e6e79;   /* 4.87:1 on --bg; was #8e8e99 at 3.13 */
     --accent:        #d32020;
     --accent-soft:   rgba(211, 32, 32, 0.09);
     --accent-line:   rgba(211, 32, 32, 0.3);
@@ -600,15 +600,15 @@ section { position: relative; z-index: 2; }
 .stat__n { font-size: 1.6rem; font-weight: 640; letter-spacing: -0.03em; }
 .stat__l { font-size: var(--fs-xs); color: var(--faint); font-family: var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
 
-/* journal card */
+/* journey card — no photos; the itinerary is the content */
 .trip__card {
     border: 1px solid var(--line);
     border-radius: var(--radius);
     background: var(--surface);
-    padding: clamp(1.2rem, 2.4vw, 1.9rem);
+    padding: clamp(1.3rem, 2.6vw, 2.1rem);
     display: grid;
-    gap: 1.2rem;
-    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(1.2rem, 2.4vw, 2rem);
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
     align-items: start;
     opacity: 0;
     transform: translateY(12px);
@@ -616,44 +616,49 @@ section { position: relative; z-index: 2; }
 }
 .trip__card.is-shown { opacity: 1; transform: none; }
 
-.trip__shots { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-.shot {
-    aspect-ratio: 4 / 3;
-    border-radius: 9px;
-    border: 1px solid var(--line);
-    position: relative;
-    overflow: hidden;
-    display: grid; place-items: center;
-    font-family: var(--font-mono); font-size: 0.6rem; color: var(--faint);
-    letter-spacing: 0.1em; text-transform: uppercase;
-}
-.shot:first-child { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
-.shot::before { content: ''; position: absolute; inset: 0; opacity: 0.5; }
-
-.trip__place { font-size: var(--fs-h3); font-weight: 620; letter-spacing: -0.02em; }
-.trip__when { font-family: var(--font-mono); font-size: var(--fs-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.45rem; }
-.trip__note { color: var(--muted); font-size: var(--fs-sm); margin-top: 0.7rem; }
-/* real flight legs, straight from the log */
-.legs { margin-top: 1.2rem; }
-.legs__t { font-size: var(--fs-xs); color: var(--faint); font-family: var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; }
-.leg {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 0.15rem 0.8rem;
-    padding: 0.55rem 0;
-    border-top: 1px solid var(--line);
+.trip__when {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: var(--fs-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
 }
-.leg__d { color: var(--faint); }
-.leg__r { color: var(--text); letter-spacing: 0.04em; }
-.leg__t { color: var(--faint); text-align: right; }
-.leg__f { grid-column: 1 / -1; color: var(--muted); opacity: 0.75; }
+.trip__place { font-size: var(--fs-h2); font-weight: 640; letter-spacing: -0.03em; line-height: 1.1; }
+.trip__place span { color: var(--muted); font-weight: 400; font-size: 0.5em; letter-spacing: -0.01em; display: block; margin-top: 0.35rem; }
+.trip__note { color: var(--muted); font-size: var(--fs-sm); margin-top: 0.9rem; max-width: 42ch; }
 
-@media (max-width: 520px) {
-    .leg { grid-template-columns: 1fr auto; }
-    .leg__r { grid-column: 1; }
+/* the route: a vertical line threaded through each leg */
+.route { list-style: none; position: relative; padding-left: 1.4rem; }
+.route::before {
+    content: '';
+    position: absolute; left: 3px; top: 0.9rem; bottom: 0.9rem;
+    width: 1px;
+    background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent) 25%, transparent));
 }
+.route__leg {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.1rem 0.9rem;
+    padding: 0.75rem 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+}
+.route__leg + .route__leg { border-top: 1px solid var(--line); }
+.route__node {
+    position: absolute;
+    left: -1.4rem; top: 1.05rem;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1.5px solid var(--accent);
+}
+.route__d { grid-column: 1; color: var(--faint); }
+.route__t { grid-column: 2; grid-row: 1; color: var(--faint); text-align: right; }
+.route__r { grid-column: 1 / -1; color: var(--text); letter-spacing: 0.06em; font-size: 0.84rem; }
+.route__f { grid-column: 1 / -1; color: var(--muted); opacity: 0.8; }
+.route__none { color: var(--faint); font-size: var(--fs-sm); font-style: italic; }
 
 /* ---------- OFF HOURS ------------------------------------------------- */
 .hours { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0.9rem; }
