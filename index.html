@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Farras Naim — senior technology risk auditor in Jakarta. IT general control & application control audits by day; gamer, solo traveler and streamer by night.">
+    <meta name="description" content="Farras Naim — IT guy in Jakarta. Technology risk by day; gamer, solo traveler and streamer otherwise. An interactive look at the work, the desk and the map.">
     <title>Farras Naim</title>
     <link rel="canonical" href="https://farrasnaim.github.io/">
-    <meta name="theme-color" content="#dc2626">
+    <meta name="theme-color" content="#08080b">
     <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2032%2032'%3E%3Crect%20width%3D'32'%20height%3D'32'%20rx%3D'7'%20fill%3D'%23dc2626'%2F%3E%3Ctext%20x%3D'16'%20y%3D'24'%20font-family%3D'system-ui%2Csans-serif'%20font-size%3D'21'%20font-weight%3D'700'%20fill%3D'%23ffffff'%20text-anchor%3D'middle'%3Ef%3C%2Ftext%3E%3C%2Fsvg%3E">
     <link rel="apple-touch-icon" href="./assets/my-avatar.jpg">
 
@@ -14,1290 +14,578 @@
     <meta property="og:type" content="profile">
     <meta property="og:site_name" content="Farras Naim">
     <meta property="og:title" content="Farras Naim — Senior, Technology Risk">
-    <meta property="og:description" content="Senior technology risk auditor in Jakarta. IT general control & application control audits by day; gamer, solo traveler and streamer by night.">
+    <meta property="og:description" content="IT guy in Jakarta. An interactive look at the work, the desk and the map.">
     <meta property="og:url" content="https://farrasnaim.github.io/">
     <meta property="og:image" content="https://farrasnaim.github.io/assets/my-avatar.jpg">
     <meta property="og:image:alt" content="Farras Naim">
     <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Farras Naim — Senior, Technology Risk">
-    <meta name="twitter:description" content="Senior technology risk auditor in Jakarta. IT general control & application control audits by day; gamer, solo traveler and streamer by night.">
+    <meta name="twitter:description" content="IT guy in Jakarta. An interactive look at the work, the desk and the map.">
     <meta name="twitter:image" content="https://farrasnaim.github.io/assets/my-avatar.jpg">
 
     <!-- Applied before first paint so a saved theme never flashes the wrong colors -->
     <script>
         (function () {
+            /* Marks that scripting is available. Reveal-on-scroll hides elements
+               until observed, so those styles are scoped to .js — without this
+               the page would render blank when JS is off or fails. */
+            document.documentElement.className += ' js';
             try {
                 var saved = localStorage.getItem('theme');
-                var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-                document.documentElement.setAttribute('data-theme', theme);
-            } catch (e) {
-                /* localStorage blocked (private mode) — fall back to the media query in CSS */
-            }
+                if (saved) document.documentElement.setAttribute('data-theme', saved);
+            } catch (e) { /* private mode — fall back to the dark default */ }
         })();
     </script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg: #fafafa;
-            --bg-secondary: #ffffff;
-            --text: #1a1a1a;
-            --text-muted: #717171;
-            --border: #e8e8e8;
-            --accent-1: #b91c1c;
-            --accent-2: #991b1b;
-            --accent-3: #7f1d1d;
-        }
-
-        /* TYPE SCALE
-           One ratio for the whole page so hierarchy comes from size, not just
-           weight and color. Values fluidly shrink on small screens via clamp(). */
-        :root {
-            --fs-display: clamp(1.5rem, 1.2rem + 1.4vw, 1.875rem);  /* name */
-            --fs-title:   clamp(1.05rem, 0.98rem + 0.35vw, 1.2rem); /* section headings */
-            --fs-lead:    1.0625rem;                                /* work role, card titles */
-            --fs-body:    0.9375rem;                                /* running text */
-            --fs-sm:      0.875rem;                                 /* secondary text */
-            --fs-xs:      0.75rem;                                  /* eyebrows, dates, meta */
-
-            /* Fixed control stack: offset + 2 buttons + gap, plus breathing
-               room. Content reserves this so the buttons never sit on text. */
-            --fab-size: 3rem;
-            --fab-gap: 0.6rem;
-            --fab-offset: 1.5rem;
-            --fab-reserve: calc(var(--fab-offset) * 2 + var(--fab-size) * 2 + var(--fab-gap));
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg: #0a0a0a;
-                --bg-secondary: #121212;
-                --text: #ffffff;
-                --text-muted: #a8a8a8;
-                --border: #2a2a2a;
-                --accent-1: #ef4444;
-                --accent-2: #dc2626;
-                --accent-3: #b91c1c;
-            }
-        }
-
-        html[data-theme="light"] {
-            --bg: #fafafa;
-            --bg-secondary: #ffffff;
-            --text: #1a1a1a;
-            --text-muted: #717171;
-            --border: #e8e8e8;
-            --accent-1: #dc2626;
-            --accent-2: #991b1b;
-            --accent-3: #7f1d1d;
-        }
-
-        html[data-theme="dark"] {
-            --bg: #0a0a0a;
-            --bg-secondary: #121212;
-            --text: #ffffff;
-            --text-muted: #a8a8a8;
-            --border: #2a2a2a;
-            --accent-1: #ef4444;
-            --accent-2: #dc2626;
-            --accent-3: #b91c1c;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 10%;
-            left: 5%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(220, 38, 38, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: float1 20s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            bottom: 20%;
-            right: 10%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(156, 27, 27, 0.08) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: float2 25s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        @keyframes float1 {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(30px); }
-        }
-
-        @keyframes float2 {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-30px); }
-        }
-
-        .container {
-            position: relative;
-            z-index: 1;
-        }
-
-        a {
-            color: var(--accent-1);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        a:hover {
-            color: var(--accent-2);
-        }
-
-        /* Percentage padding resolves against the viewport, not this element,
-           so `4%` made the usable width shrink as the screen grew once
-           max-width capped out. A clamped gutter keeps it growing instead. */
-        .container {
-            /* max-width includes the gutter under border-box, so add it back:
-               content settles at exactly min(viewport - 2 gutters, 1600px)
-               and never shrinks as the viewport grows. */
-            max-width: calc(1600px + 2 * clamp(1.5rem, 2.5vw, 3.5rem));
-            margin: 0 auto;
-            padding: 0 clamp(1.5rem, 2.5vw, 3.5rem);
-        }
-
-        /* HERO SECTION
-           Bottom padding clears the fixed control stack so it never sits on
-           top of the last card. */
-        .hero {
-            padding: 4rem 0 var(--fab-reserve);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            display: grid;
-            grid-template-columns: clamp(270px, 19vw, 400px) 1fr;
-            gap: 3.5rem;
-            align-items: start;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .profile-card {
-            background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(220, 38, 38, 0.02) 100%);
-            border: 1px solid rgba(220, 38, 38, 0.2);
-            border-radius: 16px;
-            padding: 2rem 1.5rem;
-            backdrop-filter: blur(10px);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .profile-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, rgba(220, 38, 38, 0.15) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        /* The photo is square and fluid, so a wider card would otherwise make
-           it taller too — capping it lets the extra width go to the text and
-           shortens the card instead of growing it. */
-        .profile-photo {
-            width: 100%;
-            max-width: 260px;
-            aspect-ratio: 1;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 1.2rem;
-            border: 2px solid rgba(220, 38, 38, 0.5);
-            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(220, 38, 38, 0.1));
-        }
-
-        .profile-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .profile-name {
-            font-size: var(--fs-display);
-            font-weight: 800;
-            line-height: 1.15;
-            margin-bottom: 0.7rem;
-            background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.02em;
-        }
-
-        .profile-bio {
-            font-size: var(--fs-body);
-            color: var(--text-muted);
-            line-height: 1.7;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* CONNECT CARD */
-        .connect-card {
-            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(220, 38, 38, 0.08) 100%);
-            border: 1px solid rgba(220, 38, 38, 0.2);
-            border-radius: 16px;
-            padding: 1.8rem 1.5rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .connect-title {
-            font-size: var(--fs-sm);
-            font-weight: 700;
-            letter-spacing: 0.02em;
-            margin-bottom: 1.2rem;
-            color: var(--accent-1);
-        }
-
-        /* Flex rather than a fixed column count so the same rules fit both
-           cards: 2 chips split in half, 3 split in thirds. */
-        .connect-links {
-            display: flex;
-            gap: 0.8rem;
-        }
-
-        .connect-link {
-            flex: 1 1 0;
-            min-width: 0;
-            padding: 0.5rem;
-            background: rgba(220, 38, 38, 0.08);
-            border: 1px solid rgba(220, 38, 38, 0.3);
-            border-radius: 6px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0.35rem;
-            transition: all 0.3s ease;
-            font-size: var(--fs-xs);
-            font-weight: 600;
-            letter-spacing: 0.01em;
-            color: var(--accent-1);
-            min-height: 3.75rem;
-        }
-
-        .connect-link:hover {
-            background: rgba(220, 38, 38, 0.2);
-            border-color: var(--accent-1);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.2);
-        }
-
-        /* Line icons inherit currentColor so they track the accent on hover
-           and stay legible in both themes. */
-        .connect-link-icon {
-            width: 1.15rem;
-            height: 1.15rem;
-            display: block;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        /* STREAM CARD */
-        .stream-card {
-            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(220, 38, 38, 0.08) 100%);
-            border: 1px solid rgba(220, 38, 38, 0.3);
-            border-radius: 16px;
-            padding: 1.8rem 1.5rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .stream-icons {
-            display: flex;
-            gap: 0.6rem;
-            margin-bottom: 0.8rem;
-            font-size: 1.3rem;
-        }
-
-        .stream-icons img {
-            width: 1.3rem;
-            height: 1.3rem;
-            object-fit: contain;
-        }
-
-        .stream-title {
-            font-size: var(--fs-lead);
-            font-weight: 700;
-            margin-bottom: 0.4rem;
-            color: var(--text);
-        }
-
-        .stream-desc {
-            font-size: var(--fs-sm);
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 1.1rem;
-        }
-
-        .stream-buttons {
-            display: flex;
-            gap: 0.6rem;
-        }
-
-        .stream-btn {
-            flex: 1;
-            padding: 0.6rem;
-            background: var(--accent-1);
-            color: var(--bg);
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: var(--fs-sm);
-            letter-spacing: 0.01em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-        }
-
-        .stream-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.3);
-        }
-
-        .btn-icon {
-            width: 1rem;
-            height: 1rem;
-            object-fit: contain;
-        }
-
-        .button-divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--fs-xs);
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        /* CENTER CONTENT */
-        .hero-center {
-            display: flex;
-            flex-direction: column;
-            gap: 3rem;
-        }
-
-        /* Two independent columns rather than grid rows, so the short work
-           column can be filled by "free time" instead of leaving the page
-           lopsided against the much taller undergrad list. */
-        .hero-main {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.8rem 3.5rem;
-            align-items: start;
-        }
-
-        .col {
-            display: flex;
-            flex-direction: column;
-            gap: 3rem;
-            min-width: 0;
-        }
-
-        .section {
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-        }
-
-        .section-title {
-            font-size: var(--fs-title);
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.01em;
-            line-height: 1.25;
-            position: relative;
-            padding-bottom: 0.7rem;
-            margin-bottom: 1rem;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-            border-radius: 2px;
-        }
-
-        /* WORK ITEMS */
-        .work-item {
-            background: linear-gradient(135deg, rgba(220, 38, 38, 0.03) 0%, rgba(220, 38, 38, 0.01) 100%);
-            border: 1px solid rgba(220, 38, 38, 0.15);
-            border-radius: 12px;
-            padding: 1rem;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            margin-bottom: 1rem;
-        }
-
-        .work-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .work-item:hover {
-            background: linear-gradient(135deg, rgba(220, 38, 38, 0.08) 0%, rgba(220, 38, 38, 0.08) 100%);
-            border-color: rgba(220, 38, 38, 0.3);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(220, 38, 38, 0.1);
-        }
-
-        /* Lowercase like the rest of the page. Tracking is dialled back from
-           the uppercase setting, and the size bumped a step, since lowercase
-           reads smaller than caps at the same font-size. */
-        .work-period {
-            font-size: var(--fs-sm);
-            color: var(--accent-1);
-            font-weight: 700;
-            letter-spacing: 0.01em;
-            margin-bottom: 0.5rem;
-        }
-
-        .work-role {
-            font-size: var(--fs-lead);
-            font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 0.2rem;
-            color: var(--text);
-        }
-
-        .work-company {
-            font-size: var(--fs-sm);
-            color: var(--text-muted);
-            margin-bottom: 0.8rem;
-            font-weight: 600;
-        }
-
-        .work-description {
-            font-size: var(--fs-body);
-            color: var(--text-muted);
-            line-height: 1.7;
-        }
-
-        /* COLLEGE SECTION */
-        .college-intro {
-            font-size: var(--fs-body);
-            color: var(--text-muted);
-            line-height: 1.7;
-            margin-bottom: 1.2rem;
-        }
-
-        .subsection {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 0;
-            position: relative;
-        }
-
-        .subsection::before {
-            content: '';
-            position: absolute;
-            left: 0.35rem;
-            top: 0.5rem;
-            bottom: 0.5rem;
-            width: 2px;
-            background: var(--accent-1);
-        }
-
-        .org-item {
-            background: transparent;
-            border: none;
-            border-radius: 0;
-            padding: 0 0 1.1rem 2rem;
-            transition: all 0.3s ease;
-            margin-bottom: 0;
-            position: relative;
-        }
-
-        .org-item:last-child {
-            padding-bottom: 0;
-        }
-
-        .org-item::before {
-            content: '';
-            position: absolute;
-            left: 0.01rem;
-            top: 0.35rem;
-            width: 0.7rem;
-            height: 0.7rem;
-            background: var(--accent-1);
-            border-radius: 50%;
-            border: 2px solid var(--bg);
-        }
-
-        .org-item:hover::before {
-            background: var(--accent-2);
-            box-shadow: 0 0 8px var(--accent-2);
-        }
-
-        .org-title {
-            font-size: var(--fs-body);
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 0.15rem;
-            line-height: 1.35;
-        }
-
-        .org-role {
-            font-size: var(--fs-sm);
-            color: var(--accent-1);
-            font-weight: 700;
-            letter-spacing: 0.01em;
-            margin-bottom: 0.35rem;
-        }
-
-        .org-desc {
-            font-size: var(--fs-sm);
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        .hobby-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .hobby-item {
-            background: transparent;
-            border: 1.5px solid rgba(220, 38, 38, 0.3);
-            border-radius: 10px;
-            padding: 1rem 0.8rem;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .hobby-item:hover {
-            background: rgba(220, 38, 38, 0.05);
-            border-color: rgba(220, 38, 38, 0.6);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.1);
-        }
-
-        .hobby-icon {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            display: block;
-            line-height: 1;
-        }
-
-        .hobby-title {
-            font-size: var(--fs-lead);
-            font-weight: 700;
-            margin-bottom: 0.3rem;
-            color: var(--text);
-        }
-
-        .hobby-desc {
-            font-size: var(--fs-sm);
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        /* FLOATING CONTROLS
-           Stacked in one corner column so the two buttons can never overlap
-           each other, and both are available at every breakpoint. */
-        .floating-controls {
-            position: fixed;
-            bottom: var(--fab-offset);
-            right: var(--fab-offset);
-            display: flex;
-            flex-direction: column;
-            gap: var(--fab-gap);
-            z-index: 1000;
-        }
-
-        .fab {
-            width: var(--fab-size);
-            height: var(--fab-size);
-            border-radius: 50%;
-            background: var(--accent-1);
-            border: none;
-            color: var(--bg);
-            font-size: 1.25rem;
-            line-height: 1;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease, visibility 0.3s ease;
-            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.3);
-        }
-
-        .fab:hover {
-            transform: scale(1.08);
-            box-shadow: 0 6px 24px rgba(220, 38, 38, 0.4);
-        }
-
-        .fab:active {
-            transform: scale(0.95);
-        }
-
-        .fab:focus-visible {
-            outline: 3px solid var(--accent-1);
-            outline-offset: 3px;
-        }
-
-        /* Jump-to-top only earns its place once there is something to jump back to */
-        .jump-to-top {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .jump-to-top.show {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-        }
-
-        /* FADE IN ANIMATION */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Only elements JS has opted in get hidden, so the page still renders
-           in full if scripting is unavailable. */
-        .reveal {
-            opacity: 0;
-        }
-
-        .reveal.fade-in {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-
-        /* Respect users who ask for less motion: no transforms, no reveal delay. */
-        @media (prefers-reduced-motion: reduce) {
-            html {
-                scroll-behavior: auto;
-            }
-
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-
-            .reveal {
-                opacity: 1;
-            }
-        }
-
-        /* DESKTOP SPECIFIC */
-        @media (min-width: 769px) {
-            .section {
-                gap: 0.8rem;
-            }
-        }
-
-        /* Past this width the centered container leaves a wide margin, so the
-           fixed buttons sit clear of all content and the tall bottom reserve
-           is just dead space keeping the page from fitting one screen. */
-        @media (min-width: 1800px) {
-            .hero {
-                padding-bottom: 4rem;
-            }
-        }
-
-        /* MOBILE RESPONSIVE */
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 1.5rem;
-                max-width: 100%;
-            }
-
-            .hero {
-                padding: 2rem 0 var(--fab-reserve);
-            }
-
-            .hero-content {
-                display: flex;
-                flex-direction: column;
-                gap: 0;
-                grid-template-columns: none;
-            }
-
-            .hero-sidebar {
-                display: contents;
-            }
-
-            .profile-card {
-                padding: 1.5rem 1rem;
-                order: 1;
-                margin-bottom: 1.5rem;
-                width: 100%;
-            }
-
-            .profile-photo {
-                margin-bottom: 0.8rem;
-                max-width: 150px;
-            }
-
-            .connect-card {
-                padding: 1.5rem 1rem;
-                order: 2;
-                margin-bottom: 1.5rem;
-                width: 100%;
-            }
-
-            .stream-card {
-                padding: 1.2rem 1rem;
-                order: 5;
-                margin-top: 1.5rem;
-                width: 100%;
-            }
-
-            .connect-title {
-                margin-bottom: 0.8rem;
-            }
-
-            .connect-link {
-                min-height: 3.25rem;
-                padding: 0.5rem 0.4rem;
-            }
-
-            .stream-desc {
-                margin-bottom: 0.9rem;
-            }
-
-            /* Comfortable tap target on touch screens */
-            .stream-btn {
-                padding: 0.7rem 0.5rem;
-            }
-
-            .hero-center {
-                gap: 2rem;
-                order: 3;
-                width: 100%;
-            }
-
-            /* Collapse the two desktop columns and reorder so the reading
-               order stays work -> undergrad -> free time. */
-            .hero-main {
-                display: flex;
-                flex-direction: column;
-                gap: 2.5rem;
-            }
-
-            .col {
-                display: contents;
-            }
-
-            .section-work {
-                order: 1;
-            }
-
-            .section-college {
-                order: 2;
-            }
-
-            .hero-hobbies {
-                order: 3;
-            }
-
-            .section {
-                gap: 0.5rem;
-            }
-
-            .section-title {
-                margin-bottom: 0.6rem;
-            }
-
-            .work-item {
-                background: transparent;
-                border: none;
-                border-left: 3px solid var(--accent-1);
-                border-radius: 0;
-                padding: 0.1rem 0 0.1rem 1rem;
-                margin-bottom: 1.4rem;
-                margin-top: 0;
-            }
-
-            .college-intro {
-                margin-bottom: 1rem;
-            }
-
-            .hobby-grid {
-                grid-template-columns: 1fr;
-                gap: 1.4rem;
-            }
-
-            .hobby-item {
-                background: transparent;
-                border: none;
-                border-left: 3px solid var(--accent-1);
-                border-radius: 0;
-                padding: 0.1rem 0 0.1rem 1rem;
-                margin-bottom: 0;
-                margin-top: 0;
-                text-align: left;
-            }
-
-            .hobby-item:hover {
-                background: transparent;
-                transform: none;
-                box-shadow: none;
-            }
-
-            /* Hide floating blobs on mobile */
-            body::before,
-            body::after {
-                display: none;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="./assets/app.css">
 </head>
 <body>
-    <div class="container">
-        <section class="hero">
-            <div class="hero-content">
-                <!-- LEFT SIDEBAR -->
-                <div class="hero-sidebar">
-                    <div class="profile-card">
-                        <div class="profile-photo">
-                            <img src="./assets/my-avatar.jpg" alt="Farras Naim" width="720" height="720" fetchpriority="high" decoding="async">
-                        </div>
-                        <h1 class="profile-name">farras naim</h1>
-                        <p class="profile-bio">
-                            2001 kid living in Jakarta. IT guy by day, chronic overthinker by default. extrovert from school through my last semester; then work happened. now it's solo trips, long games, and streaming the fallout.
-                        </p>
-                    </div>
 
-                    <div class="connect-card">
-                        <div class="connect-title">connect</div>
-                        <div class="connect-links">
-                            <a href="mailto:farrasnaim@outlook.com" class="connect-link" title="Email">
-                                <svg class="connect-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                                    <path d="m2 7 10 6 10-6"></path>
-                                </svg>
-                                <span>email</span>
-                            </a>
-                            <a href="https://linkedin.com/in/farrasnaim" target="_blank" rel="noopener noreferrer" class="connect-link" title="LinkedIn">
-                                <svg class="connect-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                    <rect x="2" y="9" width="4" height="12"></rect>
-                                    <circle cx="4" cy="4" r="2"></circle>
-                                </svg>
-                                <span>linkedin</span>
-                            </a>
-                        </div>
-                    </div>
+<div class="atmos" aria-hidden="true">
+    <div class="atmos__grid"></div>
+    <div class="atmos__glow atmos__glow--a"></div>
+    <div class="atmos__glow atmos__glow--b"></div>
+</div>
+<div class="spotlight" aria-hidden="true"></div>
 
-                    <div class="connect-card">
-                        <div class="connect-title">socials</div>
-                        <div class="connect-links">
-                            <a href="https://instagram.com/farrasnaim" target="_blank" rel="noopener noreferrer" class="connect-link" title="Instagram">
-                                <svg class="connect-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                                    <rect x="2" y="2" width="20" height="20" rx="5"></rect>
-                                    <circle cx="12" cy="12" r="4"></circle>
-                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                                </svg>
-                                <span>instagram</span>
-                            </a>
-                            <a href="https://www.tiktok.com/@farrasnaim" target="_blank" rel="noopener noreferrer" class="connect-link" title="TikTok">
-                                <svg class="connect-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                                    <path d="M15 3v10.5a4 4 0 1 1-4-4"></path>
-                                    <path d="M15 3c.4 2.4 2.3 4.3 4.7 4.5"></path>
-                                </svg>
-                                <span>tiktok</span>
-                            </a>
-                            <a href="https://open.spotify.com/user/farrasnaim" target="_blank" rel="noopener noreferrer" class="connect-link" title="Spotify">
-                                <svg class="connect-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                                    <circle cx="12" cy="12" r="9"></circle>
-                                    <path d="M7.5 9.2c3-.9 6.4-.6 9 .9"></path>
-                                    <path d="M8 12.6c2.5-.7 5.2-.5 7.4.8"></path>
-                                    <path d="M8.5 15.7c1.9-.5 4-.3 5.6.6"></path>
-                                </svg>
-                                <span>spotify</span>
-                            </a>
-                        </div>
-                    </div>
+<!-- ============================= NAV ============================= -->
+<header class="nav" id="nav">
+    <a class="nav__brand" href="#top"><span class="nav__dot"></span> farras naim</a>
 
-                    <div class="stream-card">
-                        <div class="stream-icons" aria-hidden="true">
-                            <span>📺</span>
-                        </div>
-                        <div class="stream-title">stream & videos</div>
-                        <div class="stream-desc">
-                            watch me crash out over whatever I'm doom-playing that night.
-                        </div>
-                        <div class="stream-buttons">
-                            <a href="https://www.twitch.tv/rughseel" target="_blank" rel="noopener noreferrer" class="stream-btn">
-                                <img src="./assets/twitch-icon.png" alt="" class="btn-icon" width="16" height="16" loading="lazy" decoding="async">
-                                <span>twitch</span>
-                            </a>
-                            <span class="button-divider">or</span>
-                            <a href="https://www.youtube.com/@farrasnaim/streams" target="_blank" rel="noopener noreferrer" class="stream-btn">
-                                <img src="./assets/youtube-icon.png" alt="" class="btn-icon" width="16" height="16" loading="lazy" decoding="async">
-                                <span>youtube</span>
-                            </a>
-                        </div>
-                    </div>
+    <nav class="nav__links" aria-label="Sections">
+        <a class="nav__link" href="#journey">journey</a>
+        <a class="nav__link" href="#rig">the rig</a>
+        <a class="nav__link" href="#travel">map</a>
+        <a class="nav__link" href="#offhours">off hours</a>
+        <a class="nav__link" href="#connect">connect</a>
+    </nav>
+
+    <div class="nav__tools">
+        <button class="kbd-btn" id="cmdkOpen" aria-label="Open command menu">
+            <span>search</span> <kbd>⌘K</kbd>
+        </button>
+        <button class="icon-btn" id="themeToggle" aria-label="Switch theme" aria-pressed="false">
+            <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.1 5.1l1.4 1.4M17.5 17.5l1.4 1.4M18.9 5.1l-1.4 1.4M6.5 17.5l-1.4 1.4"></path></svg>
+            <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.4 8.4 0 1 0 10.2 10.2z"></path></svg>
+        </button>
+    </div>
+</header>
+
+<main id="top">
+<div class="shell">
+
+    <!-- ============================= HERO ============================= -->
+    <section class="hero" id="hero">
+        <div class="hero__inner">
+            <div class="hero__avatar rv">
+                <img src="./assets/my-avatar.jpg" alt="Farras Naim" width="720" height="720" fetchpriority="high" decoding="async">
+            </div>
+
+            <div>
+                <h1 class="hero__title rv">
+                    I take things apart<br>to see <em>what they really do.</em>
+                </h1>
+
+                <p class="hero__role rv">
+                    currently&nbsp;<span class="hero__roleWord" id="roleWord" data-words="auditing control gaps,breaking my own setup,planning a solo trip,losing at valorant,over-thinking it">auditing control gaps</span>
+                </p>
+
+                <p class="hero__bio rv">
+                    2001 kid living in Jakarta. IT guy by day, chronic overthinker by default.
+                    extrovert from school through my last semester; then work happened.
+                    now it's solo trips, long games, and streaming the fallout.
+                </p>
+
+                <div class="hero__facts rv">
+                    <span class="chip"><span class="chip__dot"></span> jakarta, id</span>
+                    <span class="chip"><span class="chip__dot"></span> technology risk @ EY</span>
+                    <span class="chip"><span class="chip__dot"></span> telkom university '22</span>
+                    <span class="chip"><span class="chip__dot"></span> iced americano, no sugar</span>
                 </div>
 
-                <!-- CENTER CONTENT -->
-                <div class="hero-center">
-                    <div class="hero-main">
-                      <div class="col">
-                        <!-- WORK -->
-                        <div class="section section-work">
-                            <h2 class="section-title">what I do for a living</h2>
+                <p class="hero__cue rv"><span class="hero__cueLine"></span> scroll, or hit ⌘K</p>
+            </div>
+        </div>
+    </section>
 
-                            <div class="work-item">
-                                <div class="work-period">sep 2022 – now</div>
-                                <div class="work-role">senior, technology risk</div>
-                                <div class="work-company">EY Indonesia</div>
-                                <div class="work-description">
-                                    doing IT general control and application control audits on various sectors (banking, fmcg, pharmaceutical, e-commerce, etc.). digging into complex systems (SAP, Oracle, Dynamics) to figure out if they're actually doing what they're supposed to do.
-                                </div>
-                            </div>
+    <!-- ============================ JOURNEY =========================== -->
+    <section class="sec" id="journey">
+        <div class="sec__head rv">
+            <p class="eyebrow">01 — journey</p>
+            <h2 class="sec__title">Six years, two lives, one timeline.</h2>
+            <p class="sec__lede">
+                Work and campus interleaved more than a CV ever shows — I was running lab
+                operations and auditing a bank in the same month. Everything is collapsed;
+                open whatever you're curious about.
+            </p>
+        </div>
 
-                            <div class="work-item">
-                                <div class="work-period">jun 2022 – sep 2022</div>
-                                <div class="work-role">IT governance & compliance intern</div>
-                                <div class="work-company">PT Bank Jago Tbk</div>
-                                <div class="work-description">
-                                    prepped audit docs for regulators (BI, OJK). learned that compliance documentation and actual IT operations live in totally different worlds.
-                                </div>
-                            </div>
+        <div class="tl__filters rv" role="group" aria-label="Filter timeline">
+            <button class="filter" data-filter="all" aria-pressed="true">everything</button>
+            <button class="filter" data-filter="work" aria-pressed="false">work</button>
+            <button class="filter" data-filter="campus" aria-pressed="false">campus</button>
+        </div>
 
-                            <div class="work-item">
-                                <div class="work-period">aug 2021 – jun 2022</div>
-                                <div class="work-role">IT governance & compliance intern</div>
-                                <div class="work-company">PT XL Axiata Tbk</div>
-                                <div class="work-description">
-                                    explored ISO 27001 and security frameworks. learned that making people care about security beats most technical controls.
-                                </div>
-                            </div>
-                        </div>
+        <div class="tl rv" id="timeline">
+            <div class="tl__progress" id="tlProgress" aria-hidden="true"></div>
 
-                        <!-- FREE TIME -->
-                        <div class="section hero-hobbies">
-                            <h2 class="section-title">free time</h2>
+            <article class="tl-item" data-type="work">
+                <button class="tl-head" aria-expanded="false">
+                    <span class="tl-when">sep 2022 — now</span>
+                    <span class="tl-what">senior, technology risk</span>
+                    <span class="tl-where">EY Indonesia</span>
+                    <span class="tl-plus" aria-hidden="true"><svg viewBox="0 0 12 12"><path class="bar bar--h" d="M1 6h10"/><path class="bar bar--v" d="M6 1v10"/></svg></span>
+                </button>
+                <div class="tl-body"><div class="tl-body__inner">
+                    <p>ITGC and application control audits across banking, fmcg, pharmaceutical and e-commerce. digging into the systems companies run on to figure out whether they actually do what everyone assumes they do.</p>
+                    <ul class="tl-tags"><li class="tag">ITGC</li><li class="tag">SAP</li><li class="tag">Oracle</li><li class="tag">Dynamics</li><li class="tag">app controls</li></ul>
+                </div></div>
+                <span class="tl-node" aria-hidden="true"></span>
+            </article>
 
-                            <div class="hobby-grid">
-                                <div class="hobby-item">
-                                    <span class="hobby-icon" aria-hidden="true">🎮</span>
-                                    <div class="hobby-title">gaming</div>
-                                    <div class="hobby-desc">
-                                        valorant with my friends from discord. CS2, minecraft or roblox when we're sick of losing.
-                                    </div>
-                                </div>
+            <article class="tl-item" data-type="campus">
+                <button class="tl-head" aria-expanded="false">
+                    <span class="tl-when">jun 2022</span>
+                    <span class="tl-what">BSc information systems — cum laude</span>
+                    <span class="tl-where">telkom university · 3.74 GPA</span>
+                    <span class="tl-plus" aria-hidden="true"><svg viewBox="0 0 12 12"><path class="bar bar--h" d="M1 6h10"/><path class="bar bar--v" d="M6 1v10"/></svg></span>
+                </button>
+                <div class="tl-body"><div class="tl-body__inner">
+                    <p>graduated after four years of saying yes to nearly everything. worth it for the people; expensive in me-time. the ten entries below are what that actually looked like.</p>
+                    <ul class="tl-tags"><li class="tag">information systems</li><li class="tag">3.74 / 4.00</li><li class="tag">cum laude</li></ul>
+                </div></div>
+                <span class="tl-node" aria-hidden="true"></span>
+            </article>
 
-                                <div class="hobby-item">
-                                    <span class="hobby-icon" aria-hidden="true">🌍</span>
-                                    <div class="hobby-title">solo travel</div>
-                                    <div class="hobby-desc">
-                                        no itinerary, no group chat voting on where to eat. that's the entire appeal.
-                                    </div>
-                                </div>
+            <article class="tl-item" data-type="work">
+                <button class="tl-head" aria-expanded="false">
+                    <span class="tl-when">jun — sep 2022</span>
+                    <span class="tl-what">IT governance &amp; compliance intern</span>
+                    <span class="tl-where">PT Bank Jago Tbk</span>
+                    <span class="tl-plus" aria-hidden="true"><svg viewBox="0 0 12 12"><path class="bar bar--h" d="M1 6h10"/><path class="bar bar--v" d="M6 1v10"/></svg></span>
+                </button>
+                <div class="tl-body"><div class="tl-body__inner">
+                    <p>prepped audit docs for regulators (BI, OJK). learned that compliance documentation and actual IT operations live in totally different worlds.</p>
+                    <ul class="tl-tags"><li class="tag">BI</li><li class="tag">OJK</li><li class="tag">governance</li></ul>
+                </div></div>
+                <span class="tl-node" aria-hidden="true"></span>
+            </article>
 
-                                <div class="hobby-item">
-                                    <span class="hobby-icon" aria-hidden="true">⚙️</span>
-                                    <div class="hobby-title">tinkering</div>
-                                    <div class="hobby-desc">
-                                        breaking my own setup on purpose, then fixing it. this site included.
-                                    </div>
-                                </div>
+            <article class="tl-item" data-type="work">
+                <button class="tl-head" aria-expanded="false">
+                    <span class="tl-when">aug 2021 — jun 2022</span>
+                    <span class="tl-what">IT governance &amp; compliance intern</span>
+                    <span class="tl-where">PT XL Axiata Tbk</span>
+                    <span class="tl-plus" aria-hidden="true"><svg viewBox="0 0 12 12"><path class="bar bar--h" d="M1 6h10"/><path class="bar bar--v" d="M6 1v10"/></svg></span>
+                </button>
+                <div class="tl-body"><div class="tl-body__inner">
+                    <p>explored ISO 27001 and security frameworks. learned that making people care about security beats most technical controls.</p>
+                    <ul class="tl-tags"><li class="tag">ISO 27001</li><li class="tag">risk</li><li class="tag">awareness</li></ul>
+                </div></div>
+                <span class="tl-node" aria-hidden="true"></span>
+            </article>
 
-                                <div class="hobby-item">
-                                    <span class="hobby-icon" aria-hidden="true">☕</span>
-                                    <div class="hobby-title">caffeine addict</div>
-                                    <div class="hobby-desc">
-                                        iced americano, no sugar. the one dependency I've never audited.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                      </div>
+            <article class="tl-item" data-type="campus">
+                <button class="tl-head" aria-expanded="false">
+                    <span class="tl-when">aug 2021</span>
+                    <span class="tl-what">SI code speaker</span>
+                    <span class="tl-where">BPH HMSI telkom university</span>
+                    <span class="tl-plus" aria-hidden="true"><svg viewBox="0 0 12 12"><path class="bar bar--h" d="M1 6h10"/><path class="bar bar--v" d="M6 1v10"/></svg></span>
+                </button>
+                <div class="tl-body"><div class="tl-body__inner">
+                    <p>taught 6th graders MS Word over zoom. they were locked in, genuinely.</p>
+                </div></div>
+                <span class="tl-node" aria-hidden="true"></span>
+            </article>
 
-                      <div class="col">
-                        <!-- COLLEGE -->
-                        <div class="section section-college">
-                            <h2 class="section-title">undergrad activities</h2>
+            <article class="tl-item" data-type="campus">
+                <button class="tl-head" aria-expanded="false">
+                    <span class="tl-when">jun 2021 — jan 2022</span>
+                    <span class="tl-what">expert staff</span>
+                    <span class="tl-where">BPH HMSI telkom university</span>
+                    <span class="tl-plus" aria-hidden="true"><svg viewBox="0 0 12 12"><path class="bar bar--h" d="M1 6h10"/><path class="bar bar--v" d="M6 1v10"/></svg></span>
+                </button>
+                <div class="tl-body"><div class="tl-body__inner">
+                    <p>ran the "monthly care" program — donation drives for disaster victims &amp; orphanages.</p>
+                </div></div>
+                <span class="tl-node" aria-hidden="true"></span>
+            </article>
 
-                            <p class="college-intro">
-                                graduated from telkom university in 2022 with a 3.74 GPA (cum laude), got pretty involved in orgs & a bunch of activities, but honestly sacrificed a lot of me time. here's what I was up to:
-                            </p>
+            <article class="tl-item" data-type="campus">
+                <button class="tl-head" aria-expanded="false">
+                    <span class="tl-when">jun — sep 2021</span>
+                    <span class="tl-what">coordinator, creative team</span>
+                    <span class="tl-where">PKKMB telkom university</span>
+                    <span class="tl-plus" aria-hidden="true"><svg viewBox="0 0 12 12"><path class="bar bar--h" d="M1 6h10"/><path class="bar bar--v" d="M6 1v10"/></svg></span>
+                </button>
+                <div class="tl-body"><div class="tl-body__inner">
+                    <p>led 12 people through the first-ever online freshman week. 7000+ students, zero blueprint.</p>
+                    <ul class="tl-tags"><li class="tag">team of 12</li><li class="tag">7000+ students</li></ul>
+                </div></div>
+                <span class="tl-node" aria-hidden="true"></span>
+            </article>
 
-                            <div class="subsection">
-                                <div class="org-item">
-                                    <div class="org-title">SI code speaker • BPH HMSI telkom university</div>
-                                    <div class="org-role">aug 2021</div>
-                                    <div class="org-desc">
-                                        taught 6th graders MS Word over zoom. they were locked in, genuinely.
-                                    </div>
-                                </div>
+            <article class="tl-item" data-type="campus">
+                <button class="tl-head" aria-expanded="false">
+                    <span class="tl-when">feb — nov 2021</span>
+                    <span class="tl-what">coordinator</span>
+                    <span class="tl-where">keprofesian EIM telkom university</span>
+                    <span class="tl-plus" aria-hidden="true"><svg viewBox="0 0 12 12"><path class="bar bar--h" d="M1 6h10"/><path class="bar bar--v" d="M6 1v10"/></svg></span>
+                </button>
+                <div class="tl-body"><div class="tl-body__inner">
+                    <p>ran community service &amp; cert programs. donation drives plus tech classes for kids.</p>
+                </div></div>
+                <span class="tl-node" aria-hidden="true"></span>
+            </article>
 
-                                <div class="org-item">
-                                    <div class="org-title">expert staff • BPH HMSI telkom university</div>
-                                    <div class="org-role">jun 2021 – jan 2022</div>
-                                    <div class="org-desc">
-                                        ran the "monthly care" program — donation drives for disaster victims & orphanages.
-                                    </div>
-                                </div>
+            <article class="tl-item" data-type="campus">
+                <button class="tl-head" aria-expanded="false">
+                    <span class="tl-when">oct 2020 — may 2022</span>
+                    <span class="tl-what">practicum &amp; lab assistant</span>
+                    <span class="tl-where">sisjarlab telkom university</span>
+                    <span class="tl-plus" aria-hidden="true"><svg viewBox="0 0 12 12"><path class="bar bar--h" d="M1 6h10"/><path class="bar bar--v" d="M6 1v10"/></svg></span>
+                </button>
+                <div class="tl-body"><div class="tl-body__inner">
+                    <p>TA'd 4 courses: networks, OS, infosec, data comms. explaining subnetting builds character.</p>
+                    <ul class="tl-tags"><li class="tag">networks</li><li class="tag">operating systems</li><li class="tag">infosec</li><li class="tag">data comms</li></ul>
+                </div></div>
+                <span class="tl-node" aria-hidden="true"></span>
+            </article>
 
-                                <div class="org-item">
-                                    <div class="org-title">coordinator, creative team • PKKMB telkom university</div>
-                                    <div class="org-role">jun – sep 2021</div>
-                                    <div class="org-desc">
-                                        led 12 people through the first-ever online freshman week. 7000+ students, zero blueprint.
-                                    </div>
-                                </div>
+            <article class="tl-item" data-type="campus">
+                <button class="tl-head" aria-expanded="false">
+                    <span class="tl-when">sep 2020 — jun 2022</span>
+                    <span class="tl-what">lab coordinator</span>
+                    <span class="tl-where">sisjarlab telkom university</span>
+                    <span class="tl-plus" aria-hidden="true"><svg viewBox="0 0 12 12"><path class="bar bar--h" d="M1 6h10"/><path class="bar bar--v" d="M6 1v10"/></svg></span>
+                </button>
+                <div class="tl-body"><div class="tl-body__inner">
+                    <p>wrote the lab rules &amp; the disciplinary system. yes, I was that guy.</p>
+                </div></div>
+                <span class="tl-node" aria-hidden="true"></span>
+            </article>
 
-                                <div class="org-item">
-                                    <div class="org-title">coordinator • keprofesian EIM telkom university</div>
-                                    <div class="org-role">feb 2021 – nov 2021</div>
-                                    <div class="org-desc">
-                                        ran community service & cert programs. donation drives plus tech classes for kids.
-                                    </div>
-                                </div>
+            <article class="tl-item" data-type="campus">
+                <button class="tl-head" aria-expanded="false">
+                    <span class="tl-when">aug — sep 2020</span>
+                    <span class="tl-what">liaison officer</span>
+                    <span class="tl-where">PKKMB telkom university</span>
+                    <span class="tl-plus" aria-hidden="true"><svg viewBox="0 0 12 12"><path class="bar bar--h" d="M1 6h10"/><path class="bar bar--v" d="M6 1v10"/></svg></span>
+                </button>
+                <div class="tl-body"><div class="tl-body__inner">
+                    <p>walked the IS international class through freshman week without losing anyone.</p>
+                </div></div>
+                <span class="tl-node" aria-hidden="true"></span>
+            </article>
 
-                                <div class="org-item">
-                                    <div class="org-title">practicum & lab assistant • sisjarlab telkom university</div>
-                                    <div class="org-role">oct 2020 – may 2022</div>
-                                    <div class="org-desc">
-                                        TA'd 4 courses: networks, OS, infosec, data comms. explaining subnetting builds character.
-                                    </div>
-                                </div>
+            <article class="tl-item" data-type="campus">
+                <button class="tl-head" aria-expanded="false">
+                    <span class="tl-when">mar 2020 — may 2021</span>
+                    <span class="tl-what">expert staff</span>
+                    <span class="tl-where">BPM SI telkom university</span>
+                    <span class="tl-plus" aria-hidden="true"><svg viewBox="0 0 12 12"><path class="bar bar--h" d="M1 6h10"/><path class="bar bar--v" d="M6 1v10"/></svg></span>
+                </button>
+                <div class="tl-body"><div class="tl-body__inner">
+                    <p>basically the group chat between student orgs. also handled external partnerships.</p>
+                </div></div>
+                <span class="tl-node" aria-hidden="true"></span>
+            </article>
 
-                                <div class="org-item">
-                                    <div class="org-title">lab coordinator • sisjarlab telkom university</div>
-                                    <div class="org-role">sep 2020 – jun 2022</div>
-                                    <div class="org-desc">
-                                        wrote the lab rules & the disciplinary system. yes, I was that guy.
-                                    </div>
-                                </div>
+            <article class="tl-item" data-type="campus">
+                <button class="tl-head" aria-expanded="false">
+                    <span class="tl-when">jan 2020</span>
+                    <span class="tl-what">student mentor</span>
+                    <span class="tl-where">code for kids</span>
+                    <span class="tl-plus" aria-hidden="true"><svg viewBox="0 0 12 12"><path class="bar bar--h" d="M1 6h10"/><path class="bar bar--v" d="M6 1v10"/></svg></span>
+                </button>
+                <div class="tl-body"><div class="tl-body__inner">
+                    <p>taught elementary kids to code. several picked it up faster than I did.</p>
+                </div></div>
+                <span class="tl-node" aria-hidden="true"></span>
+            </article>
 
-                                <div class="org-item">
-                                    <div class="org-title">liaison officer • PKKMB telkom university</div>
-                                    <div class="org-role">aug – sep 2020</div>
-                                    <div class="org-desc">
-                                        walked the IS international class through freshman week without losing anyone.
-                                    </div>
-                                </div>
+            <article class="tl-item" data-type="campus">
+                <button class="tl-head" aria-expanded="false">
+                    <span class="tl-when">jun — aug 2019</span>
+                    <span class="tl-what">member, planning team</span>
+                    <span class="tl-where">PKKMB telkom university</span>
+                    <span class="tl-plus" aria-hidden="true"><svg viewBox="0 0 12 12"><path class="bar bar--h" d="M1 6h10"/><path class="bar bar--v" d="M6 1v10"/></svg></span>
+                </button>
+                <div class="tl-body"><div class="tl-body__inner">
+                    <p>built the rundown for 8-day freshman week. 7000+ students, one spreadsheet.</p>
+                </div></div>
+                <span class="tl-node" aria-hidden="true"></span>
+            </article>
+        </div>
+    </section>
 
-                                <div class="org-item">
-                                    <div class="org-title">expert staff • BPM SI telkom university</div>
-                                    <div class="org-role">mar 2020 – may 2021</div>
-                                    <div class="org-desc">
-                                        basically the group chat between student orgs. also handled external partnerships.
-                                    </div>
-                                </div>
+    <!-- ============================== RIG ============================= -->
+    <section class="sec" id="rig">
+        <div class="sec__head rv">
+            <p class="eyebrow">02 — the rig</p>
+            <h2 class="sec__title">Where the overthinking happens.</h2>
+            <p class="sec__lede">
+                Every part of this desk was a decision, and specs are the least interesting
+                part of any of them. Click anything glowing to hear why it's there.
+            </p>
+        </div>
 
-                                <div class="org-item">
-                                    <div class="org-title">student mentor • code for kids</div>
-                                    <div class="org-role">jan 2020</div>
-                                    <div class="org-desc">
-                                        taught elementary kids to code. several picked it up faster than I did.
-                                    </div>
-                                </div>
+        <div class="rig rv">
+            <div class="rig__stage">
+                <svg class="rig__svg" viewBox="0 0 960 560" role="img" aria-label="Illustration of a desk setup. Interactive hotspots reveal each component.">
+                    <defs>
+                        <linearGradient id="screenGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.30"/>
+                            <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.03"/>
+                        </linearGradient>
+                        <linearGradient id="deskGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="var(--line-hi)"/>
+                            <stop offset="100%" stop-color="var(--line)"/>
+                        </linearGradient>
+                    </defs>
 
-                                <div class="org-item">
-                                    <div class="org-title">member, planning team • PKKMB telkom university</div>
-                                    <div class="org-role">jun – aug 2019</div>
-                                    <div class="org-desc">
-                                        built the rundown for 8-day freshman week. 7000+ students, one spreadsheet.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                      </div>
-                    </div>
+                    <!-- wall shelf -->
+                    <rect x="650" y="150" width="250" height="7" rx="3" fill="var(--line)"/>
+
+                    <!-- desk -->
+                    <g class="rig-part" data-part="desk" tabindex="0" role="button" aria-label="Workspace">
+                        <g class="body">
+                            <rect x="40" y="432" width="880" height="15" rx="5" fill="url(#deskGrad)"/>
+                            <rect x="74" y="447" width="13" height="92" rx="4" fill="var(--line)"/>
+                            <rect x="873" y="447" width="13" height="92" rx="4" fill="var(--line)"/>
+                        </g>
+                        <circle class="hot-ring" cx="140" cy="440" r="5"/>
+                        <circle class="hot" cx="140" cy="440"/>
+                    </g>
+
+                    <!-- monitor -->
+                    <g class="rig-part" data-part="monitor" tabindex="0" role="button" aria-label="Monitor">
+                        <g class="body">
+                            <rect x="292" y="146" width="376" height="232" rx="11" fill="var(--surface-hi)" stroke="var(--line-hi)" stroke-width="1.5"/>
+                            <rect x="304" y="158" width="352" height="208" rx="6" fill="url(#screenGrad)"/>
+                            <rect x="324" y="186" width="150" height="7" rx="3.5" fill="var(--accent)" opacity="0.55"/>
+                            <rect x="324" y="206" width="240" height="6" rx="3" fill="var(--line-hi)"/>
+                            <rect x="324" y="222" width="190" height="6" rx="3" fill="var(--line-hi)"/>
+                            <rect x="324" y="252" width="270" height="6" rx="3" fill="var(--line)"/>
+                            <rect x="324" y="268" width="120" height="6" rx="3" fill="var(--line)"/>
+                            <rect x="470" y="378" width="20" height="42" fill="var(--line-hi)"/>
+                            <rect x="418" y="418" width="124" height="12" rx="5" fill="var(--line-hi)"/>
+                        </g>
+                        <circle class="hot-ring" cx="640" cy="176" r="5"/>
+                        <circle class="hot" cx="640" cy="176"/>
+                    </g>
+
+                    <!-- tower -->
+                    <g class="rig-part" data-part="pc" tabindex="0" role="button" aria-label="Desktop PC">
+                        <g class="body">
+                            <rect x="112" y="238" width="128" height="194" rx="10" fill="var(--surface-hi)" stroke="var(--line-hi)" stroke-width="1.5"/>
+                            <rect x="126" y="254" width="100" height="80" rx="6" fill="var(--accent)" opacity="0.13"/>
+                            <circle cx="176" cy="294" r="21" fill="none" stroke="var(--accent)" stroke-width="2.5" opacity="0.7"/>
+                            <circle cx="176" cy="294" r="5" fill="var(--accent)" opacity="0.8"/>
+                            <rect x="126" y="350" width="100" height="6" rx="3" fill="var(--line-hi)"/>
+                            <rect x="126" y="366" width="70" height="6" rx="3" fill="var(--line)"/>
+                            <circle cx="222" cy="416" r="3.5" fill="var(--accent)"/>
+                        </g>
+                        <circle class="hot-ring" cx="228" cy="252" r="5"/>
+                        <circle class="hot" cx="228" cy="252"/>
+                    </g>
+
+                    <!-- keyboard -->
+                    <g class="rig-part" data-part="keyboard" tabindex="0" role="button" aria-label="Keyboard">
+                        <g class="body">
+                            <rect x="336" y="404" width="258" height="26" rx="6" fill="var(--surface-hi)" stroke="var(--line-hi)" stroke-width="1.3"/>
+                            <g fill="var(--line-hi)">
+                                <rect x="346" y="411" width="14" height="5" rx="2"/><rect x="366" y="411" width="14" height="5" rx="2"/>
+                                <rect x="386" y="411" width="14" height="5" rx="2"/><rect x="406" y="411" width="14" height="5" rx="2"/>
+                                <rect x="426" y="411" width="14" height="5" rx="2"/><rect x="446" y="411" width="14" height="5" rx="2"/>
+                                <rect x="466" y="411" width="14" height="5" rx="2"/><rect x="486" y="411" width="14" height="5" rx="2"/>
+                                <rect x="506" y="411" width="14" height="5" rx="2"/><rect x="526" y="411" width="14" height="5" rx="2"/>
+                                <rect x="546" y="411" width="14" height="5" rx="2"/><rect x="566" y="411" width="18" height="5" rx="2"/>
+                                <rect x="386" y="420" width="158" height="5" rx="2"/>
+                            </g>
+                        </g>
+                        <circle class="hot-ring" cx="466" cy="398" r="5"/>
+                        <circle class="hot" cx="466" cy="398"/>
+                    </g>
+
+                    <!-- mouse -->
+                    <g class="rig-part" data-part="mouse" tabindex="0" role="button" aria-label="Mouse">
+                        <g class="body">
+                            <path d="M624 430c0-16 8-26 20-26s20 10 20 26z" fill="var(--surface-hi)" stroke="var(--line-hi)" stroke-width="1.3"/>
+                            <path d="M644 404v12" stroke="var(--line-hi)" stroke-width="1.3"/>
+                        </g>
+                        <circle class="hot-ring" cx="672" cy="410" r="5"/>
+                        <circle class="hot" cx="672" cy="410"/>
+                    </g>
+
+                    <!-- audio -->
+                    <g class="rig-part" data-part="audio" tabindex="0" role="button" aria-label="Audio">
+                        <g class="body">
+                            <rect x="762" y="360" width="9" height="72" rx="4" fill="var(--line)"/>
+                            <rect x="734" y="428" width="66" height="8" rx="4" fill="var(--line)"/>
+                            <path d="M740 356a27 27 0 0 1 54 0" fill="none" stroke="var(--line-hi)" stroke-width="4" stroke-linecap="round"/>
+                            <rect x="732" y="352" width="15" height="30" rx="7" fill="var(--surface-hi)" stroke="var(--line-hi)" stroke-width="1.3"/>
+                            <rect x="787" y="352" width="15" height="30" rx="7" fill="var(--surface-hi)" stroke="var(--line-hi)" stroke-width="1.3"/>
+                        </g>
+                        <circle class="hot-ring" cx="812" cy="352" r="5"/>
+                        <circle class="hot" cx="812" cy="352"/>
+                    </g>
+
+                    <!-- network -->
+                    <g class="rig-part" data-part="network" tabindex="0" role="button" aria-label="Networking">
+                        <g class="body">
+                            <rect x="700" y="112" width="140" height="36" rx="9" fill="var(--surface-hi)" stroke="var(--line-hi)" stroke-width="1.3"/>
+                            <circle cx="716" cy="130" r="3" fill="var(--accent)"/>
+                            <circle cx="728" cy="130" r="3" fill="var(--accent)" opacity="0.5"/>
+                            <circle cx="740" cy="130" r="3" fill="var(--line-hi)"/>
+                            <path d="M800 112V96M820 112V96" stroke="var(--line-hi)" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M770 104a22 22 0 0 1 34 0M776 92a34 34 0 0 1 46 0" fill="none" stroke="var(--accent)" stroke-width="2" opacity="0.45" stroke-linecap="round"/>
+                        </g>
+                        <circle class="hot-ring" cx="856" cy="130" r="5"/>
+                        <circle class="hot" cx="856" cy="130"/>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="rig__panel" id="rigPanel">
+                <p class="rig__hint" id="rigHint">Pick a glowing point — or use the shortcuts below.</p>
+                <div class="rig__list" id="rigList"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ TRAVEL ============================ -->
+    <section class="sec" id="travel">
+        <div class="sec__head rv">
+            <p class="eyebrow">03 — the map</p>
+            <h2 class="sec__title">Places I went on my own.</h2>
+            <p class="sec__lede">
+                Solo travel is the one thing that reliably gets me out of my own head.
+                Every pin is a trip — tap one to read what stuck.
+            </p>
+        </div>
+
+        <div class="trip rv">
+            <div class="trip__mapWrap" id="mapWrap">
+                <canvas class="trip__canvas" id="mapCanvas"></canvas>
+                <!-- pins injected here -->
+            </div>
+
+            <div class="trip__meta" id="tripStats"></div>
+            <div class="trip__card" id="tripCard" aria-live="polite"></div>
+        </div>
+    </section>
+
+    <!-- =========================== OFF HOURS ========================== -->
+    <section class="sec" id="offhours">
+        <div class="sec__head rv">
+            <p class="eyebrow">04 — off hours</p>
+            <h2 class="sec__title">What the rest of the week looks like.</h2>
+        </div>
+
+        <div class="hours rv">
+            <button class="card" aria-expanded="false">
+                <span class="card__icon" aria-hidden="true">🎮</span>
+                <span class="card__title">gaming</span>
+                <span class="card__desc">valorant with my friends from discord. CS2, minecraft or roblox when we're sick of losing.</span>
+                <span class="card__more"><div><p>the discord call is most of my social life these days, which is a sentence I've made peace with. we're not good. we keep queueing.</p></div></span>
+                <span class="card__cue">more <svg viewBox="0 0 10 10"><path d="M1 5h8M5 1v8"/></svg></span>
+            </button>
+
+            <button class="card" aria-expanded="false">
+                <span class="card__icon" aria-hidden="true">🌍</span>
+                <span class="card__title">solo travel</span>
+                <span class="card__desc">no itinerary, no group chat voting on where to eat. that's the entire appeal.</span>
+                <span class="card__more"><div><p>I book the flight and figure out the rest there. every trip has one afternoon where nothing goes to plan, and that's always the part I remember.</p></div></span>
+                <span class="card__cue">more <svg viewBox="0 0 10 10"><path d="M1 5h8M5 1v8"/></svg></span>
+            </button>
+
+            <button class="card" aria-expanded="false">
+                <span class="card__icon" aria-hidden="true">⚙️</span>
+                <span class="card__title">tinkering</span>
+                <span class="card__desc">breaking my own setup on purpose, then fixing it. this site included.</span>
+                <span class="card__more"><div><p>reinstalling something at 1am to see if I can do it faster than last time is a hobby, apparently. this page has been rebuilt more times than it's been read.</p></div></span>
+                <span class="card__cue">more <svg viewBox="0 0 10 10"><path d="M1 5h8M5 1v8"/></svg></span>
+            </button>
+
+            <button class="card" aria-expanded="false">
+                <span class="card__icon" aria-hidden="true">☕</span>
+                <span class="card__title">caffeine addict</span>
+                <span class="card__desc">iced americano, no sugar. the one dependency I've never audited.</span>
+                <span class="card__more"><div><p>two before noon, one more if the working papers are going badly. I've been told this is not a personality. I disagree.</p></div></span>
+                <span class="card__cue">more <svg viewBox="0 0 10 10"><path d="M1 5h8M5 1v8"/></svg></span>
+            </button>
+        </div>
+    </section>
+
+    <!-- ============================ CONNECT =========================== -->
+    <section class="sec" id="connect">
+        <div class="sec__head rv">
+            <p class="eyebrow">05 — connect</p>
+            <h2 class="sec__title">Say something.</h2>
+        </div>
+
+        <div class="connect rv">
+            <div class="live">
+                <p class="live__badge"><i></i> stream &amp; videos</p>
+                <p class="live__ttl">watch me crash out over whatever I'm doom-playing that night.</p>
+                <p class="live__desc">no schedule, no overlay budget, occasional competence.</p>
+                <div class="live__btns">
+                    <a class="btn btn--solid" href="https://www.twitch.tv/rughseel" target="_blank" rel="noopener noreferrer">
+                        <img src="./assets/twitch-icon.png" alt="" width="15" height="15" loading="lazy" decoding="async"> twitch
+                    </a>
+                    <a class="btn btn--ghost" href="https://www.youtube.com/@farrasnaim/streams" target="_blank" rel="noopener noreferrer">
+                        <img src="./assets/youtube-icon.png" alt="" width="15" height="15" loading="lazy" decoding="async"> youtube
+                    </a>
                 </div>
             </div>
-        </section>
 
-        <!-- FLOATING CONTROLS (all breakpoints) -->
-        <div class="floating-controls">
-            <button type="button" class="fab jump-to-top" id="jumpToTop" aria-label="Jump to top">↑</button>
-            <button type="button" class="fab theme-toggle" id="themeToggle" aria-label="Switch theme" aria-pressed="false">🌙</button>
+            <div class="links">
+                <a class="linkRow" href="mailto:farrasnaim@outlook.com">
+                    <svg class="brand" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+                    <span><span class="linkRow__t">email</span><br><span class="linkRow__h">farrasnaim@outlook.com</span></span>
+                    <span class="linkRow__go"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                </a>
+                <a class="linkRow" href="https://linkedin.com/in/farrasnaim" target="_blank" rel="noopener noreferrer">
+                    <svg class="brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                    <span><span class="linkRow__t">linkedin</span><br><span class="linkRow__h">/in/farrasnaim</span></span>
+                    <span class="linkRow__go"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                </a>
+                <a class="linkRow" href="https://instagram.com/farrasnaim" target="_blank" rel="noopener noreferrer">
+                    <svg class="brand" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    <span><span class="linkRow__t">instagram</span><br><span class="linkRow__h">@farrasnaim</span></span>
+                    <span class="linkRow__go"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                </a>
+                <a class="linkRow" href="https://www.tiktok.com/@farrasnaim" target="_blank" rel="noopener noreferrer">
+                    <svg class="brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3v10.5a4 4 0 1 1-4-4"/><path d="M15 3c.4 2.4 2.3 4.3 4.7 4.5"/></svg>
+                    <span><span class="linkRow__t">tiktok</span><br><span class="linkRow__h">@farrasnaim</span></span>
+                    <span class="linkRow__go"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                </a>
+                <a class="linkRow" href="https://open.spotify.com/user/farrasnaim" target="_blank" rel="noopener noreferrer">
+                    <svg class="brand" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M7.5 9.2c3-.9 6.4-.6 9 .9"/><path d="M8 12.6c2.5-.7 5.2-.5 7.4.8"/><path d="M8.5 15.7c1.9-.5 4-.3 5.6.6"/></svg>
+                    <span><span class="linkRow__t">spotify</span><br><span class="linkRow__h">what the overthinking sounds like</span></span>
+                    <span class="linkRow__go"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                </a>
+            </div>
         </div>
+    </section>
+
+    <footer class="foot">
+        <span>© <span id="yr">2026</span> farras naim — built, broken and rebuilt in a browser tab.</span>
+        <span>press <kbd>⌘K</kbd> to jump around</span>
+    </footer>
+
+</div>
+</main>
+
+<!-- ======================= COMMAND PALETTE ======================= -->
+<div class="cmdk" id="cmdk" role="dialog" aria-modal="true" aria-label="Command menu" hidden>
+    <div class="cmdk__box">
+        <input class="cmdk__input" id="cmdkInput" type="text" placeholder="jump to a section, open a link…" autocomplete="off" spellcheck="false" aria-controls="cmdkList">
+        <div class="cmdk__list" id="cmdkList" role="listbox" aria-label="Results"></div>
     </div>
+</div>
 
-    <script>
-        (function () {
-            'use strict';
-
-            var html = document.documentElement;
-            var jumpToTop = document.getElementById('jumpToTop');
-            var themeToggle = document.getElementById('themeToggle');
-            var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-            /* ---- Reveal on scroll -------------------------------------------
-               Reveals once and then stops observing. The previous version also
-               faded elements back out on exit, which made already-read content
-               disappear behind you as you scrolled. */
-            function initReveal() {
-                /* Headings and intro copy are deliberately excluded: they stay
-                   painted so the page structure is stable on load and when
-                   landing mid-page. */
-                var targets = document.querySelectorAll('.work-item, .hobby-item, .org-item');
-
-                if (reduceMotion.matches || !('IntersectionObserver' in window)) {
-                    return; // leave everything visible
-                }
-
-                Array.prototype.forEach.call(targets, function (el) {
-                    el.classList.add('reveal');
-                });
-
-                var observer = new IntersectionObserver(function (entries) {
-                    entries.forEach(function (entry) {
-                        if (!entry.isIntersecting) return;
-                        entry.target.classList.add('fade-in');
-                        observer.unobserve(entry.target);
-                    });
-                }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
-
-                Array.prototype.forEach.call(targets, function (el) {
-                    observer.observe(el);
-                });
-            }
-
-            /* ---- Jump to top ------------------------------------------------ */
-            function initJumpToTop() {
-                if (!jumpToTop) return;
-
-                jumpToTop.addEventListener('click', function () {
-                    if (reduceMotion.matches) {
-                        window.scrollTo(0, 0);
-                        return;
-                    }
-
-                    var start = window.scrollY;
-                    var duration = 600;
-                    var startTime = performance.now();
-                    var easeOutCubic = function (t) { return 1 - Math.pow(1 - t, 3); };
-
-                    (function step(now) {
-                        var progress = Math.min((now - startTime) / duration, 1);
-                        window.scrollTo(0, start * (1 - easeOutCubic(progress)));
-                        if (progress < 1) requestAnimationFrame(step);
-                    })(startTime);
-                });
-
-                var ticking = false;
-                function updateVisibility() {
-                    jumpToTop.classList.toggle('show', window.scrollY > 300);
-                    ticking = false;
-                }
-
-                window.addEventListener('scroll', function () {
-                    if (ticking) return;
-                    ticking = true;
-                    requestAnimationFrame(updateVisibility);
-                }, { passive: true });
-
-                updateVisibility();
-            }
-
-            /* ---- Theme toggle -----------------------------------------------
-               The head script already applied the stored theme before paint;
-               this only keeps the button label and storage in sync. */
-            function initTheme() {
-                if (!themeToggle) return;
-
-                var systemDark = window.matchMedia('(prefers-color-scheme: dark)');
-
-                function readStored() {
-                    try { return localStorage.getItem('theme'); } catch (e) { return null; }
-                }
-
-                function paint(theme) {
-                    html.setAttribute('data-theme', theme);
-                    themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
-                    themeToggle.setAttribute('aria-pressed', String(theme === 'dark'));
-                    themeToggle.setAttribute(
-                        'aria-label',
-                        theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
-                    );
-                }
-
-                paint(html.getAttribute('data-theme') || (systemDark.matches ? 'dark' : 'light'));
-
-                themeToggle.addEventListener('click', function () {
-                    var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-                    try { localStorage.setItem('theme', next); } catch (e) { /* private mode */ }
-                    paint(next);
-                });
-
-                // Follow the OS only while the visitor hasn't made an explicit choice
-                var onSystemChange = function (e) {
-                    if (!readStored()) paint(e.matches ? 'dark' : 'light');
-                };
-
-                if (systemDark.addEventListener) {
-                    systemDark.addEventListener('change', onSystemChange);
-                } else if (systemDark.addListener) {
-                    systemDark.addListener(onSystemChange); // Safari < 14
-                }
-            }
-
-            initReveal();
-            initJumpToTop();
-            initTheme();
-        })();
-    </script>
+<script src="./assets/app.js" defer></script>
 </body>
 </html>
