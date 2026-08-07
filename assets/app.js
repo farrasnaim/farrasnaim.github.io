@@ -14,70 +14,72 @@
        ===================================================================== */
 
     /* --- THE RIG ---------------------------------------------------------
-       PLACEHOLDER DATA. Swap `spec` and `why` for your real setup.
-       `part` must match the data-part attribute on the SVG group.        */
+       Real parts. `part` must match the data-part attribute on the SVG.   */
     var RIG = [
-        { part: 'pc', label: 'desktop', name: 'the tower', spec: 'ryzen 7 · 32 GB · nvme',
-          why: 'built it myself, mostly so I would know exactly what to blame. <strong>32 GB is the part I would not cut</strong> — running a VM, a browser with forty tabs of working papers and a game in the background is a normal tuesday.' },
+        { part: 'pc', label: 'tower', name: 'the main PC', spec: 'i7-14700F · RTX 5060 8GB · 32GB DDR4 · 1TB NVMe',
+          why: 'a 20-core i7-14700F next to a mid-range RTX 5060, which looks unbalanced until you notice what it actually does all day. <strong>the cores are for work, the GPU is for the evening</strong> — audit workbooks and VMs eat threads, valorant does not eat much of anything. a 360mm AIO in a darkFlash C280 so the whole thing stays quiet while it does both.' },
 
-        { part: 'monitor', label: 'monitor', name: 'the panel', spec: '27" · 1440p · 165 Hz',
-          why: '1440p over 4K on purpose. at this size the extra pixels cost more frames than they add clarity, and <strong>I stare at spreadsheets more than I stare at textures</strong>. the high refresh is for valorant; the panel size is for having two documents side by side without squinting.' },
+        { part: 'monitor', label: 'display', name: 'ASUS ROG Strix XG27WCS', spec: '27" QHD · 180 Hz · on an Oximus dual arm',
+          why: '1440p at 27" over 4K on purpose — <strong>at this size the extra pixels cost frames without adding clarity</strong>, and I read spreadsheets far more than I look at textures. 180Hz is the valorant half of the argument. it sits on a dual monitor arm because the desk surface is worth more than the stand was.' },
 
-        { part: 'keyboard', label: 'keyboard', name: 'the board', spec: 'tkl · tactile switches',
-          why: 'tenkeyless so the mouse sits closer to my shoulder — <strong>a numpad I use twice a month is not worth the wrist angle</strong>. tactile rather than clicky because I share calls with people who did not consent to my hobby.' },
+        { part: 'keyboard', label: 'keyboard', name: 'iLovBee B87', spec: 'TKL · tri-mode wireless · RGB',
+          why: 'tenkeyless so the mouse sits closer to my shoulder. <strong>a numpad I touch twice a month is not worth the wrist angle</strong>, and tri-mode means the same board follows the ThinkPad when I work somewhere else without re-learning a layout.' },
 
-        { part: 'mouse', label: 'mouse', name: 'the mouse', spec: 'lightweight · wireless',
-          why: 'light matters more than dpi. <strong>nobody has ever lost a duel because their sensor was 6000 dpi instead of 8000</strong>, but everybody has lost one dragging a brick across a mousepad. wireless purely so there is one less cable to route.' },
+        { part: 'mouse', label: 'mouse', name: 'LAMZU MAYA X', spec: 'wireless · 8K polling · Artisan Ninja FX Raiden',
+          why: 'light beats high DPI every time — <strong>nobody has lost a duel because their sensor read 6000 instead of 8000</strong>, but everyone has lost one dragging a brick. the Artisan pad is the part people skip and then notice immediately: a control-speed surface makes small corrections repeatable.' },
 
-        { part: 'audio', label: 'audio', name: 'the headphones', spec: 'open-back · desk mic',
-          why: 'open-back means I can hear footsteps and the doorbell. <strong>the mic is a separate device on purpose</strong> — headset mics are a compromise on both halves, and streaming makes the difference obvious to everyone but me.' },
+        { part: 'audio', label: 'audio', name: 'Sony WH-1000XM6', spec: 'wireless · active noise cancelling',
+          why: 'noise cancelling is the actual feature, and it is not for music. <strong>open-plan audit rooms and a laptop fan are the two sounds I most need gone</strong>. wireless because I stand up mid-call more than I would like to admit, and they live on top of the tower so there is one obvious place they belong.' },
 
-        { part: 'network', label: 'network', name: 'the network', spec: 'mesh · wired backhaul',
-          why: 'the one thing I actually over-engineered. <strong>wired backhaul instead of pure wireless mesh</strong>, because packet loss in a ranked game is indistinguishable from being bad at the game, and I need to be able to rule it out.' },
+        { part: 'laptop', label: 'work laptop', name: 'ThinkPad T14 Gen 3', spec: 'i7-1265U · 32GB · since 2022',
+          why: 'the machine that has been with me since I joined EY in 2022, and the one that has taken the most abuse. <strong>32GB is the only reason million-row Excel workbooks open at all</strong> — the CPU is a low-power U-series chip, so memory is what stops a pivot table from ending the afternoon. it keeps the desk honest: the tower is mine, this one is the job.' },
 
-        { part: 'desk', label: 'workspace', name: 'the desk', spec: 'standing · cable tray',
-          why: 'sit-stand, though I would be lying if I said the stand half sees much use. <strong>the cable tray is the real upgrade</strong> — the desk being clear is the difference between opening the laptop and finding a reason not to.' }
+        { part: 'cam', label: 'webcam', name: 'Streamplify CAM PRO', spec: '4K · fixed on the bezel',
+          why: 'a real camera instead of the laptop\'s, because <strong>the ThinkPad lid is never pointed where I am actually sitting</strong>. it stays clipped to the monitor so joining a client call is one click and not a furniture rearrangement.' },
+
+        { part: 'mic', label: 'microphone', name: 'Thronmax Rosa Mdrill Zero+', spec: 'USB condenser · own stand',
+          why: 'the one piece I would tell anyone to buy first. <strong>headset mics compromise both halves and everyone hears it except you</strong> — audio is what makes a stream watchable and a call not exhausting. it sits off to the right on its own stand, clear of the keyboard.' }
     ];
 
     /* --- TRAVEL ----------------------------------------------------------
-       PLACEHOLDER TRIPS. Replace with your real ones.
-       lat/lon place the pin; `shots` are colour pairs for the photo blocks
-       until you drop real images in (swap `shot.style.background` below). */
+       International legs only, taken straight from the flight log.
+       lat/lon place the pin; `legs` are real flights; `note` is yours to
+       rewrite — everything else here is data rather than recollection.   */
     var TRIPS = [
         { city: 'Jakarta', country: 'Indonesia', lat: -6.21, lon: 106.85, when: 'home base', home: true,
-          note: 'where everything starts and ends. the airport I know well enough to cut it fine.',
-          loved: ['warung at 2am', 'the drive home', 'nothing to plan'],
-          shots: ['#3a1f1f', '#241a2e', '#1b2a33'] },
+          note: 'CGK is the start and end of every line on this map. the domestic flights are not plotted — this is the international log only.',
+          legs: [] },
 
-        { city: 'Bali', country: 'Indonesia', lat: -8.65, lon: 115.22, when: 'mar 2023',
-          note: 'went for four days, spent three of them on a scooter with no particular destination.',
-          loved: ['the ride to nowhere', 'coffee with a view', 'nobody asking where I was'],
-          shots: ['#1f3a2e', '#2e2a1a', '#1b2633'] },
+        { city: 'Cairo', country: 'Egypt', lat: 30.04, lon: 31.24, when: 'apr 2025',
+          note: 'the longest single leg I have flown — over eleven hours in one go.',
+          legs: [ { d: '2 apr 2025', r: 'CGK → CAI', f: 'MS 978 · B789', t: '11h 18m' } ] },
 
-        { city: 'Singapore', country: 'Singapore', lat: 1.35, lon: 103.82, when: 'aug 2023',
-          note: 'the easiest first solo trip there is. everything works, which is its own kind of holiday.',
-          loved: ['hawker centres', 'the MRT', 'walking until my feet gave out'],
-          shots: ['#2a1f3a', '#1a2e2a', '#331b1b'] },
+        { city: 'Jeddah', country: 'Saudi Arabia', lat: 21.49, lon: 39.19, when: 'apr 2025',
+          note: 'nine days on the ground between landing from Cairo and flying back out — the longest I have stayed anywhere abroad.',
+          legs: [ { d: '3 apr 2025',  r: 'CAI → JED', f: 'MS 665 · A333',  t: '2h 07m' },
+                  { d: '12 apr 2025', r: 'JED → DOH', f: 'QR 1185 · A333', t: '1h 59m' } ] },
 
-        { city: 'Bangkok', country: 'Thailand', lat: 13.76, lon: 100.50, when: 'jan 2024',
-          note: 'loud in the best way. got lost twice and both times it improved the day.',
-          loved: ['street food at midnight', 'the river boats', 'the noise'],
-          shots: ['#3a2a1f', '#1f2a3a', '#2e1a24'] },
+        { city: 'Doha', country: 'Qatar', lat: 25.29, lon: 51.53, when: 'apr 2025 · connection',
+          note: 'in and out the same day. counted here because the passport was stamped, not because I saw anything.',
+          legs: [ { d: '12 apr 2025', r: 'JED → DOH', f: 'QR 1185 · A333', t: '1h 59m' },
+                  { d: '12 apr 2025', r: 'DOH → BKK', f: 'QR 838 · B77W',  t: '6h 12m' } ] },
 
-        { city: 'Kuala Lumpur', country: 'Malaysia', lat: 3.14, lon: 101.69, when: 'jun 2024',
-          note: 'a long weekend that was mostly an excuse to eat. no regrets, no itinerary.',
-          loved: ['the food courts', 'cheap flights', 'a hotel with a view'],
-          shots: ['#1f2e3a', '#331f2a', '#26331b'] },
+        { city: 'Bangkok', country: 'Thailand', lat: 13.76, lon: 100.50, when: 'nov 2024 · apr 2025',
+          note: 'the only city out here I went back to. first on a direct hop from Jakarta, then again as the last stop on the way home from Doha.',
+          legs: [ { d: '28 nov 2024', r: 'CGK → DMK', f: 'SL 117 · B738',  t: '3h 21m' },
+                  { d: '1 dec 2024',  r: 'DMK → CGK', f: 'QZ 253 · A320',  t: '3h 25m' },
+                  { d: '12 apr 2025', r: 'DOH → BKK', f: 'QR 838 · B77W',  t: '6h 12m' },
+                  { d: '13 apr 2025', r: 'DMK → CGK', f: 'ID 7630 · A320', t: '3h 26m' } ] },
 
-        { city: 'Seoul', country: 'South Korea', lat: 37.57, lon: 126.98, when: 'oct 2024',
-          note: 'first properly cold trip. underestimated the walking, overestimated my jacket.',
-          loved: ['convenience stores', 'the subway', 'autumn actually existing'],
-          shots: ['#2a2a3a', '#3a1f2a', '#1b3327'] },
+        { city: 'Kuala Lumpur', country: 'Malaysia', lat: 3.14, lon: 101.69, when: 'nov 2025',
+          note: 'first half of a two-country run — flew in from Jakarta, left overland-adjacent on a different airline entirely.',
+          legs: [ { d: '6 nov 2025', r: 'CGK → KUL', f: '8B 675 · A321', t: '2h 18m' },
+                  { d: '9 nov 2025', r: 'KUL → SGN', f: 'MH 758 · B738', t: '2h 55m' } ] },
 
-        { city: 'Tokyo', country: 'Japan', lat: 35.68, lon: 139.69, when: 'apr 2025',
-          note: 'the one that reset the bar. a week alone and I never once felt like I was alone badly.',
-          loved: ['trains that mean it', 'tiny bars', 'vending machine coffee'],
-          shots: ['#3a1f2e', '#1f3339', '#2e2a1f'] }
+        { city: 'Ho Chi Minh City', country: 'Vietnam', lat: 10.82, lon: 106.63, when: 'nov 2025',
+          note: 'second half of the same trip, and the most recent stamp in the book.',
+          legs: [ { d: '9 nov 2025',  r: 'KUL → SGN', f: 'MH 758 · B738', t: '2h 55m' },
+                  { d: '12 nov 2025', r: 'SGN → CGK', f: 'VN 631 · A321', t: '2h 53m' } ] }
     ];
 
     /* Coarse continent outlines [lon, lat] — rasterised into dots below.
@@ -436,21 +438,30 @@
             var t = TRIPS[i];
             pins.forEach(function (p, n) { p.classList.toggle('is-active', n === i); });
 
+            var legs = t.legs.length
+                ? '<div class="legs"><p class="legs__t">flights</p>' +
+                  t.legs.map(function (l) {
+                      /* order matters: d, r, t fill row one; f spans row two */
+                      return '<div class="leg">' +
+                                 '<span class="leg__d">' + l.d + '</span>' +
+                                 '<span class="leg__r">' + l.r + '</span>' +
+                                 '<span class="leg__t">' + l.t + '</span>' +
+                                 '<span class="leg__f">' + l.f + '</span>' +
+                             '</div>';
+                  }).join('') + '</div>'
+                : '';
+
             card.innerHTML =
                 '<div class="trip__shots">' +
-                    t.shots.map(function (c, n) {
-                        return '<div class="shot" style="background:linear-gradient(145deg,' + c + ',var(--bg-deep))">' +
-                               (n === 0 ? 'photo — add yours' : 'photo') + '</div>';
-                    }).join('') +
+                    '<div class="shot">photo — add yours</div>' +
+                    '<div class="shot">photo</div>' +
+                    '<div class="shot">photo</div>' +
                 '</div>' +
                 '<div>' +
                     '<p class="trip__when">' + t.when + '</p>' +
                     '<h3 class="trip__place">' + t.city + ', ' + t.country + '</h3>' +
                     '<p class="trip__note">' + t.note + '</p>' +
-                    '<div class="trip__loved">' +
-                        '<p class="trip__lovedT">what stuck</p>' +
-                        '<ul>' + t.loved.map(function (l) { return '<li class="tag">' + l + '</li>'; }).join('') + '</ul>' +
-                    '</div>' +
+                    legs +
                 '</div>';
 
             card.classList.remove('is-shown');
@@ -460,11 +471,16 @@
         /* stats */
         var stats = $('#tripStats');
         if (stats) {
-            var countries = {};
-            TRIPS.forEach(function (t) { countries[t.country] = 1; });
+            var away = TRIPS.filter(function (t) { return !t.home; });
+            var countries = {}, uniqueLegs = {};
+            away.forEach(function (t) {
+                countries[t.country] = 1;
+                t.legs.forEach(function (l) { uniqueLegs[l.d + l.r] = 1; });
+            });
             stats.innerHTML =
-                '<div><p class="stat__n">' + TRIPS.length + '</p><p class="stat__l">cities</p></div>' +
+                '<div><p class="stat__n">' + away.length + '</p><p class="stat__l">cities</p></div>' +
                 '<div><p class="stat__n">' + Object.keys(countries).length + '</p><p class="stat__l">countries</p></div>' +
+                '<div><p class="stat__n">' + Object.keys(uniqueLegs).length + '</p><p class="stat__l">intl. legs</p></div>' +
                 '<div><p class="stat__n">100%</p><p class="stat__l">solo</p></div>';
         }
 
