@@ -51,7 +51,7 @@
           why: 'a real camera instead of the laptop\'s, because <strong>the ThinkPad lid is never pointed where I am actually sitting</strong>. it stays clipped to the monitor so joining a client call is one click and not a furniture rearrangement.' },
 
         { part: 'mic', label: 'microphone', name: 'Thronmax Rosa Mdrill Zero+', spec: 'USB condenser · own stand',
-          why: 'the one piece I would tell anyone to buy first. <strong>headset mics compromise both halves and everyone hears it except you</strong> — audio is what makes a stream watchable and a call not exhausting. it sits off to the right on its own stand, clear of the keyboard.' }
+          why: 'the one piece I would tell anyone to buy first. <strong>headset mics compromise both halves and everyone hears it except you</strong> — audio is what makes a stream watchable and a call not exhausting. it sits off to the left on its own stand, clear of the keyboard.' }
     ];
 
     /* --- TRAVEL ----------------------------------------------------------
