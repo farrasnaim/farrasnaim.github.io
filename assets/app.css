@@ -28,6 +28,12 @@
     --accent-line:   rgba(240, 68, 68, 0.34);
     --accent-glow:   rgba(240, 68, 68, 0.30);
 
+    /* Twitch brand purple. It's a solid fill carrying white text, so the
+       contrast that matters (4.6:1, AA) is against the fill rather than the
+       page — no light-theme override needed. */
+    --twitch:        #9146ff;
+    --twitch-glow:   rgba(145, 70, 255, 0.34);
+
     --shadow-pop:    rgba(0, 0, 0, 0.6);
     --vignette:      rgba(0, 0, 0, 0.4);
 
@@ -770,6 +776,9 @@ section { position: relative; z-index: 2; }
 .btn:hover { transform: translateY(-2px); }
 .btn--solid { background: var(--accent-solid); border-color: var(--accent-solid); color: #fff; }
 .btn--solid:hover { box-shadow: 0 8px 26px var(--accent-glow); }
+/* platform-coloured rather than site-accent — the button reads as Twitch */
+.btn--twitch { background: var(--twitch); border-color: var(--twitch); color: #fff; }
+.btn--twitch:hover { box-shadow: 0 8px 26px var(--twitch-glow); }
 .btn--ghost:hover { border-color: var(--line-hi); background: var(--surface-hi); }
 .btn svg {
     width: 16px; height: 16px; flex-shrink: 0;
@@ -933,7 +942,7 @@ section { position: relative; z-index: 2; }
     /* printers drop backgrounds: un-clip the gradient headline and re-ink
        labels whose color relies on a painted fill behind them */
     .hero__title em { background: none; -webkit-text-fill-color: currentColor; color: #111; }
-    .btn--solid, .filter[aria-pressed="true"], .rig__listBtn.is-active {
+    .btn--solid, .btn--twitch, .filter[aria-pressed="true"], .rig__listBtn.is-active {
         color: #111 !important; border-color: #333 !important;
     }
 }
