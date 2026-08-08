@@ -326,6 +326,24 @@
     })();
 
     /* =====================================================================
+       6b. STORY ASIDES — expandable detail in the work section
+       ===================================================================== */
+    (function story() {
+        $$('.story__aside').forEach(function (aside) {
+            var btn = $('.story__toggle', aside);
+            var more = $('.story__more', aside);
+            if (!btn || !more) return;
+            var id = 'st-' + Math.random().toString(36).slice(2, 8);
+            more.id = id;
+            btn.setAttribute('aria-controls', id);
+            btn.addEventListener('click', function () {
+                var open = aside.classList.toggle('is-open');
+                btn.setAttribute('aria-expanded', String(open));
+            });
+        });
+    })();
+
+    /* =====================================================================
        7. THE RIG — hotspots + detail panel
        ===================================================================== */
     (function rig() {
@@ -580,6 +598,7 @@
 
         var ITEMS = [
             { icon: '◐', label: 'journey — work & campus', hint: 'section', go: function () { jump('#journey'); } },
+            { icon: '◒', label: 'the work — day to day',   hint: 'section', go: function () { jump('#work'); } },
             { icon: '◧', label: 'the rig — desk setup',    hint: 'section', go: function () { jump('#rig'); } },
             { icon: '◍', label: 'the map — travel',        hint: 'section', go: function () { jump('#travel'); } },
             { icon: '◔', label: 'off hours',               hint: 'section', go: function () { jump('#offhours'); } },

@@ -502,6 +502,35 @@ section { position: relative; z-index: 2; }
     background: var(--surface);
 }
 
+/* ---------- STORY (the work) ------------------------------------------ */
+.story { max-width: 60ch; display: grid; gap: clamp(1.5rem, 3vw, 2.2rem); }
+.story__lead { color: var(--text); line-height: 1.8; }
+
+.story__aside { margin-top: 0.7rem; }
+.story__toggle {
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    font-family: var(--font-mono); font-size: var(--fs-xs);
+    letter-spacing: 0.03em; color: var(--accent);
+    transition: color 0.25s var(--ease);
+}
+.story__toggle:hover { color: var(--text); }
+.story__toggle svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; transition: transform 0.4s var(--ease); }
+.story__aside.is-open .story__toggle svg { transform: rotate(45deg); }
+
+/* same 0fr -> 1fr auto-height reveal as the timeline/cards; .js-scoped so the
+   asides render open when scripting is off */
+.story__more { display: grid; transition: grid-template-rows 0.45s var(--ease); }
+.js .story__more { grid-template-rows: 0fr; }
+.story__aside.is-open .story__more { grid-template-rows: 1fr; }
+.story__more > div { overflow: hidden; }
+.js .story__more > div { visibility: hidden; transition: visibility 0.45s; }
+.story__aside.is-open .story__more > div { visibility: visible; transition: none; }
+.story__more p {
+    color: var(--muted); font-size: var(--fs-sm);
+    margin-top: 0.75rem; padding: 0.1rem 0 0.1rem 1rem;
+    border-left: 2px solid var(--accent-line);
+}
+
 /* ---------- BATTLESTATION --------------------------------------------- */
 .rig { display: grid; grid-template-columns: 1.35fr 0.85fr; gap: clamp(1.5rem, 3vw, 3rem); align-items: start; }
 
@@ -924,7 +953,7 @@ section { position: relative; z-index: 2; }
     .js .rv { opacity: 1; transform: none; }
     .spotlight { display: none; }
     /* expansion still needs to work, just instantly */
-    .tl-body, .card__more { transition: none; }
+    .tl-body, .card__more, .story__more { transition: none; }
 }
 
 /* ---------- PRINT ------------------------------------------------------
