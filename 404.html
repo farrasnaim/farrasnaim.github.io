@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>404 — Farras Naim</title>
+    <meta name="theme-color" content="#08080b">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2032%2032'%3E%3Crect%20width%3D'32'%20height%3D'32'%20rx%3D'7'%20fill%3D'%23dc2626'%2F%3E%3Ctext%20x%3D'16'%20y%3D'24'%20font-family%3D'system-ui%2Csans-serif'%20font-size%3D'21'%20font-weight%3D'700'%20fill%3D'%23ffffff'%20text-anchor%3D'middle'%3Ef%3C%2Ftext%3E%3C%2Fsvg%3E">
+    <!-- self-contained on purpose: a 404 must not depend on /assets resolving -->
+    <script>
+        try {
+            var t = localStorage.getItem('theme');
+            if (t) document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+    </script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #08080b; --text: #ededf0; --muted: #8b8b96;
+            --accent: #f04444; --line: rgba(255, 255, 255, 0.12);
+        }
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+                color-scheme: light;
+                --bg: #fbfbfc; --text: #16161a; --muted: #63636e;
+                --accent: #d32020; --line: rgba(10, 10, 20, 0.15);
+            }
+        }
+        :root[data-theme="light"] {
+            color-scheme: light;
+            --bg: #fbfbfc; --text: #16161a; --muted: #63636e;
+            --accent: #d32020; --line: rgba(10, 10, 20, 0.15);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            min-height: 100vh; /* fallback for engines without svh units */
+            min-height: 100svh;
+            display: grid; place-items: center;
+            background: var(--bg); color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif;
+            line-height: 1.65;
+            padding: 2rem;
+        }
+        main { max-width: 34rem; }
+        .code {
+            font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+            font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 1rem;
+        }
+        h1 { font-size: clamp(1.6rem, 5vw, 2.35rem); font-weight: 660; letter-spacing: -0.032em; line-height: 1.12; }
+        p { color: var(--muted); margin-top: 0.9rem; }
+        a {
+            display: inline-block; margin-top: 1.6rem;
+            padding: 0.62rem 1.05rem;
+            border: 1px solid var(--line); border-radius: 100px;
+            color: var(--text); text-decoration: none; font-size: 0.875rem;
+        }
+        a:hover { border-color: var(--accent); }
+        a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    </style>
+</head>
+<body>
+<main>
+    <p class="code">404 — not found</p>
+    <h1>this page doesn't exist.</h1>
+    <p>it may have been renamed, rebuilt, or never existed at all. knowing this site, probably rebuilt.</p>
+    <a href="/">back to the page that does</a>
+</main>
+</body>
+</html>
