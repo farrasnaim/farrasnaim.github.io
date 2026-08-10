@@ -69,7 +69,7 @@
          app.css or app.js changes: GitHub Pages serves assets with a
          long cache life, and a stale stylesheet against fresh markup
          renders the page wrong until the browser happens to refetch. -->
-    <link rel="stylesheet" href="./assets/app.css?v=dad62579">
+    <link rel="stylesheet" href="./assets/app.css?v=5d6d6f48">
 </head>
 <body>
 
@@ -622,7 +622,8 @@
                     <span class="card__desc">gua suka ngoptimasi sesuatu. terus ngoptimasi hasil optimasinya lagi.</span>
                     <span class="card__cue">lebih banyak <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 5h8M5 1v8"/></svg></span>
                 </button>
-                <div class="card__more" id="card-more-tinkering"><div><p>milih part PC, ngatur config router, sampe nentuin wording di halaman ini — gua ga bisa lepas dari satu keputusan sampe gua tau persis kenapa itu bisa jalan dan hal apa yang bisa ngerusaknya. "good enough" itu secara teori emang valid. katanya sih gitu. halaman ini sendiri udah dibongkar pasang entah berapa kali sebelum akhirnya gua anggap cukup.</p></div></div>
+                <div class="card__more" id="card-more-tinkering"><div><p>milih part PC, ngatur config router, sampe nentuin wording di halaman ini — gua ga bisa lepas dari satu keputusan sampe gua tau persis kenapa itu bisa jalan dan hal apa yang bisa ngerusaknya. "good enough" itu secara teori emang valid. katanya sih gitu. yang paling parah kena itu routernya: empat hari gua bangun ulang dari firmware-nya, terus di akhir gua audit sendiri dan ngehapus sekitar sepertiga dari yang udah gua bikin — termasuk watchdog yang baru gua tulis sehari sebelumnya, yang ternyata malah jadi penyebab wifi putus-putus yang harusnya dia cegah.</p>
+                    <button class="pm__open" id="pmOpen" type="button">postmortem-nya <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 5h8M5.5 1.5 9 5 5.5 8.5"/></svg></button></div></div>
             </div>
 
             <div class="card">
@@ -732,8 +733,58 @@
     </div>
 </dialog>
 
+<!-- Opened from the tinkering card; see the postmortem block in app.js. -->
+<dialog class="pm" id="pm" aria-labelledby="pmTitle">
+    <div class="pm__box">
+        <button class="pm__close" id="pmClose" type="button" aria-label="Tutup">✕</button>
+        <p class="eyebrow">routernya — postmortem</p>
+        <h3 class="pm__title" id="pmTitle">Empat hari ngerusakin wifi sendiri.</h3>
+        <p class="pm__lede">GL.iNet Beryl 7 — router travel — gua pindahin dari firmware bawaannya ke OpenWrt, terus gua bikinin console sendiri buat hal-hal yang ga ditampilin sama interface aslinya. kebanyakan yang di bawah ini awalnya gua salah dulu.</p>
+
+        <div class="pm__stats"><div class="stat"><div class="stat__n">24</div><div class="stat__l">paket dihapus</div></div><div class="stat"><div class="stat__n">98 MB</div><div class="stat__l">RAM balik</div></div><div class="stat"><div class="stat__n">97%</div><div class="stat__l">ruleset lebih kecil</div></div><div class="stat"><div class="stat__n">185</div><div class="stat__l">baris dihapus</div></div></div>
+
+        <div class="pm__inc">
+            <p class="pm__incT">loop yang ngehapus buktinya sendiri</p>
+            <div class="pm__row"><div class="pm__k">yang rusak</div><div class="pm__v">empat core mentok 100%, IPv6 mati, routernya nyampe 70°C.</div></div>
+            <div class="pm__row"><div class="pm__k">dugaan awal</div><div class="pm__v">ada yang muter-muter. gua kira masalahnya emang beban tinggi.</div></div>
+            <div class="pm__row"><div class="pm__k">aslinya</div><div class="pm__v">satu daemon selamat dari restart dan masih megang nama yang dibutuhin penggantinya. tiap salinan baru mati kena tabrakan nama dalam sepersepuluh detik terus langsung dijalanin lagi, jadi interface-nya naik-turun beberapa kali per detik — dan lognya penuh secepet itu sampe bukti kejadiannya ketimpa dalam 42 detik.</div></div>
+            <div class="pm__row"><div class="pm__k">yang berubah</div><div class="pm__v">dibuktiin lewat tes terkontrol: command yang sama langsung mati pas pake nama yang dipegang, jalan mulus pas pake nama lain.</div></div>
+        </div>
+        <div class="pm__inc">
+            <p class="pm__incT">watchdog yang malah bikin mati</p>
+            <div class="pm__row"><div class="pm__k">yang rusak</div><div class="pm__v">semua device 5&nbsp;GHz putus, pas lagi di tengah testing.</div></div>
+            <div class="pm__row"><div class="pm__k">dugaan awal</div><div class="pm__v">gara-gara editan gua sendiri semenit sebelumnya.</div></div>
+            <div class="pm__row"><div class="pm__k">aslinya</div><div class="pm__v">script recovery yang baru gua tulis nge-reload wifi. watchdog-nya ngecek pas reload-nya lagi jalan, nyimpulin AP-nya ilang, terus mulai reload kedua di atas yang pertama. persis bikin masalah yang harusnya dia cegah.</div></div>
+            <div class="pm__row"><div class="pm__k">yang berubah</div><div class="pm__v">seluruh subsystem-nya gua hapus besoknya. 185 baris keluar, ga ada gantinya.</div></div>
+        </div>
+        <div class="pm__inc">
+            <p class="pm__incT">solusi rapi yang malah motong koneksi sendiri</p>
+            <div class="pm__row"><div class="pm__k">yang rusak</div><div class="pm__v">belum ada. yang ini ketahuan sebelum sempet kejadian.</div></div>
+            <div class="pm__row"><div class="pm__k">dugaan awal</div><div class="pm__v">matiin aja prosesnya baik-baik.</div></div>
+            <div class="pm__row"><div class="pm__k">aslinya</div><div class="pm__v">proses itu sama kembarannya yang masih hidup punya client ID yang persis sama, dan matiin baik-baik itu artinya ngelepas alamatnya. servernya ga bisa bedain dua-duanya — jadi solusi rapinya malah bakal mutusin koneksi routernya sendiri pas lagi dibenerin.</div></div>
+            <div class="pm__row"><div class="pm__k">yang berubah</div><div class="pm__v">dimatiin paksa aja, sengaja.</div></div>
+        </div>
+        <div class="pm__inc">
+            <p class="pm__incT">upgrade gua sendiri yang bocorin VPN</p>
+            <div class="pm__row"><div class="pm__k">yang rusak</div><div class="pm__v">ga ada yang keliatan. itu justru masalahnya.</div></div>
+            <div class="pm__row"><div class="pm__k">dugaan awal</div><div class="pm__v">kill-switch-nya udah nutup DNS, berarti aman.</div></div>
+            <div class="pm__row"><div class="pm__k">aslinya</div><div class="pm__v">tool routing-nya emang ga bisa nandain IPv6 sama sekali. device yang dirouting lewat tunnel nanya alamat pake cara lama, dapet jawaban format baru, terus nyambung langsung keluar lewat samping tunnel. gara-gara gua sendiri yang nyalain IPv6.</div></div>
+            <div class="pm__row"><div class="pm__k">yang berubah</div><div class="pm__v">blokir semua IPv6 yang di-forward buat device itu, bukan cuma DNS-nya. beneran kehilangan fungsi, tapi sengaja dipilih daripada bocor diem-diem.</div></div>
+        </div>
+        <div class="pm__inc">
+            <p class="pm__incT">yang jawabannya ternyata ga usah diapa-apain</p>
+            <div class="pm__row"><div class="pm__k">yang rusak</div><div class="pm__v">wifinya balik terus di channel yang beda dari yang diset.</div></div>
+            <div class="pm__row"><div class="pm__k">dugaan awal</div><div class="pm__v">katanya cuma masalah tampilan. gua ga terima.</div></div>
+            <div class="pm__row"><div class="pm__k">aslinya</div><div class="pm__v">chip-nya cuma punya satu slot channel per radio tapi dua buat seluruh device. nyambung ke wifi orang di band yang sama bikin slot bersamanya pindah dan punya gua ikut; beda band, ga ada slot bareng, jadi AP gua dibongkar terus dibangun ulang.</div></div>
+            <div class="pm__row"><div class="pm__k">yang berubah</div><div class="pm__v">ga ada. begitu mekanismenya jelas, ternyata behavior-nya emang bener, dan patch yang udah gua mulai gua batalin.</div></div>
+        </div>
+        <div class="pm__note"><b>yang bukan:</b> empat hari, bukan berbulan-bulan. sekitar sembilan ribu baris shell sama JavaScript biasa, tanpa test, tanpa CI. console-nya ga pake autentikasi sama sekali — jalan sebagai root di jaringan yang cuma gua yang pake, dan itu risiko yang gua ambil sadar terus gua catat, bukan yang kelewat. ini build hobi yang kebetulan ada dua-tiga hari debugging yang lumayan, dan ngaku lebih dari itu justru hal yang tiap hari gua tandain di kerjaan.</div>
+        <a class="pm__repo" href="https://github.com/farrasnaim/beryl7-console" target="_blank" rel="noopener noreferrer">kodenya, kalo mau liat →</a>
+    </div>
+</dialog>
+
 <!-- Load failure is handled by the capturing error listener in the head
      script (an inline onerror here would be blocked by the CSP). -->
-<script src="./assets/app.js?v=24a2f0f7" defer></script>
+<script src="./assets/app.js?v=89783a21" defer></script>
 </body>
 </html>

@@ -657,6 +657,25 @@
     /* =====================================================================
        9. COMMAND PALETTE
        ===================================================================== */
+    /* --- POSTMORTEM DIALOG ----------------------------------------------
+       Opened from the tinkering card. If <dialog> is unsupported the panel
+       is flagged for inline rendering and the trigger is removed, so the
+       content is never stranded behind a button that cannot work. */
+    (function postmortem() {
+        var box = $('#pm'), opener = $('#pmOpen'), closer = $('#pmClose');
+        if (!box) return;
+        if (typeof box.showModal !== 'function') {
+            box.setAttribute('data-inline', '');
+            if (opener) opener.parentNode.removeChild(opener);
+            return;
+        }
+        if (opener) opener.addEventListener('click', function () { if (!box.open) box.showModal(); });
+        if (closer) closer.addEventListener('click', function () { box.close(); });
+        /* pointerdown rather than click, for the same drag-select reason as
+           the palette below */
+        box.addEventListener('pointerdown', function (e) { if (e.target === box) box.close(); });
+    })();
+
     (function palette() {
         var box = $('#cmdk'), input = $('#cmdkInput'), list = $('#cmdkList'), opener = $('#cmdkOpen');
         if (!box || !input || !list || typeof box.showModal !== 'function') return;

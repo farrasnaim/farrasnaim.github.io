@@ -68,7 +68,7 @@
          app.css or app.js changes: GitHub Pages serves assets with a
          long cache life, and a stale stylesheet against fresh markup
          renders the page wrong until the browser happens to refetch. -->
-    <link rel="stylesheet" href="./assets/app.css?v=dad62579">
+    <link rel="stylesheet" href="./assets/app.css?v=5d6d6f48">
 </head>
 <body>
 
@@ -632,7 +632,8 @@
                     <span class="card__desc">I optimize things. then I optimize the optimization.</span>
                     <span class="card__cue">more <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 5h8M5 1v8"/></svg></span>
                 </button>
-                <div class="card__more" id="card-more-tinkering"><div><p>PC parts, router config, even the wording on this page — I cannot let a decision go until I know exactly why it works and what could break it. "good enough" is theoretically valid. apparently. this page itself has been taken apart and rebuilt who knows how many times before I finally called it enough.</p></div></div>
+                <div class="card__more" id="card-more-tinkering"><div><p>PC parts, router config, even the wording on this page — I cannot let a decision go until I know exactly why it works and what could break it. "good enough" is theoretically valid. apparently. the router got the worst of it: four days rebuilding it from the firmware up, then an audit at the end where I deleted about a third of what I had made — including a watchdog written the day before, which turned out to be causing the exact Wi-Fi dropouts it was meant to prevent.</p>
+                    <button class="pm__open" id="pmOpen" type="button">the postmortem <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 5h8M5.5 1.5 9 5 5.5 8.5"/></svg></button></div></div>
             </div>
 
             <div class="card">
@@ -742,8 +743,58 @@
     </div>
 </dialog>
 
+<!-- Opened from the tinkering card; see the postmortem block in app.js. -->
+<dialog class="pm" id="pm" aria-labelledby="pmTitle">
+    <div class="pm__box">
+        <button class="pm__close" id="pmClose" type="button" aria-label="Close">✕</button>
+        <p class="eyebrow">the router — postmortem</p>
+        <h3 class="pm__title" id="pmTitle">Four days of breaking my own Wi-Fi.</h3>
+        <p class="pm__lede">a GL.iNet Beryl 7 — a travel router — moved off its vendor firmware onto upstream OpenWrt, with a console built on top for the things the stock interface would not show me. most of what follows is something I got wrong first.</p>
+
+        <div class="pm__stats"><div class="stat"><div class="stat__n">24</div><div class="stat__l">packages removed</div></div><div class="stat"><div class="stat__n">98 MB</div><div class="stat__l">RAM freed</div></div><div class="stat"><div class="stat__n">97%</div><div class="stat__l">smaller ruleset</div></div><div class="stat"><div class="stat__n">185</div><div class="stat__l">lines deleted</div></div></div>
+
+        <div class="pm__inc">
+            <p class="pm__incT">the loop that ate its own evidence</p>
+            <div class="pm__row"><div class="pm__k">what broke</div><div class="pm__v">all four cores pinned, IPv6 down, the router sitting at 70°C.</div></div>
+            <div class="pm__row"><div class="pm__k">what I thought</div><div class="pm__v">something was spinning. I took the load to be the problem.</div></div>
+            <div class="pm__row"><div class="pm__k">what it actually was</div><div class="pm__v">a background daemon had survived a restart and was still holding the name its replacement needed. every new copy died on the collision in about a tenth of a second and was restarted immediately, so the interface went down and up several times a second — and it filled the log buffer so fast that the evidence of the failure was overwritten in 42 seconds.</div></div>
+            <div class="pm__row"><div class="pm__k">what changed</div><div class="pm__v">proved it with a controlled test: the same command died instantly under the held name and ran fine under a different one.</div></div>
+        </div>
+        <div class="pm__inc">
+            <p class="pm__incT">the watchdog that caused the outage</p>
+            <div class="pm__row"><div class="pm__k">what broke</div><div class="pm__v">every 5&nbsp;GHz device dropped, in the middle of testing.</div></div>
+            <div class="pm__row"><div class="pm__k">what I thought</div><div class="pm__v">my own edit, a minute earlier.</div></div>
+            <div class="pm__row"><div class="pm__k">what it actually was</div><div class="pm__v">the recovery script I had just written reloaded the Wi-Fi. the watchdog sampled during that reload, decided the access points were missing, and started a second reload on top of the first. it produced precisely the failure it existed to prevent.</div></div>
+            <div class="pm__row"><div class="pm__k">what changed</div><div class="pm__v">deleted the whole subsystem the next day. 185 lines out, nothing put back.</div></div>
+        </div>
+        <div class="pm__inc">
+            <p class="pm__incT">the tidy fix that would have cut the line</p>
+            <div class="pm__row"><div class="pm__k">what broke</div><div class="pm__v">nothing. this one was caught before it ever fired.</div></div>
+            <div class="pm__row"><div class="pm__k">what I thought</div><div class="pm__v">shut the stuck process down politely.</div></div>
+            <div class="pm__row"><div class="pm__k">what it actually was</div><div class="pm__v">that process and the live one shared an identical client ID, and a polite shutdown releases the address. the server cannot tell them apart — so the clean fix would have dropped the router off its own connection while repairing it.</div></div>
+            <div class="pm__row"><div class="pm__k">what changed</div><div class="pm__v">killed it the ungraceful way instead, on purpose.</div></div>
+        </div>
+        <div class="pm__inc">
+            <p class="pm__incT">my own upgrade opened the VPN</p>
+            <div class="pm__row"><div class="pm__k">what broke</div><div class="pm__v">nothing visible. that is the problem with this one.</div></div>
+            <div class="pm__row"><div class="pm__k">what I thought</div><div class="pm__v">the kill-switch covered DNS, so it was covered.</div></div>
+            <div class="pm__row"><div class="pm__k">what it actually was</div><div class="pm__v">the routing tool cannot tag IPv6 at all. a device routed through the tunnel asks for an address the old way, gets a new-format answer back, and connects straight out around the tunnel. switching IPv6 on is what created the gap.</div></div>
+            <div class="pm__row"><div class="pm__k">what changed</div><div class="pm__v">block all forwarded IPv6 for those devices rather than only their DNS. a real loss of function, taken deliberately over a silent leak.</div></div>
+        </div>
+        <div class="pm__inc">
+            <p class="pm__incT">the one where the answer was no fix</p>
+            <div class="pm__row"><div class="pm__k">what broke</div><div class="pm__v">the Wi-Fi kept coming back on a different channel than the one configured.</div></div>
+            <div class="pm__row"><div class="pm__k">what I thought</div><div class="pm__v">I was told it was cosmetic. I did not accept that.</div></div>
+            <div class="pm__row"><div class="pm__k">what it actually was</div><div class="pm__v">the chip advertises one channel slot per radio but two across the whole device. joining another network on the same band retunes the shared slot and mine follows it; across bands there is no shared slot, so my access point is torn down and rebuilt from scratch.</div></div>
+            <div class="pm__row"><div class="pm__k">what changed</div><div class="pm__v">nothing. once the mechanism was clear the behaviour turned out to be correct, and the patch I had started got reverted.</div></div>
+        </div>
+        <div class="pm__note"><b>what this is not:</b> four days, not months. about nine thousand lines of shell and plain JavaScript, no tests, no CI. the console has no authentication at all — it runs as root on a network only I use, which is a risk I took deliberately and wrote down rather than one I missed. it is an enthusiast build with a couple of good debugging days in it, and calling it more than that would be the exact thing I spend my working hours flagging.</div>
+        <a class="pm__repo" href="https://github.com/farrasnaim/beryl7-console" target="_blank" rel="noopener noreferrer">the code, if you want it →</a>
+    </div>
+</dialog>
+
 <!-- Load failure is handled by the capturing error listener in the head
      script (an inline onerror here would be blocked by the CSP). -->
-<script src="./assets/app.js?v=24a2f0f7" defer></script>
+<script src="./assets/app.js?v=89783a21" defer></script>
 </body>
 </html>
