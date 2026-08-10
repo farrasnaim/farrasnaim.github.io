@@ -739,7 +739,7 @@
         <button class="pm__close" id="pmClose" type="button" aria-label="Tutup">✕</button>
         <p class="eyebrow">routernya — postmortem</p>
         <h3 class="pm__title" id="pmTitle">Empat hari ngerusakin wifi sendiri.</h3>
-        <p class="pm__lede">GL.iNet Beryl 7 — router travel — gua pindahin dari firmware bawaannya ke OpenWrt, terus gua bikinin console sendiri buat hal-hal yang ga ditampilin sama interface aslinya. kebanyakan yang di bawah ini awalnya gua salah dulu.</p>
+        <p class="pm__lede">GL.iNet Beryl 7 — router travel — gua pindahin dari firmware bawaannya ke OpenWrt, terus gua bikinin console sendiri buat hal-hal yang ga ditampilin sama interface aslinya. debugging-nya bareng Claude yang nyambung langsung ke routernya lewat SSH: dia yang jalanin command sama baca log, gua yang nentuin sebenernya lagi nyari apa dan kapan jawabannya kerasa kegampangan buat langsung diterima. kebanyakan yang di bawah ini awalnya salah dulu — entah gua, entah dia.</p>
 
         <div class="pm__stats"><div class="stat"><div class="stat__n">24</div><div class="stat__l">paket dihapus</div></div><div class="stat"><div class="stat__n">98 MB</div><div class="stat__l">RAM balik</div></div><div class="stat"><div class="stat__n">97%</div><div class="stat__l">ruleset lebih kecil</div></div><div class="stat"><div class="stat__n">185</div><div class="stat__l">baris dihapus</div></div></div>
 
@@ -748,7 +748,7 @@
             <div class="pm__row"><div class="pm__k">yang rusak</div><div class="pm__v">empat core mentok 100%, IPv6 mati, routernya nyampe 70°C.</div></div>
             <div class="pm__row"><div class="pm__k">dugaan awal</div><div class="pm__v">ada yang muter-muter. gua kira masalahnya emang beban tinggi.</div></div>
             <div class="pm__row"><div class="pm__k">aslinya</div><div class="pm__v">satu daemon selamat dari restart dan masih megang nama yang dibutuhin penggantinya. tiap salinan baru mati kena tabrakan nama dalam sepersepuluh detik terus langsung dijalanin lagi, jadi interface-nya naik-turun beberapa kali per detik — dan lognya penuh secepet itu sampe bukti kejadiannya ketimpa dalam 42 detik.</div></div>
-            <div class="pm__row"><div class="pm__k">yang berubah</div><div class="pm__v">dibuktiin lewat tes terkontrol: command yang sama langsung mati pas pake nama yang dipegang, jalan mulus pas pake nama lain.</div></div>
+            <div class="pm__row"><div class="pm__k">yang berubah</div><div class="pm__v">kejawab lewat tes terkontrol: command yang sama langsung mati pas pake nama yang dipegang, jalan mulus pas pake nama lain.</div></div>
         </div>
         <div class="pm__inc">
             <p class="pm__incT">watchdog yang malah bikin mati</p>
