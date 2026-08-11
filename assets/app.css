@@ -1065,6 +1065,9 @@ html:not(.js) .pm__box, .pm[data-inline] .pm__box {
         border-radius: 100px;
     }
     .icon-btn__label { display: inline; font-size: var(--fs-xs); }
+    /* the hint explains an unlabelled magnifier; at this width the button
+       carries a visible "menu" label already, so it explains nothing */
+    .foot__hint { display: none; }
     .lang-code { display: none; }
     .lang-flag { display: block; }
     /* 8.6rem of label against ~180px of value is not a two-column layout */
