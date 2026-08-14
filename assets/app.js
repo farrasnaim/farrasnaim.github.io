@@ -19,7 +19,7 @@
     var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
     /* --- LANGUAGE --------------------------------------------------------
-       index.html (Indonesian) and en.html share this file; <html lang> decides
+       index.html (English) and id.html share this file; <html lang> decides
        which copy gets used. Anything translated is stored twice — English on
        the field, the Indonesian one on the same field suffixed `_id` — and
        read back through pick(). A missing translation falls through to the
