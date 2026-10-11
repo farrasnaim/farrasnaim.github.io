@@ -5,12 +5,10 @@
 (function () {
     'use strict';
 
-    /* Set to true to respect the visitor's prefers-reduced-motion setting.
-       Left false on purpose: the animation is meant to run for everyone, so
-       every `reduce.matches` check below reads false regardless of the OS.
-       Flipping this back also needs the reduced-motion block in app.css
-       un-commented — the two halves cover scripted and declarative motion. */
-    var HONOR_REDUCED_MOTION = false;
+    /* Respect the visitor's prefers-reduced-motion setting. This flag and
+       the matching block in app.css are a pair: the CSS stops declarative
+       animation, this stops the scripted kind. Set both or neither. */
+    var HONOR_REDUCED_MOTION = true;
 
     var reduce = HONOR_REDUCED_MOTION
         ? window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -41,7 +39,8 @@
             pJourney: 'journey · work & campus', pWork: 'the work · day to day',
             pRig: 'the rig · desk setup', pMap: 'the map · travel',
             pHours: 'off hours', pConnect: 'connect', pEmail: 'email me',
-            pTheme: 'toggle theme', pTop: 'back to top'
+            pTheme: 'toggle theme', pTop: 'back to top',
+            pinHint: 'tap a pin to see that trip'
         },
         id: {
             cities: 'kota', countries: 'negara', legs: 'leg intl.',
@@ -53,7 +52,8 @@
             pJourney: 'perjalanan · kerja & kampus', pWork: 'kerjaan · rutinitas harian',
             pRig: 'the rig · setup meja', pMap: 'peta · jalan-jalan',
             pHours: 'waktu luang', pConnect: 'kontak', pEmail: 'email gua',
-            pTheme: 'ganti tema', pTop: 'balik ke atas'
+            pTheme: 'ganti tema', pTop: 'balik ke atas',
+            pinHint: 'tap pin-nya buat liat perjalanannya'
         }
     }[LANG];
 
@@ -334,23 +334,40 @@
             });
         });
 
-        /* filters */
+        /* filters. The degree is typed "edu" and rides along with both the
+           work and the campus view: it belongs to the campus years but is
+           the one line a recruiter skimming "work" must not lose. */
+        function matches(type, want) {
+            return want === 'all' || type === want || type === 'edu';
+        }
+        function apply(btn) {
+            var want = btn.dataset.filter;
+            filters.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
+            items.forEach(function (item) {
+                var show = matches(item.dataset.type, want);
+                item.hidden = !show;
+                if (!show) {
+                    item.classList.remove('is-open');
+                    var h = $('.tl-head', item);
+                    if (h) h.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
         var filters = $$('.filter');
         filters.forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                var want = btn.dataset.filter;
-                filters.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
-                items.forEach(function (item) {
-                    var show = want === 'all' || item.dataset.type === want;
-                    item.hidden = !show;
-                    if (!show) {
-                        item.classList.remove('is-open');
-                        var h = $('.tl-head', item);
-                        if (h) h.setAttribute('aria-expanded', 'false');
-                    }
-                });
-            });
+            /* a count on each chip, so the default (work-only) view still
+               says how much sits behind the other filters */
+            var n = items.filter(function (it) { return matches(it.dataset.type, btn.dataset.filter); }).length;
+            var tag = document.createElement('span');
+            tag.className = 'filter__n';
+            tag.textContent = n;
+            btn.appendChild(tag);
+            btn.addEventListener('click', function () { apply(btn); });
         });
+        /* the markup decides the initial view (aria-pressed), so the page
+           opens on the short work list rather than all fourteen rows */
+        var initial = filters.filter(function (b) { return b.getAttribute('aria-pressed') === 'true'; })[0];
+        if (initial && initial.dataset.filter !== 'all') apply(initial);
 
         /* spine progress */
         var bar = $('#tlProgress');
@@ -380,6 +397,15 @@
                 head.addEventListener('click', function () {
                     var open = card.classList.toggle('is-open');
                     head.setAttribute('aria-expanded', String(open));
+                });
+                /* the hover lift reads as "the whole card is a button", so
+                   let it be one: clicks on the card chrome forward to the
+                   real control. The expanded body is left alone so its own
+                   links and buttons (the postmortem opener) keep working,
+                   and text in it can be selected without collapsing it. */
+                card.addEventListener('click', function (e) {
+                    if (e.target.closest('.card__head') || e.target.closest('.card__more')) return;
+                    head.click();
                 });
             }
             card.addEventListener('pointermove', function (e) {
@@ -622,6 +648,16 @@
             requestAnimationFrame(function () { card.classList.add('is-shown'); });
         }
 
+        /* a one-line affordance under the map; the pins don't look like
+           controls until one is active. A caption rather than an overlay,
+           so it can never sit on top of a pin. */
+        if (wrap && UI.pinHint) {
+            var hint = document.createElement('p');
+            hint.className = 'trip__hint';
+            hint.textContent = UI.pinHint;
+            wrap.insertAdjacentElement('afterend', hint);
+        }
+
         /* stats */
         var stats = $('#tripStats');
         if (stats) {
@@ -749,12 +785,21 @@
         }
         /* showModal() supplies the modal contract: Tab containment, inert
            background, native Escape, and focus restore to the opener */
+        /* On a touch screen, focusing the input raises the keyboard over
+           the list before anyone has read it. There the list takes initial
+           focus instead (autofocus steers showModal's own focus step), and
+           the input is one tap away for anyone who wants to type. */
+        var coarse = window.matchMedia('(pointer: coarse)').matches;
+        if (coarse) {
+            list.setAttribute('tabindex', '-1');
+            list.setAttribute('autofocus', '');
+        }
         function open() {
             if (box.open) return;
             box.showModal();
             input.value = '';
             render('');
-            input.focus();
+            if (coarse) list.focus(); else input.focus();
         }
         function close() { if (box.open) box.close(); }
 
