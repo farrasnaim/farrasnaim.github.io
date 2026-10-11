@@ -40,7 +40,8 @@
             pRig: 'the rig · desk setup', pMap: 'the map · travel',
             pHours: 'off hours', pConnect: 'connect', pEmail: 'email me',
             pTheme: 'toggle theme', pTop: 'back to top',
-            pinHint: 'tap a pin to see that trip'
+            pinHint: 'tap a pin to see that trip',
+            closeTrip: 'Close trip details'
         },
         id: {
             cities: 'kota', countries: 'negara', legs: 'leg intl.',
@@ -53,7 +54,8 @@
             pRig: 'the rig · setup meja', pMap: 'peta · jalan-jalan',
             pHours: 'waktu luang', pConnect: 'kontak', pEmail: 'email gua',
             pTheme: 'ganti tema', pTop: 'balik ke atas',
-            pinHint: 'tap pin-nya buat liat perjalanannya'
+            pinHint: 'tap pin-nya buat liat perjalanannya',
+            closeTrip: 'Tutup detail perjalanan'
         }
     }[LANG];
 
@@ -615,9 +617,68 @@
             }
 
             pts.forEach(function (pt, i) {
-                pins[i].style.left = Math.max(10, Math.min(w - 10, pt.x)) + 'px';
-                pins[i].style.top  = Math.max(10, Math.min(h - 10, pt.y)) + 'px';
+                var x = Math.max(10, Math.min(w - 10, pt.x));
+                var y = Math.max(10, Math.min(h - 10, pt.y));
+                pins[i].style.left = x + 'px';
+                pins[i].style.top  = y + 'px';
+                pinPos[i] = { x: x, y: y };
             });
+        }
+
+        /* On wide screens the card is a popover inside the map (see the CSS
+           for the breakpoint). It goes on whichever side of the pin has
+           more room, vertically centred on the pin and kept inside the map.
+           Positions are relative to .trip, the card's offset parent, so the
+           map's own offset is added. */
+        var pinPos = [], current = -1;
+        var wide = window.matchMedia('(min-width: 940px)');
+        function place(i) {
+            if (!wide.matches) { card.style.left = card.style.top = card.style.maxHeight = ''; return; }
+            var p = pinPos[i];
+            if (!p) return;
+            var w = wrap.clientWidth, h = wrap.clientHeight;
+            var pad = 12, gap = 26;
+            card.style.maxHeight = (h - pad * 2) + 'px';
+            var cw = card.offsetWidth, ch = card.offsetHeight;
+            function clampX(x) { return Math.max(pad, Math.min(w - cw - pad, x)); }
+            function clampY(y) { return Math.max(pad, Math.min(Math.max(pad, h - ch - pad), y)); }
+            /* Candidate spots: either side of the pin, aligned to its
+               centre, top or bottom. Pins are clustered (south-east Asia,
+               the Gulf), so the one rule "emptier side" would park the card
+               on top of neighbours. Score each spot by the pins it would
+               hide and take the lowest; ties go to the side with more room,
+               then to the centred alignment. */
+            var farSide = p.x > w / 2 ? -1 : 1;
+            var cands = [];
+            [farSide, -farSide].forEach(function (side, s) {
+                [0, 1, 2].forEach(function (align) {
+                    var x = side > 0 ? p.x + gap : p.x - gap - cw;
+                    var y = align === 0 ? p.y - ch / 2 : align === 1 ? p.y - 18 : p.y - ch + 18;
+                    cands.push({ x: clampX(x), y: clampY(y), order: s * 3 + align });
+                });
+            });
+            /* last resort: docked to the map's far edge (the Americas side
+               has no pins at all), level with the pin. Ranked after every
+               pin-adjacent spot so it only wins when those all hide pins. */
+            [farSide, -farSide].forEach(function (side, s) {
+                cands.push({ x: side > 0 ? w - cw - pad : pad, y: clampY(p.y - ch / 2), order: 6 + s });
+            });
+            cands.forEach(function (c) {
+                c.hits = 0;
+                pinPos.forEach(function (q, n) {
+                    if (n === i || !q) return;
+                    if (q.x > c.x - 14 && q.x < c.x + cw + 14 && q.y > c.y - 14 && q.y < c.y + ch + 14) c.hits++;
+                });
+            });
+            cands.sort(function (a, b) { return a.hits - b.hits || a.order - b.order; });
+            card.style.left = (wrap.offsetLeft + cands[0].x) + 'px';
+            card.style.top  = (wrap.offsetTop + cands[0].y) + 'px';
+        }
+        function closeCard() {
+            if (!wide.matches || current < 0) return;
+            current = -1;
+            card.classList.remove('is-shown');
+            pins.forEach(function (p) { p.classList.remove('is-active'); });
         }
 
         function open(i) {
@@ -637,16 +698,27 @@
                 : '<p class="route__none">' + UI.noLegs + '</p>';
 
             card.innerHTML =
+                '<button class="trip__close" type="button" aria-label="' + UI.closeTrip + '">✕</button>' +
                 '<div class="trip__head">' +
                     '<p class="trip__when">' + pick(t, 'when') + '</p>' +
                     '<h3 class="trip__place">' + t.city + '<span>' + t.country + '</span></h3>' +
                     '<p class="trip__note">' + pick(t, 'note') + '</p>' +
                 '</div>' +
                 route;
+            $('.trip__close', card).addEventListener('click', closeCard);
 
+            current = i;
+            card.scrollTop = 0;
             card.classList.remove('is-shown');
+            place(i);
             requestAnimationFrame(function () { card.classList.add('is-shown'); });
         }
+
+        /* the popover also closes on Escape and on a click on bare map */
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && current >= 0 && wide.matches) closeCard();
+        });
+        wrap.addEventListener('click', function (e) { if (e.target === cv) closeCard(); });
 
         /* a one-line affordance under the map; the pins don't look like
            controls until one is active. A caption rather than an overlay,
@@ -677,7 +749,7 @@
         var rt;
         function relayout() {
             clearTimeout(rt);
-            rt = setTimeout(function () { drawMap(); layoutPins(); }, 140);
+            rt = setTimeout(function () { drawMap(); layoutPins(); if (current >= 0) place(current); }, 140);
         }
         /* ResizeObserver catches container size changes that never fire a
            window resize (embedded webviews, some zoom paths); fall back to
